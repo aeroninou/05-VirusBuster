@@ -12,11 +12,11 @@ public class Main {
         //Game Summary
         controller.startGame();
 
-        String input = controller.userInput();
+        String userInput = controller.userInput();
 
         //user input and play game or quit game.
         //also to play the game again.
-        if("P".equals(input)){
+        if("P".equals(userInput)){
             controller.startGame();
         } else{
             controller.loserMessage();
