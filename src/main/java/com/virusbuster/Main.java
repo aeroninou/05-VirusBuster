@@ -16,6 +16,9 @@ public class Main {
 
         //play and quit
         controller.userInput();
+
+        //loser message
+        controller.loserMessage();
     }
 
 }
