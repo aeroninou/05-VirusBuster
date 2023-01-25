@@ -1,7 +1,5 @@
 package com.virusbuster.view;
 
-
-import com.apps.util.Console;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +17,6 @@ public class View {
         } catch (IOException e){
             e.printStackTrace();
         }
-        Console.pause(3000);
         Console.clear();
     }
 }
