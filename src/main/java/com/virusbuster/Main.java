@@ -14,6 +14,8 @@ public class Main {
         //print out Game Summary
         controller.gameInstruction();
 
+        //play and quit
+        controller.userInput();
     }
 
 }
