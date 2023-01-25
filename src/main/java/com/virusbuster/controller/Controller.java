@@ -22,8 +22,12 @@ public class Controller {
         View.gameInstructions();
     }
 
-    public static void userInput  () {
-        View.promptForOption();
+    public void userInput () {
+        View.promptForPlayorQuit();
+    }
+
+    public void loserMessage(){
+        View.loserMessage();
     }
 
 
