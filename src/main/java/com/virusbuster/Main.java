@@ -1,2 +1,4 @@
-package com.virusbuster;public class Main {
+package com.virusbuster;
+
+public class Main {
 }
