@@ -14,16 +14,13 @@ public class Controller {
         this.view = view;
     }
 
-    public void displayGameTitle(){
+    public void startGame(){
         View.welcome();
-    }
-
-    public void gameInstruction(){
         View.gameInstructions();
     }
 
-    public void userInput () {
-        View.promptForPlayorQuit();
+    public String userInput() {
+        return View.promptForPlayorQuit();
     }
 
     public void loserMessage(){
