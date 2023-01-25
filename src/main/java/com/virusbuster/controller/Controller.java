@@ -18,5 +18,9 @@ public class Controller {
         View.welcome();
     }
 
+    public void gameInstruction(){
+        View.gameInstructions();
+    }
+
 }
 

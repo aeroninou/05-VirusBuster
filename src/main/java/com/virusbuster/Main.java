@@ -11,6 +11,9 @@ public class Main {
         //Display Game Title
         controller.displayGameTitle();
 
+        //print out Game Summary
+        controller.gameInstruction();
+
     }
 
 }
