@@ -9,16 +9,19 @@ public class Main {
         Controller controller = new Controller(view);
 
         //Display Game Title
-        controller.displayGameTitle();
+        //Game Summary
+        controller.startGame();
 
-        //print out Game Summary
-        controller.gameInstruction();
+        String userInput = controller.userInput();
 
-        //play and quit
-        controller.userInput();
+        //user input and play game or quit game.
+        //also to play the game again.
+        if("P".equals(userInput)){
+            controller.startGame();
+        } else{
+            controller.loserMessage();
+        }
 
-        //loser message
-        controller.loserMessage();
     }
 
 }

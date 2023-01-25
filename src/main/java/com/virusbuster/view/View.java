@@ -17,11 +17,6 @@ public class View {
 
     private static Prompter prompter = new Prompter(new Scanner(System.in));
 
-    private enum Option {
-        PLAY,
-        QUIT
-    }
-
     public static void welcome() {
         Console.clear();
         try {
@@ -52,7 +47,7 @@ public class View {
             banner = Files.readString(Path.of(GAME_INSTRUCTIONS));
             for (char ch : banner.toCharArray()){
                 System.out.print(ch);
-                Console.pause(50);
+                Console.pause(10);
             }
 
         } catch (IOException e){
@@ -61,17 +56,16 @@ public class View {
         Console.clear();
     }
 
-    public static Option promptForPlayorQuit() {
+    public static String promptForPlayorQuit() {
         Console.clear();
-        String answer = prompt("Enter 'P' for Play or 'Q' for Quit?: ", "(?i)(P|Q)", "Error... ").toUpperCase();
+        System.out.println("\nAre you ready to rescue the world?");
+        String answer = prompt("\nEnter 'P' for Play or 'Q' for Quit?: ", "(?i)(P|Q)", "Error... ").toUpperCase();
 
-        Option option = null;
+        String option = null;
         if ("P".equals(answer)) {
-//            option = Option.PLAY;
-            System.out.println("Play");
+           option = "P";
         } else if ("Q".equals(answer)) {
-            System.out.println("Quit");
-//            option = Option.QUIT;
+            option = "Q";
         }
         return option;
     }
@@ -79,8 +73,7 @@ public class View {
     private static String prompt(String promptMessage, String regex, String helpMessage) {
 
         try {
-            String answer = prompter.prompt(promptMessage, regex, helpMessage).toUpperCase();
-            return answer;
+            return prompter.prompt(promptMessage, regex, helpMessage).toUpperCase();
         } catch (NoSuchElementException e) {
             System.exit(0);
         }
