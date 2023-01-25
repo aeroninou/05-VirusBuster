@@ -8,11 +8,11 @@ public class Main {
         View view = new View();
         Controller controller = new Controller(view);
 
-//        //Display Game Title
-//        controller.displayGameTitle();
-//
-//        //print out Game Summary
-//        controller.gameInstruction();
+        //Display Game Title
+        controller.displayGameTitle();
+
+        //print out Game Summary
+        controller.gameInstruction();
 
         //play and quit
         controller.userInput();
