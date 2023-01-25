@@ -22,5 +22,10 @@ public class Controller {
         View.gameInstructions();
     }
 
+    public static void userInput  () {
+        View.promptForOption();
+    }
+
+
 }
 
