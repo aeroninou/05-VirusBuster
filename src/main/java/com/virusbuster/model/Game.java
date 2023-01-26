@@ -1,15 +1,21 @@
 package com.virusbuster.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import static com.virusbuster.view.View.*;
 
 public class Game {
 
-    private static Commands move;
+    private static Commands verb;
     private static Locations currentLocation;
+    private static String noun;
 
     private static final String startingLocation = "Area51";
+    private static List<String> items = new ArrayList<>(Arrays.asList("camu camu", "zippo lighter", "silver pen", "sumalak", "glacier magical plant"));
+
 
     public Game(){
         setCurrentLocation(startingLocation);
@@ -27,17 +33,19 @@ public class Game {
         boolean inputVaild = false;
         while (!inputVaild){
             System.out.println('>');
-            String [] moveInput = commandInput().toLowerCase().split(" ");
+            String [] moveInput = commandInput().toLowerCase().split(" ", 2);
 
             if ("look".equals(moveInput[0])){
-                move = validCommand(moveInput[0]);
+                verb = validCommand(moveInput[0]);
+                noun = moveInput[1];
+                inputVaild = isValid(noun);
                 System.out.println("You input was " + moveInput[0]);
-                inputVaild = true;
 
             } else if ("bag".equals(moveInput[0])){
-                move = validCommand(moveInput[0]);
-                System.out.println("You chose " + move);
-                inputVaild = true;
+                verb = validCommand(moveInput[0]);
+                noun = moveInput[1];
+                inputVaild = isValid(noun);
+                System.out.println("You chose " + verb);
             }
         }
     }
@@ -54,6 +62,16 @@ public class Game {
         return result;
     }
 
+    private static boolean isValid (String input) {
+            if(items.contains(input)){
+                return true;
+            } else {
+                System.out.println("Sorry, that is not a valid item.");
+                return false;
+            }
+        }
+
+
     private static Commands[] values() {
         return Commands.values();
     }
@@ -63,26 +81,6 @@ public class Game {
         String input = sc.nextLine().trim();
         return input;
     }
-
-    // Players enter a Verb and Noun to interact with the world
-    public static void userCommand(){
-        System.out.println("What would you like to do? ");
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-        String arr[] = input.toLowerCase().split("[ \t,.:;?!\"']+", 2);
-
-        String move = arr[0];
-        String item = arr[1];
-        System.out.println(move);
-        if (move.equals("go")){
-            //function for go
-            System.out.println(move);
-
-        }else if(move.equals("look")){
-            System.out.println("not working");
-            //function for look
-        }
-
     }
-}
+
 
