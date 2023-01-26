@@ -6,15 +6,15 @@ public class Controller {
 
     private View view;
 
-    public Controller(){
+    public Controller() {
     }
 
-    public Controller(View view){
+    public Controller(View view) {
         super();
         this.view = view;
     }
 
-    public void startGame(){
+    public void startGame() {
         View.welcome();
         View.gameInstructions();
     }
@@ -23,7 +23,7 @@ public class Controller {
         return View.promptForPlayorQuit();
     }
 
-    public void loserMessage(){
+    public void loserMessage() {
         View.loserMessage();
     }
 

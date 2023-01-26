@@ -2,10 +2,17 @@ package com.virusbuster.model;
 
 import java.util.Scanner;
 
+import static com.virusbuster.view.View.*;
+
 public class Game {
 
     private static Commands move;
 
+    private void startGame() {
+        welcome();
+        gameInstructions();
+
+    }
 
     public static void gameTest (){
         boolean inputVaild = false;
@@ -48,4 +55,25 @@ public class Game {
         return input;
     }
 
+    // Players enter a Verb and Noun to interact with the world
+    private static void userCommand(){
+        System.out.println("What would you like to do? ");
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        String arr[] = input.toLowerCase().split("[ \t,.:;?!\"']+", 2);
+
+        String move = arr[0];
+        String item = arr[1];
+        System.out.println(move);
+        if (move.equals("go")){
+            //function for go
+            System.out.println(move);
+
+        }else if(move.equals("look")){
+            System.out.println("not working");
+            //function for look
+        }
+
+    }
 }
+
