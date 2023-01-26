@@ -24,7 +24,7 @@ public class GameMap {
     public void setLocation(List<Locations> locations){
         this.locations = locations;
     }
-    public GameMap displayLocation(){
+    public static GameMap displayLocation(){
         //create a GSON object for parsing data
         Gson gson = new Gson();
         BufferedReader br = null;
