@@ -1,7 +1,5 @@
 package com.virusbuster.model;
 
-import java.util.Locale;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Game {
@@ -16,11 +14,12 @@ public class Game {
             String [] moveInput = commandInput().toLowerCase().split(" ");
 
             if ("look".equals(moveInput[0])){
-                move = validMove(moveInput[0]);
-                System.out.println("You chose " + move);
+                move = validCommand(moveInput[0]);
+                System.out.println("You input was " + moveInput[0]);
                 inputVaild = true;
+
             } else if ("bag".equals(moveInput[0])){
-                move = validMove(moveInput[0]);
+                move = validCommand(moveInput[0]);
                 System.out.println("You chose " + move);
                 inputVaild = true;
             }
@@ -28,7 +27,7 @@ public class Game {
     }
 
 
-    private static Commands validMove(String input) {
+    private static Commands validCommand(String input) {
         Commands result = null;
         for (Commands command : values()) {
             if (command.getValue().equalsIgnoreCase(input)) {
