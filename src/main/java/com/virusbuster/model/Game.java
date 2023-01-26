@@ -7,11 +7,20 @@ import static com.virusbuster.view.View.*;
 public class Game {
 
     private static Commands move;
+    private static Locations currentLocation;
 
-    private void startGame() {
-        welcome();
-        gameInstructions();
+    private static final String startingLocation = "Area51";
 
+    public Game(){
+        setCurrentLocation(startingLocation);
+    }
+
+    public static Locations getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public static void setCurrentLocation(String currentLocation) {
+        //Game.currentLocation = currentLocation;
     }
 
     public static void gameTest (){
@@ -56,7 +65,7 @@ public class Game {
     }
 
     // Players enter a Verb and Noun to interact with the world
-    private static void userCommand(){
+    public static void userCommand(){
         System.out.println("What would you like to do? ");
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();

@@ -2,6 +2,9 @@ package com.virusbuster.view;
 
 import com.apps.util.Prompter;
 import com.apps.util.Console;
+import com.virusbuster.model.Game;
+import com.virusbuster.model.GameMap;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -56,18 +59,17 @@ public class View {
         Console.clear();
     }
 
-    public static String promptForPlayorQuit() {
+    public static void promptForPlayorQuit() {
         Console.clear();
         System.out.println("\nAre you ready to rescue the world?");
         String answer = prompt("\nEnter 'P' for Play or 'Q' for Quit?: ", "(?i)(P|Q)", "Error... ").toUpperCase();
 
-        String option = null;
         if ("P".equals(answer)) {
-           option = "P";
+            GameMap.displayLocation();
+            Game.gameTest();
         } else if ("Q".equals(answer)) {
-            option = "Q";
+            loserMessage();
         }
-        return option;
     }
 
     private static String prompt(String promptMessage, String regex, String helpMessage) {
