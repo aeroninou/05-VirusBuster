@@ -1,30 +1,27 @@
 {
-  "locations1": [
+  "locations": [
     {
       "name": "Area51",
-      "directions": {
-        "east": "Portal Room"
-      },
+      "east": "Portal Room",
       "description": "Headquarters",
-      "items": []
+      "item": []
     },
     {
       "name": "Portal Room",
-      "directions": {
-        "north": "Laboratory",
-        "south": "Armory",
-        "west": "Area51"
-      },
+      "north": "Laboratory",
+      "south": "Armory",
+      "west": "Area51",
       "description": "Once you grab your tradeable items, report back here to start your journey",
-      "items": []
+      "item": []
     },
     {
       "name": "Laboratory",
-      "directions": {
-        "south": "Portal Room"
-      },
-      "description": "Bunch of scientits looking at you to bring back the elements...",
-      "items": ["ice container", "raincoat"]
+      "south": "Portal Room",
+      "description": "Bunch of scientists looking at you to bring back the elements...",
+      "item": [
+        "ice container",
+        "raincoat"]
+
     },
     {
       "name": "Armory",
@@ -33,15 +30,20 @@
         "south": "Cafeteria"
       },
       "description": "Soldiers cleaning out their equipment.. ",
-      "items": ["poncho", "gold rolex watch"]
+      "item": [
+        "poncho",
+        "gold rolex watch"
+      ]
     },
     {
       "name": "Cafeteria",
-      "directions": {
-        "north": "Armory"
-      },
+      "north": "Armory",
       "description": "The Cafeteria is serving steak and lobster...",
-      "items": ["zippo ligther", "bubble gum", "jack daniels"]
+      "item": [
+        "zippo ligther",
+        "bubble gum",
+        "jack daniels"
+      ]
     }
   ]
 }
