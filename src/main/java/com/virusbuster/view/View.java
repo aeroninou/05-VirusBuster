@@ -70,7 +70,6 @@ public class View {
         return option;
     }
 
-
     private static String prompt(String promptMessage, String regex, String helpMessage) {
 
         try {
