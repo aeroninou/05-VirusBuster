@@ -72,6 +72,9 @@ public class Game {
                 inputVaild = isValid(noun);
                 System.out.println("You input was " + verb + " " + noun);
             }
+            else if ("help".equals(moveInput[0])){
+                commandsHelp();
+            }
         }
     }
 

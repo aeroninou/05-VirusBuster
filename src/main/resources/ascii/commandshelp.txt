@@ -13,7 +13,7 @@
                                _________________
                           ***NORTH, SOUTH, EAST, WEST***
                          ***ROOM1, ROOM2, ROOM3, ROOM4***
-            ***CAMU CAMU, CAMEL MILK, SUMLAK, GLACIER MAGICAL, PLANT***
+            ***CAMU CAMU, CAMEL MILK, SUMALAK, GLACIER MAGICAL, PLANT***
   ***ZIPPO LIGHTER, BUBBLE GUM, JACK DANIELS, RAINCOAT, ICE CONTAINER, ROLEX WATCH***
                                   ***NPC***
                                  ***ITEMS***
