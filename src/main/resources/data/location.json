@@ -2,26 +2,77 @@
   "locations": [
     {
       "name": "Area51",
-      "east": "Portal Room",
+      "directions": {
+        "east": "Portal Room"
+      },
       "description": "Headquarters",
       "item": []
     },
     {
       "name": "Portal Room",
-      "north": "Laboratory",
-      "south": "Armory",
-      "west": "Area51",
-      "description": "Once you grab your tradeable items, report back here to start your journey",
+      "directions": {
+        "north": "Laboratory",
+        "south": "Armory",
+        "west": "Area51",
+        "room1": "Amazon Jungle Fever, Brazil"
+      },
+      "description": "Once you grab your items, report back here to start your journey",
       "item": []
     },
     {
+      "name": "Amazon Jungle Fever, Brazil",
+      "directions": {
+        "portal": "Portal Room",
+        "room2": "Burj Khalifa, Dubai",
+        "room3": "Tashkent, Uzbekistan",
+        "room4": "Nuuk, Greenland"
+      },
+      "description": "You arrive notice tribe members struggling to build a fire",
+      "item": "Camu Camu"
+    },
+    {
+      "name": "Burj Khalifa, Dubai",
+      "directions": {
+        "portal": "Portal Room",
+        "room1": "Amazon Jungle Fever",
+        "room3": "Tashkent, Uzbekistan",
+        "room4": "Nuuk, Greenland"
+      },
+      "description": "You meet with the Prince, who loves gold",
+      "item": "Camel Milk"
+    },
+    {
+      "name": "Tashkent, Uzbekistan",
+      "directions": {
+        "portal": "Portal Room",
+        "room1": "Amazon Jungle Fever",
+        "room2": "Burj Khalifa, Dubai",
+        "room4": "Nuuk, Greenland"
+      },
+      "description": "You notice that the vendor notices that you are blowing a bubble gum",
+      "item": "Sumalak"
+    },
+    {
+      "name": "Nuuk, Greenland",
+      "directions": {
+        "portal": "Portal Room",
+        "room1": "Amazon Jungle Fever",
+        "room2": "Burj Khalifa, Dubai",
+        "room3": "Tashkent, Uzbekistan"
+      },
+      "description": "The farmer loves that Jack",
+      "item": "Magical Glacier Plant"
+    },
+    {
       "name": "Laboratory",
-      "south": "Portal Room",
+      "directions": {
+        "south": "Portal Room"
+      },
       "description": "Bunch of scientists looking at you to bring back the elements...",
       "item": [
         "ice container",
-        "raincoat"]
-
+        "raincoat"
+      ]
     },
     {
       "name": "Armory",
@@ -37,7 +88,9 @@
     },
     {
       "name": "Cafeteria",
-      "north": "Armory",
+      "directions": {
+        "north": "Armory"
+      },
       "description": "The Cafeteria is serving steak and lobster...",
       "item": [
         "zippo ligther",

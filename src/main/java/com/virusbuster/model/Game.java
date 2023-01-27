@@ -29,6 +29,7 @@ public class Game {
         //Game.currentLocation = currentLocation;
     }
 
+
     public static void gameTest (){
         boolean inputVaild = false;
         while (!inputVaild){
