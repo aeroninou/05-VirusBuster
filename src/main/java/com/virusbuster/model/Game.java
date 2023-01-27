@@ -59,7 +59,6 @@ public class Game {
         }
     }
 
-
     private static Commands validCommand(String input) {
         Commands result = null;
         for (Commands command : values()) {
