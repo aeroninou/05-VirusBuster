@@ -92,6 +92,4 @@ public class Locations {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
 }
