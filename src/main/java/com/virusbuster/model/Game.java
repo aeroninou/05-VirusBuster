@@ -26,7 +26,7 @@ public class Game {
     private static List<String> items = new ArrayList<>(Arrays.asList("CAMU CAMU", "CAMEL MILK", "SUMALAK", "RAINCOAT", "GLACIER MAGICAL PLANT"));
     private static List<String> commands = new ArrayList<>(Arrays.asList("GO", "GET", "ENTER", "TRADE", "TALK", "BAG"));
 
-
+    //parsing user's inout
     public static void parseCommand(List<String> wordlist) {
 
         if (wordlist.size() != 2) {
@@ -44,6 +44,7 @@ public class Game {
         }
     }
 
+    //splits input string to define a set of delimeter characters
     public static List<String> wordList(String input) {
         String delims = "[ \t,.:;?!\"']+";
         List<String> strlist = new ArrayList<>();
@@ -55,6 +56,7 @@ public class Game {
         return strlist;
     }
 
+    //inout validation for user input
     public static String runCommand(String inputstr) {
         List<String> wl;
         String s = "gucci";
