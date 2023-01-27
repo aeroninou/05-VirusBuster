@@ -2,11 +2,12 @@ package com.virusbuster.controller;
 
 import com.virusbuster.model.Game;
 import com.virusbuster.model.GameMap;
+import com.virusbuster.model.Player;
 import com.virusbuster.view.View;
 
 public class Controller {
 
-    private View view;
+    private final View view;
     private GameMap map;
     private Game game;
 
@@ -17,12 +18,12 @@ public class Controller {
         this.game = game;
     }
 
-    public void userInput(Game game) {
+    public void userInput() {
 
-        View.welcome();
-        View.gameInstructions();
-        Game.generateWorld();
-        View.promptForPlayorQuit();
+        view.welcome();
+        view.gameInstructions();
+        game.generateWorld();
+        view.promptForPlayorQuit();
 
     }
 }
