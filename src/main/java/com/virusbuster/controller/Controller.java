@@ -18,8 +18,8 @@ public class Controller {
         this.game = game;
     }
 
+    //starts the flow of game.
     public void userInput() {
-
         view.welcome();
         view.gameInstructions();
         game.generateWorld();

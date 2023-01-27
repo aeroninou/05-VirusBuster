@@ -22,9 +22,8 @@ public class Game {
     public Game() {
     }
 
-    //private static final String startingLocation = "Area51";
     private static List<String> items = new ArrayList<>(Arrays.asList("CAMU CAMU", "CAMEL MILK", "SUMALAK", "RAINCOAT", "GLACIER MAGICAL PLANT"));
-    private static List<String> commands = new ArrayList<>(Arrays.asList("GO", "GET", "ENTER", "TRADE", "TALK", "BAG"));
+    private static List<String> commands = new ArrayList<>(Arrays.asList("GO", "GET", "ENTER", "TRADE", "TALK", "BAG", "QUIT"));
 
     //parsing user's inout
     public static void parseCommand(List<String> wordlist) {
@@ -36,10 +35,10 @@ public class Game {
             noun = wordlist.get(1);
 
             if (!commands.contains(verb)) {
-                System.out.println(verb + " is not a verb");
+                System.out.println(verb + " is not a valid verb");
             }
             if (!items.contains(noun)) {
-                System.out.println(noun + " is not a noun!");
+                System.out.println(noun + " is not a valid noun!");
             }
         }
     }
@@ -73,15 +72,21 @@ public class Game {
         return s;
     }
 
+    //game method
     public static void gameTest () {
-
+        //prompt for name and set player name
         player.setName(Player.promptForName());
 
+        //display current location
         displayLocation(player);
         boolean inputVaild = false;
         while (!inputVaild) {
             System.out.println('↓');
             String moveInput = commandInput();
+            if ("quit".equalsIgnoreCase(moveInput) || "q".equalsIgnoreCase(moveInput)) {
+                exitMessage();
+                System.exit(0);
+            }
             runCommand(moveInput);
 
             if ("go".equalsIgnoreCase(String.valueOf(verb))) {
@@ -104,13 +109,11 @@ public class Game {
 
             } else if ("help".equalsIgnoreCase(String.valueOf(verb))) {
                 commandsHelp();
-            } else if ("quit".equalsIgnoreCase(String.valueOf(verb))) {
-                exitMessage();
-                System.exit(0);
             }
         }
     }
 
+    //Checking if the commands are valid by looping Commands enums
     private static Commands validCommand (String input){
         Commands result = null;
         for (Commands command : values()) {
@@ -122,22 +125,24 @@ public class Game {
         return result;
     }
 
+    //isValid is checking if the items input is valid
     private static boolean isValid (String input){
         if (items.contains(input)) {
             System.out.printf("Your input was [%s, %s]", verb, noun);
             return true;
         } else {
-            System.out.printf("Sorry, [%s, %s] is not a valid. See below for valid inputs.", verb, noun);
+            System.out.printf("\nSorry, [%s, %s] is not a valid. See below for valid inputs.", verb, noun);
             commandsHelp();
             return false;
         }
     }
 
-
+    //getting the values of the Command enum
     private static Commands[] values () {
         return Commands.values();
     }
 
+    //prompt user for verb and nouns
     private static String commandInput () {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine().trim();

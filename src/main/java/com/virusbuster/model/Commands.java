@@ -7,7 +7,8 @@ public enum Commands {
     LOOK("look"),
     TRADE("trade"),
     BAG("bag"),
-    ENTER("enter");
+    ENTER("enter"),
+    QUIT("quit");
 
     private final String value;
 

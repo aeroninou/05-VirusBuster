@@ -13,6 +13,7 @@ public class Main {
         Game game = new Game();
         Controller controller = new Controller(view,map, game);
 
+        //calling controller input asking for play or quit.
         controller.userInput();
     }
 
