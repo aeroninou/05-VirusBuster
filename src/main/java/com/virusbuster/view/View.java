@@ -91,12 +91,10 @@ public class View {
             e.printStackTrace();
         }
         Console.pause(3000);
-        Console.clear();
     }
 
     //asking player if they want to play game or quit. will execute
     public void promptForPlayorQuit() {
-        Console.clear();
         System.out.println("\nAre you ready to rescue the world?");
         String answer = prompt("\nEnter 'P'/Play or 'Q'/Quit?: ", "(?i)(P|Q|PLAY|QUIT)", "Error...must be letter P, PLAY, Q, or QUIT").toUpperCase();
 

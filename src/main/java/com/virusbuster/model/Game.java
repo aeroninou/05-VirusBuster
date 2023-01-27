@@ -1,5 +1,6 @@
 package com.virusbuster.model;
 
+
 import com.apps.util.Console;
 import com.google.gson.Gson;
 import com.virusbuster.view.View;
@@ -27,7 +28,9 @@ public class Game {
     //parsing user's inout
     public static void parseCommand(List<String> wordlist) {
 
-        if (wordlist.size() != 2) {
+        if ("help".equalsIgnoreCase(wordlist.get(0))) {
+            System.out.println("See above for valid commands");
+        } else if (wordlist.size() != 2) {
             System.out.println("Error! Enter 2 words for command");
         } else {
             verb = String.valueOf(validCommand(wordlist.get(0)));
@@ -88,27 +91,26 @@ public class Game {
             } else if ("help".equalsIgnoreCase(moveInput)) {
                 commandsHelp();
                 Console.pause(2000);
-                Console.clear();
             }
             runCommand(moveInput);
 
             if ("go".equalsIgnoreCase(String.valueOf(verb))) {
-                inputVaild = isValid(noun);
+                //inputVaild = isValid(noun);
 
             } else if ("get".equalsIgnoreCase(String.valueOf(verb))) {
-                inputVaild = isValid(noun);
+                //inputVaild = isValid(noun);
 
             } else if ("enter".equalsIgnoreCase(String.valueOf(verb))) {
-                inputVaild = isValid(noun);
+                //inputVaild = isValid(noun);
 
             } else if ("trade".equalsIgnoreCase(String.valueOf(verb))) {
-                inputVaild = isValid(noun);
+                //inputVaild = isValid(noun);
 
             } else if ("talk".equalsIgnoreCase(String.valueOf(verb))) {
-                inputVaild = isValid(noun);
+                //inputVaild = isValid(noun);
 
             } else if ("look".equalsIgnoreCase(String.valueOf(verb))) {
-                inputVaild = isValid(noun);
+                //inputVaild = isValid(noun);
             }
         }
     }
@@ -125,17 +127,18 @@ public class Game {
         return result;
     }
 
-    //isValid is checking if the items input is valid
-    private static boolean isValid (String input){
-        if (items.contains(input)) {
-            System.out.printf("Your input was [%s, %s]", verb, noun);
-            return true;
-        } else {
-            System.out.printf("\nSorry, [%s, %s] is not a valid. See below for valid inputs.", verb, noun);
-            commandsHelp();
-            return false;
-        }
-    }
+//    //isValid is checking if the items input is valid
+//    private static boolean isValid (String input){
+//        if (items.contains(input)) {
+//            System.out.printf("Your input was [%s, %s]", verb, noun);
+//            return true;
+//        } else {
+//            Console.clear();
+//            System.out.printf("\nSorry, [%s, %s] is not a valid. See below for valid inputs.", verb, noun);
+//            commandsHelp();
+//            return false;
+//        }
+//    }
 
     //getting the values of the Command enum
     private static Commands[] values () {
