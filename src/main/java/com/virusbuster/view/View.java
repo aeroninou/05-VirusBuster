@@ -73,6 +73,7 @@ public class View {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Console.pause(3000);
         Console.clear();
     }
 
@@ -89,7 +90,7 @@ public class View {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Console.pause(1000);
+        Console.pause(3000);
         Console.clear();
     }
 
