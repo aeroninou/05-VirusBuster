@@ -1,4 +1,4 @@
-                         ===========Game Objective===========
+==========================================Game Objective================================
 It’s the year 2050, and a virus called “Jackpot” is killing the population to extinction.
 You have 8 chances to travel by portal to 4 locations, you must trade for:
 
@@ -10,4 +10,4 @@ You have 8 chances to travel by portal to 4 locations, you must trade for:
 Bring them back to the laboratory to Dr. WW to create an antidote.
 
 Start your mission at Area 51, with a bag that can only holds 4 items. Good Luck!
-                          ====================================
+========================================================================================
