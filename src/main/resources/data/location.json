@@ -1,6 +1,5 @@
 {
-  "locations": [
-    {
+  "area51": {
       "name": "Area51",
       "directions": {
         "east": "Portal Room"
@@ -8,7 +7,7 @@
       "description": "Headquarters",
       "item": []
     },
-    {
+  "portal":{
       "name": "Portal Room",
       "directions": {
         "north": "Laboratory",
@@ -19,7 +18,7 @@
       "description": "Once you grab your items, report back here to start your journey",
       "item": []
     },
-    {
+  "amazon":{
       "name": "Amazon Jungle Fever, Brazil",
       "directions": {
         "portal": "Portal Room",
@@ -30,7 +29,7 @@
       "description": "You arrive notice tribe members struggling to build a fire",
       "item": "Camu Camu"
     },
-    {
+  "dubai":{
       "name": "Burj Khalifa, Dubai",
       "directions": {
         "portal": "Portal Room",
@@ -41,7 +40,7 @@
       "description": "You meet with the Prince, who loves gold",
       "item": "Camel Milk"
     },
-    {
+  "uzbekistan":{
       "name": "Tashkent, Uzbekistan",
       "directions": {
         "portal": "Portal Room",
@@ -52,7 +51,7 @@
       "description": "You notice that the vendor notices that you are blowing a bubble gum",
       "item": "Sumalak"
     },
-    {
+  "greenland":{
       "name": "Nuuk, Greenland",
       "directions": {
         "portal": "Portal Room",
@@ -63,7 +62,7 @@
       "description": "The farmer loves that Jack",
       "item": "Magical Glacier Plant"
     },
-    {
+  "laboratory":{
       "name": "Laboratory",
       "directions": {
         "south": "Portal Room"
@@ -74,7 +73,7 @@
         "raincoat"
       ]
     },
-    {
+  "armory":{
       "name": "Armory",
       "directions": {
         "north": "Portal Room",
@@ -86,7 +85,7 @@
         "gold rolex watch"
       ]
     },
-    {
+  "cafeteria":{
       "name": "Cafeteria",
       "directions": {
         "north": "Armory"
@@ -98,5 +97,4 @@
         "jack daniels"
       ]
     }
-  ]
 }

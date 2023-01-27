@@ -1,55 +1,212 @@
 package com.virusbuster.model;
 
-import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.processing.Generated;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
-@Generated("org.jsonschema2pojo")
+
 public class GameMap {
-    @SerializedName("locations")
-    @Expose
-    private List<Locations> locations = null;
 
-    public List<Locations> getLocations(){
-        return locations;
+    private Armory armory;
+    private Cafeteria cafeteria;
+    private Area51 area51;
+    private PortalRoom portal;
+    private Amazon amazon;
+    private Dubai dubai;
+    private Uzbekistan uzbekistan;
+    private Greenland greenland;
+    private Laboratory laboratory;
+
+    public Armory getArmory() {
+        return armory;
     }
 
-    public void setLocation(List<Locations> locations){
-        this.locations = locations;
+    public void setArmory(Armory armory) {
+        this.armory = armory;
     }
-    public static GameMap displayLocation(){
-        //create a GSON object for parsing data
-        Gson gson = new Gson();
-        BufferedReader br = null;
-        GameMap location = null;
-        try{
-            br= new BufferedReader(new FileReader("src/main/resources/data/location.json"));
-            location = gson.fromJson(br, GameMap.class);
 
-            if(location != null){
-                for(Locations l : location.getLocations()){
-                    System.out.printf("Name: %s Description: %s  item: %s", l.getName(), l.getDescription(), l.getItem());
-                }
-            }
-        } catch(FileNotFoundException e){
-            e.printStackTrace();
-        } finally{
-            if(br!=null){
-                try{
-                    br.close();
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
+    public Cafeteria getCafeteria() {
+        return cafeteria;
+    }
+
+    public void setCafeteria(Cafeteria cafeteria) {
+        this.cafeteria = cafeteria;
+    }
+
+    public Area51 getArea51() {
+        return area51;
+    }
+
+    public void setArea51(Area51 area51) {
+        this.area51 = area51;
+    }
+
+    public PortalRoom getPortal() {
+        return portal;
+    }
+
+    public void setPortal(PortalRoom portal) {
+        this.portal = portal;
+    }
+
+    public Amazon getAmazon() {
+        return amazon;
+    }
+
+    public void setAmazon(Amazon amazon) {
+        this.amazon = amazon;
+    }
+
+    public Dubai getDubai() {
+        return dubai;
+    }
+
+    public void setDubai(Dubai dubai) {
+        this.dubai = dubai;
+    }
+
+    public Uzbekistan getUzbekistan() {
+        return uzbekistan;
+    }
+
+    public void setUzbekistan(Uzbekistan uzbekistan) {
+        this.uzbekistan = uzbekistan;
+    }
+
+    public Greenland getGreenland() {
+        return greenland;
+    }
+
+    public void setGreenland(Greenland greenland) {
+        this.greenland = greenland;
+    }
+
+    public Laboratory getLaboratory() {
+        return laboratory;
+    }
+
+    public void setLaboratory(Laboratory laboratory) {
+        this.laboratory = laboratory;
+    }
+
+    public LocationLayout getLocation(String name){
+        if(name == null){
+            return null;
+        }
+        switch(name){
+            case "Area51":
+                return area51;
+            case "Portal Room":
+                return portal;
+            case "Amazon Jungle Fever, Brazil":
+                return amazon;
+            case "Burj Khalifa, Dubai":
+                return dubai;
+            case "Tashkent, Uzbekistan":
+                return uzbekistan;
+            case "Nuuk, Greenland":
+                return greenland;
+            case "Laboratory":
+                return laboratory;
+            case "Cafeteria":
+                return cafeteria;
+            default:
+                return null;
+        }
+    }
+
+    public static class LocationLayout {
+        private String name;
+        private HashMap<String, String> directions;
+        private String description;
+        private List<String> items;
+
+        public LocationLayout() {
+
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public HashMap<String, String> getDirections() {
+            return directions;
+        }
+
+        public void setDirections(HashMap<String, String> directions) {
+            this.directions = directions;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public List<String> getItems() {
+            return items;
+        }
+
+        public void setItems(List<String> items) {
+            this.items = items;
+        }
+    }
+        public static class Armory extends LocationLayout {
+            public Armory() {
+
             }
         }
-        return location;
-    }
 
+        public static class Cafeteria extends LocationLayout {
+            public Cafeteria() {
+
+            }
+        }
+
+        public static class Area51 extends LocationLayout {
+            public Area51() {
+
+            }
+        }
+
+        public static class PortalRoom extends LocationLayout {
+            public PortalRoom() {
+
+            }
+        }
+
+        public static class Amazon extends LocationLayout {
+            public Amazon() {
+
+            }
+        }
+
+        public static class Dubai extends LocationLayout {
+            public Dubai() {
+
+            }
+        }
+
+        public static class Uzbekistan extends LocationLayout {
+            public Uzbekistan() {
+
+            }
+        }
+
+        public static class Greenland extends LocationLayout {
+            public Greenland() {
+
+            }
+        }
+
+        public static class Laboratory extends LocationLayout {
+            public Laboratory() {
+            }
+        }
 }

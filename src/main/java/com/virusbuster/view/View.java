@@ -4,10 +4,13 @@ import com.apps.util.Prompter;
 import com.apps.util.Console;
 import com.virusbuster.model.Game;
 import com.virusbuster.model.GameMap;
+import com.virusbuster.model.Item;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -31,6 +34,14 @@ public class View {
         }
         Console.pause(3000);
         Console.clear();
+    }
+
+    public static void displayLocation(Game game){
+        String currentLocation = game.getCurrentLocation().getName();
+        List<String> items = game.getCurrentLocation().getItems();
+        HashMap<String,String> directions = game.getCurrentLocation().getDirections();
+        System.out.printf("\nYou are located at: %s \nitems: %s \ndirections: %s",
+                currentLocation,items,directions);
     }
 
     public static void loserMessage() {
@@ -60,6 +71,7 @@ public class View {
         Console.clear();
     }
 
+    //prints out the verbs/nouns
     public static void commandsHelp() {
         Console.clear();
         try {
@@ -72,13 +84,14 @@ public class View {
         Console.clear();
     }
 
+
     public static void promptForPlayorQuit() {
         Console.clear();
         System.out.println("\nAre you ready to rescue the world?");
         String answer = prompt("\nEnter 'P' for Play or 'Q' for Quit?: ", "(?i)(P|Q)", "Error... ").toUpperCase();
 
         if ("P".equals(answer)) {
-            GameMap.displayLocation();
+            commandsHelp();
             Game.gameTest();
         } else if ("Q".equals(answer)) {
             loserMessage();
@@ -94,4 +107,5 @@ public class View {
         }
         return null;
     }
+
 }
