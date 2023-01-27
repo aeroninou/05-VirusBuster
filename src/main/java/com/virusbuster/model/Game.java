@@ -5,9 +5,7 @@ import com.apps.util.Console;
 import com.google.gson.Gson;
 import com.virusbuster.view.View;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.*;
 
 import static com.virusbuster.view.View.*;
@@ -155,7 +153,11 @@ public class Game {
 
     //parses the location
     public void generateWorld () {
-        try (Reader reader = new FileReader("src/main/resources/data/location.json")) {
+
+        //noinspection ConstantConditions
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/location.json");
+        Reader reader = new BufferedReader(new InputStreamReader(inputStream))){
+        //Reader reader = new InputStreamReader("data/location.json")) {
             gameWorld = new Gson().fromJson(reader, GameMap.class);
             player.setCurrentLocation(gameWorld.getArea51());
         } catch (IOException e) {
