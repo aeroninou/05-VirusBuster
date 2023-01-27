@@ -12,7 +12,7 @@ public class Main {
         Game game = new Game();
         Controller controller = new Controller(view,map, game);
 
-        controller.userInput();
+        controller.userInput(game);
 
     }
 

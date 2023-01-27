@@ -17,11 +17,13 @@ public class Controller {
         this.game = game;
     }
 
-    public void userInput() {
+    public void userInput(Game game) {
+
         View.welcome();
         View.gameInstructions();
-        View.commandsHelp();
+        Game.generateWorld();
         View.promptForPlayorQuit();
+
     }
 }
 
