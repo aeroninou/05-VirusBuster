@@ -36,11 +36,7 @@
     <maven-surefire-plugin.version>3.0.0-M8</maven-surefire-plugin.version>
     <maven-surefire-report-plugin.version>3.0.0-M8</maven-surefire-report-plugin.version>
 
-    <!--
-    TODO: Replace "replace.me.project.Main" with the fully qualified class name of the project's main class,
-     without any quotes, as the content of the <main-class.name> element.
-    -->
-    <main-class.name>replace.me.project.Main</main-class.name>
+    <main-class.name>com.virusbuster.Main</main-class.name>
 
   </properties>
 
@@ -61,11 +57,9 @@
     </dependency>
 
     <dependency>
-      <groupId>app-utils</groupId>
-      <artifactId>app-utils</artifactId>
+      <groupId>com.apps</groupId>
+      <artifactId>apps-util</artifactId>
       <version>1.1</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/libs/app-utils-1.1.jar</systemPath>
     </dependency>
 
     <dependency>
@@ -98,7 +92,6 @@
 
   <build>
     <plugins>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
