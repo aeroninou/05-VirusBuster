@@ -1,5 +1,6 @@
 package com.virusbuster.model;
 
+import com.apps.util.Console;
 import com.google.gson.Gson;
 import com.virusbuster.view.View;
 
@@ -23,7 +24,7 @@ public class Game {
     }
 
     private static List<String> items = new ArrayList<>(Arrays.asList("CAMU CAMU", "CAMEL MILK", "SUMALAK", "RAINCOAT", "GLACIER MAGICAL PLANT"));
-    private static List<String> commands = new ArrayList<>(Arrays.asList("GO", "GET", "ENTER", "TRADE", "TALK", "BAG", "QUIT"));
+    private static List<String> commands = new ArrayList<>(Arrays.asList("GO", "GET", "ENTER", "TRADE", "TALK", "BAG", "QUIT", "HELP"));
 
     //parsing user's inout
     public static void parseCommand(List<String> wordlist) {
@@ -86,6 +87,10 @@ public class Game {
             if ("quit".equalsIgnoreCase(moveInput) || "q".equalsIgnoreCase(moveInput)) {
                 exitMessage();
                 System.exit(0);
+            } else if ("help".equalsIgnoreCase(moveInput)) {
+                commandsHelp();
+                Console.pause(2000);
+                Console.clear();
             }
             runCommand(moveInput);
 
@@ -106,9 +111,6 @@ public class Game {
 
             } else if ("look".equalsIgnoreCase(String.valueOf(verb))) {
                 inputVaild = isValid(noun);
-
-            } else if ("help".equalsIgnoreCase(String.valueOf(verb))) {
-                commandsHelp();
             }
         }
     }
