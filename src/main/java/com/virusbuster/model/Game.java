@@ -22,7 +22,6 @@ public class Game {
     public Game() {
     }
 
-    //private static final String startingLocation = "Area51";
     private static List<String> items = new ArrayList<>(Arrays.asList("CAMU CAMU", "CAMEL MILK", "SUMALAK", "RAINCOAT", "GLACIER MAGICAL PLANT"));
     private static List<String> commands = new ArrayList<>(Arrays.asList("GO", "GET", "ENTER", "TRADE", "TALK", "BAG"));
 
@@ -73,10 +72,12 @@ public class Game {
         return s;
     }
 
+    //game method
     public static void gameTest () {
-
+        //prompt for name and set player name
         player.setName(Player.promptForName());
 
+        //display current location
         displayLocation(player);
         boolean inputVaild = false;
         while (!inputVaild) {
@@ -104,13 +105,14 @@ public class Game {
 
             } else if ("help".equalsIgnoreCase(String.valueOf(verb))) {
                 commandsHelp();
-            } else if ("quit".equalsIgnoreCase(String.valueOf(verb))) {
+            } else if ("quit".equalsIgnoreCase(String.valueOf(verb)) || "q".equalsIgnoreCase(String.valueOf(verb))) {
                 exitMessage();
                 System.exit(0);
             }
         }
     }
 
+    //Checking if the commands are valid by looping Commands enums
     private static Commands validCommand (String input){
         Commands result = null;
         for (Commands command : values()) {
@@ -122,6 +124,7 @@ public class Game {
         return result;
     }
 
+    //isValid is checking if the items input is valid
     private static boolean isValid (String input){
         if (items.contains(input)) {
             System.out.printf("Your input was [%s, %s]", verb, noun);
@@ -133,11 +136,12 @@ public class Game {
         }
     }
 
-
+    //getting the values of the Command enum
     private static Commands[] values () {
         return Commands.values();
     }
 
+    //prompt user for verb and nouns
     private static String commandInput () {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine().trim();

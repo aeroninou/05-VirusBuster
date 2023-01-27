@@ -90,6 +90,7 @@ public class View {
         }
     }
 
+    //create a prompt method to uses for error checking
     public static String prompt(String promptMessage, String regex, String helpMessage) {
 
         try {
