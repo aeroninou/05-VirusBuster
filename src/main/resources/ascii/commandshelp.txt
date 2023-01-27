@@ -1,8 +1,8 @@
 
-================================Game Commands================================
+================================Game Commands==============================================
 
 VALID VERBS [GO, GET, ENTER, BAG, TALK, LOOK, HELP]
 VALID NOUNS [NORTH, SOUTH, EAST. WEST, ROOM1, ROOM2, ROOM3, ROOM4]
 ITEMS [ZIPPO LIGHTER, BUBBLE GUM, JACK DANIELS, RAINCOAT, ICE CONTAINER, ROLEX WATCH]
 
-=============================================================================
+===========================================================================================
