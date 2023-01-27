@@ -9,7 +9,6 @@ public enum Commands {
     BAG("bag"),
     ENTER("enter");
 
-
     private final String value;
 
     Commands (String value) {
