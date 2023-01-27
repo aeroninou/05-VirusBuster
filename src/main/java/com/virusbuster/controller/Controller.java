@@ -20,6 +20,7 @@ public class Controller {
     public void userInput() {
         View.welcome();
         View.gameInstructions();
+        View.commandsHelp();
         View.promptForPlayorQuit();
     }
 }

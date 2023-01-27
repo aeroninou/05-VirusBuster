@@ -16,6 +16,7 @@ public class View {
     private static final String TITLE_BANNER = "src/main/resources/ascii/welcome.txt";
     private static final String GAME_INSTRUCTIONS = "src/main/resources/ascii/gameinstruction.txt";
     private static final String LOSER_MESSAGE = "src/main/resources/ascii/losermessage.txt";
+    private static final String GAME_COMMANDS = "src/main/resources/ascii/commandshelp.txt";
     private static String banner;
 
     private static Prompter prompter = new Prompter(new Scanner(System.in));
@@ -56,6 +57,18 @@ public class View {
         } catch (IOException e){
             e.printStackTrace();
         }
+        Console.clear();
+    }
+
+    public static void commandsHelp() {
+        Console.clear();
+        try {
+            banner = Files.readString(Path.of(GAME_COMMANDS));
+            System.out.println(banner);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        Console.pause(1000);
         Console.clear();
     }
 
