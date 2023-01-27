@@ -3,6 +3,7 @@ package com.virusbuster;
 import com.virusbuster.controller.Controller;
 import com.virusbuster.model.Game;
 import com.virusbuster.model.GameMap;
+import com.virusbuster.model.Player;
 import com.virusbuster.view.View;
 
 public class Main {
@@ -12,8 +13,7 @@ public class Main {
         Game game = new Game();
         Controller controller = new Controller(view,map, game);
 
-        controller.userInput(game);
-
+        controller.userInput();
     }
 
 }

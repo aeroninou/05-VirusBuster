@@ -1,14 +1,12 @@
 package com.virusbuster.model;
 
 import com.google.gson.Gson;
+import com.virusbuster.view.View;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.virusbuster.view.View.*;
 
@@ -17,75 +15,74 @@ public class Game {
     private static Commands verb;
     private static GameMap.LocationLayout currentLocation;
     private static String noun;
-    public static Game game = new Game();
+    private static View view;
     public static GameMap gameWorld;
+    public static Player player = new Player();
+
+
+
 
     //private static final String startingLocation = "Area51";
-    private static List<String> items = new ArrayList<>(Arrays.asList("camu camu", "zippo lighter", "silver pen", "sumalak", "glacier magical plant"));
+    private static List<String> items = new ArrayList<>(Arrays.asList("CAMU CAMU", "CAMEL MILK", "SUMALAK", "GLACIER MAGICAL PLANT"));
+
 
 
     public Game() {
-
-
     }
 
-    public GameMap.LocationLayout getCurrentLocation() {
-        return currentLocation;
-    }
-
-    public void setCurrentLocation(GameMap.LocationLayout currentLocation) {
-        Game.currentLocation = currentLocation;
-    }
 
     public static void gameTest() {
-        displayLocation(game);
+
+        player.setName(Player.promptForName());
+
+        displayLocation(player);
         boolean inputVaild = false;
         while (!inputVaild) {
-            System.out.println('>');
-            String[] moveInput = commandInput().toLowerCase().split(" ", 2);
+            System.out.println('↓');
+            String[] moveInput = commandInput().toUpperCase().split(" ", 2);
 
 
-            if ("go".equals(moveInput[0])){
-
-                verb = validCommand(moveInput[0]);
-                noun = moveInput[1];
-                inputVaild = isValid(noun);
-                System.out.println("You input was " + verb + " " + noun);
-
-
-            } else if ("get".equals(moveInput[0])){
+            if ("go".equalsIgnoreCase(moveInput[0])){
 
                 verb = validCommand(moveInput[0]);
                 noun = moveInput[1];
                 inputVaild = isValid(noun);
-                System.out.println("You input was " + verb + " " + noun);
+
+            } else if ("get".equalsIgnoreCase(moveInput[0])){
+
+                verb = validCommand(moveInput[0]);
+                noun = moveInput[1];
+                inputVaild = isValid(noun);
             }
-            else if ("enter".equals(moveInput[0])){
+            else if ("enter".equalsIgnoreCase(moveInput[0])){
                 verb = validCommand(moveInput[0]);
                 noun = moveInput[1];
                 inputVaild = isValid(noun);
-                System.out.println("You input was " + verb + " " + noun);
             }
-            else if ("trade".equals(moveInput[0])){
+            else if ("trade".equalsIgnoreCase(moveInput[0])){
+
                 verb = validCommand(moveInput[0]);
                 noun = moveInput[1];
                 inputVaild = isValid(noun);
-                System.out.println("You input was " + verb + " " + noun);
             }
-            else if ("talk".equals(moveInput[0])){
+            else if ("talk".equalsIgnoreCase(moveInput[0])){
+
                 verb = validCommand(moveInput[0]);
                 noun = moveInput[1];
                 inputVaild = isValid(noun);
-                System.out.println("You input was " + verb + " " + noun);
             }
-            else if ("look".equals(moveInput[0])){
+            else if ("look".equalsIgnoreCase(moveInput[0])){
+
                 verb = validCommand(moveInput[0]);
                 noun = moveInput[1];
                 inputVaild = isValid(noun);
-                System.out.println("You input was " + verb + " " + noun);
             }
-            else if ("help".equals(moveInput[0])){
+            else if ("help".equalsIgnoreCase(moveInput[0])){
                 commandsHelp();
+            }
+            else if ("quit".equalsIgnoreCase(moveInput[0])){
+                exitMessage();
+                System.exit(0);
             }
         }
     }
@@ -103,9 +100,11 @@ public class Game {
 
     private static boolean isValid(String input) {
         if (items.contains(input)) {
+            System.out.printf("Your input was [%s, %s]",verb, noun);
             return true;
         } else {
-            System.out.println("Sorry, that is not a valid item.");
+            System.out.printf("Sorry, [%s, %s] is not a valid. See below for valid inputs.", verb,  noun);
+            commandsHelp();
             return false;
         }
     }
@@ -117,17 +116,25 @@ public class Game {
 
     private static String commandInput() {
         Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine().trim();
-        return input;
+        return sc.nextLine().trim();
     }
+
     //parses the location
-    public static void generateWorld() {
+    public void generateWorld() {
         try (Reader reader = new FileReader("src/main/resources/data/location.json")) {
             gameWorld = new Gson().fromJson(reader, GameMap.class);
-            game.setCurrentLocation(gameWorld.getArea51());
+            player.setCurrentLocation(gameWorld.getArea51());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void displayLocation(Player player){
+        String currentLocation = player.getCurrentLocation().getName();
+        List<String> items = player.getCurrentLocation().getItems();
+        HashMap<String,String> directions = player.getCurrentLocation().getDirections();
+        System.out.printf("\n\n%s, you are located at: %s \nitems: %s \ndirections: %s\n",
+                player.getName(),currentLocation,items,directions);
     }
 }
 
