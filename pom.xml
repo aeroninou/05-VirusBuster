@@ -61,11 +61,9 @@
     </dependency>
 
     <dependency>
-      <groupId>app-utils</groupId>
-      <artifactId>app-utils</artifactId>
+      <groupId>com.apps</groupId>
+      <artifactId>apps-util</artifactId>
       <version>1.1</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/libs/app-utils-1.1.jar</systemPath>
     </dependency>
 
     <dependency>
