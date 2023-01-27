@@ -8,7 +8,8 @@ public enum Commands {
     TRADE("trade"),
     BAG("bag"),
     ENTER("enter"),
-    QUIT("quit");
+    QUIT("quit"),
+    HELP("help");
 
     private final String value;
 
