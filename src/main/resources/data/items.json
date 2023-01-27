@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "name": "zippo ligther",
+      "description": "This seems useful to start fire in a jungle..."
+    },
+    {
+      "name": "bubble gum",
+      "description": "mmm...I love myself some bubble gum."
+    },
+    {
+      "name": "jack daniels",
+      "description": "This might be useful, when I get cold.."
+    },
+    {
+      "name": "ice container",
+      "description": "mmm...I wonder if this is to contain something cold.."
+    },
+    {
+      "name": "raincoat",
+      "description": "Depending where I go, it might rain like cats and dogs."
+    },
+    {
+      "name": "gold rolex watch",
+      "description": "well, maybe someone might like gold..."
+    }
+  ]
+}

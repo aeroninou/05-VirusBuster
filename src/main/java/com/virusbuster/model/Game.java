@@ -44,17 +44,48 @@ public class Game {
             System.out.println('>');
             String[] moveInput = commandInput().toLowerCase().split(" ", 2);
 
-            if ("look".equals(moveInput[0])) {
-                verb = validCommand(moveInput[0]);
-                noun = moveInput[1];
-                inputVaild = isValid(noun);
-                System.out.println("You input was " + moveInput[0]);
 
-            } else if ("bag".equals(moveInput[0])) {
+            if ("go".equals(moveInput[0])){
+
                 verb = validCommand(moveInput[0]);
                 noun = moveInput[1];
                 inputVaild = isValid(noun);
-                System.out.println("You chose " + verb);
+                System.out.println("You input was " + verb + " " + noun);
+
+
+            } else if ("get".equals(moveInput[0])){
+
+                verb = validCommand(moveInput[0]);
+                noun = moveInput[1];
+                inputVaild = isValid(noun);
+                System.out.println("You input was " + verb + " " + noun);
+            }
+            else if ("enter".equals(moveInput[0])){
+                verb = validCommand(moveInput[0]);
+                noun = moveInput[1];
+                inputVaild = isValid(noun);
+                System.out.println("You input was " + verb + " " + noun);
+            }
+            else if ("trade".equals(moveInput[0])){
+                verb = validCommand(moveInput[0]);
+                noun = moveInput[1];
+                inputVaild = isValid(noun);
+                System.out.println("You input was " + verb + " " + noun);
+            }
+            else if ("talk".equals(moveInput[0])){
+                verb = validCommand(moveInput[0]);
+                noun = moveInput[1];
+                inputVaild = isValid(noun);
+                System.out.println("You input was " + verb + " " + noun);
+            }
+            else if ("look".equals(moveInput[0])){
+                verb = validCommand(moveInput[0]);
+                noun = moveInput[1];
+                inputVaild = isValid(noun);
+                System.out.println("You input was " + verb + " " + noun);
+            }
+            else if ("help".equals(moveInput[0])){
+                commandsHelp();
             }
         }
     }
