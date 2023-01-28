@@ -1,0 +1,57 @@
+{
+    "characters": [
+        {
+            "type": "User",
+            "name": "Player",
+            "quotes": [
+                “I’m looking for Camu Camu.”,
+                “I’m looking for Camel Milk. I have a rare gold Rolex watch to trade.”,
+		        “I’m willing to trade my bubble gum pack for Sumalak?”,
+                “I’m willing to trade my bottle of Jack Daniels for Glacier Magical Plant?",
+			
+            ],
+            "room": [ "Area51", "Amazon Jungle Fever", "Burj Khalifa, Dubai", 
+                      "Tashkent, Uzbekistan", "Nuuk Greenland"]
+        },
+        {
+            "type": "NPC",
+            "name": "Dr. WW",
+            "quotes": [
+                " "
+            ],
+            "room": "Area51"
+        },
+        {
+            "type": "NPC",
+            "name": "Chief",
+            "quotes": [
+                “Stranger! What brings you here?”
+            ],
+            "room": "Amazon Jungle Fever"
+        },
+        {
+    		"type": "NPC",
+            "name": "Prince",
+            "quotes": [
+               "Give me something I don’t already have!"
+            ],
+            "room": "Burj Khalifa, Dubai"
+        },
+	  {
+            "type": "NPC",
+            "name": "Local Vendor",
+            "quotes": [
+                ""
+            ],
+            "room": "Tashkent, Uzbekistan"
+        },
+ 	  {
+            "type": "NPC",
+            "name": "Farmer",
+            "quotes": [
+                “I can take you up the mountain but need that drink.”
+            ],
+            "room": "Nuuk Greenland"
+        }
+    ]
+}
