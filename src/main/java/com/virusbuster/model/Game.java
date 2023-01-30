@@ -3,13 +3,11 @@ package com.virusbuster.model;
 
 import com.apps.util.Console;
 import com.google.gson.Gson;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.virusbuster.view.View;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.*;
-
-import static com.virusbuster.view.View.*;
 
 public class Game {
 
@@ -19,6 +17,7 @@ public class Game {
     private View view;
     public GameMap gameWorld;
     public Player player = new Player();
+    public static Character character = new Character();
 
     public Game() {
     }
@@ -81,12 +80,12 @@ public class Game {
     public void gameTest() {
         //prompt for name and set player name
         player.setName(Player.promptForName());
-        generateWorld();
+        loadsLocation();
         //display current location
         displayLocation(player);
         boolean inputVaild = false;
         while (!inputVaild) {
-            System.out.println('↓');
+            System.out.println("\n↓");
             String moveInput = commandInput();
 
             if ("quit".equalsIgnoreCase(moveInput) || "q".equalsIgnoreCase(moveInput)) {
@@ -188,15 +187,26 @@ public class Game {
         }
     }
 
-    //parses the location
-    private void generateWorld() {
+    //loads the location from location.json(parsing it)
+    private void loadsLocation() {
 
         //noinspection ConstantConditions
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/location.json");
              Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            //Reader reader = new InputStreamReader("data/location.json")) {
             gameWorld = new Gson().fromJson(reader, GameMap.class);
             player.setCurrentLocation(gameWorld.getArea51());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        loadCharacter();
+    }
+
+    //loads the Characters from characters.json
+    private void loadCharacter(){
+        //noinspection ConstantConditions
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/characters.json");
+             Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            character = new Gson().fromJson(reader, Character.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -206,8 +216,30 @@ public class Game {
         String currentLocation = player.getCurrentLocation().getName();
         List<String> items = player.getCurrentLocation().getItems();
         HashMap<String, String> directions = player.getCurrentLocation().getDirections();
-        System.out.printf("\n\n%s, you are located at: %s \nitems: %s \ndirections: %s\n",
+
+        //initialize Characters to utilize attributes
+        Character.NPC1 npc1 = character.getNpc1();
+        Character.NPC2 npc2 = character.getNpc2();
+        Character.NPC3 npc3 = character.getNpc3();
+        Character.NPC4 npc4 = character.getNpc4();
+        Character.NPC5 npc5 = character.getNpc5();
+
+        System.out.printf("\n\n%s, You are located at: %s \nitems: %s \ndirections: %s\n",
                 player.getName(), currentLocation, items, directions);
+
+        if(currentLocation.equals(npc1.getLocation())){
+            System.out.printf("You see : %s",npc1.getName());
+        }else if(currentLocation.equals(npc2.getLocation())){
+            System.out.printf("You see The : %s",npc2.getName());
+        }else if(currentLocation.equals(npc3.getLocation())){
+            System.out.printf("You see The : %s",npc3.getName());
+        } else if (currentLocation.equals(npc4.getLocation())){
+            System.out.printf("You see a : %s",npc4.getName());
+        } else if(currentLocation.equals(npc5.getLocation())){
+            System.out.printf("You see a : %s",npc5.getName());
+        } else {
+            System.out.println("You see no one in this location");
+        }
     }
 }
 
