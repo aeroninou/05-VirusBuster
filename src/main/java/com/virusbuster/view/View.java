@@ -21,11 +21,12 @@ public class View {
     private static final String EXIT_MESSAGE = "ascii/exitmessage.txt";
     private static final String GAME_COMMANDS = "ascii/commandshelp.txt";
     private static final Prompter prompter = new Prompter(new Scanner(System.in));
-    private static String banner;
+    private  String banner;
+    private Game game = new Game();
 
 
     //welcome the player with a title/splash screen
-    public static void welcome() {
+    public  void welcome() {
         Console.clear();
         //noinspection ConstantConditions
         try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(TITLE_BANNER);
@@ -43,7 +44,7 @@ public class View {
     }
 
     //print exit message on quit
-    public static void exitMessage() {
+    public  void exitMessage() {
         Console.clear();
         //noinspection ConstantConditions
         try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(EXIT_MESSAGE);
@@ -78,7 +79,7 @@ public class View {
     }
 
     //prints out the verbs/nouns
-    public static void commandsHelp() {
+    public  void commandsHelp() {
         Console.clear();
         //noinspection ConstantConditions
         try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(GAME_COMMANDS);
@@ -100,7 +101,7 @@ public class View {
 
         if ("P".equals(answer) || "PLAY".equals(answer)) {
             commandsHelp();
-            Game.gameTest();
+            game.gameTest();
         } else if ("Q".equals(answer) || "QUIT".equals(answer)) {
             exitMessage();
         }

@@ -22,7 +22,7 @@ public class Controller {
     public void userInput() {
         view.welcome();
         view.gameInstructions();
-        game.generateWorld();
+        //game.generateWorld();
         view.promptForPlayorQuit();
 
     }
