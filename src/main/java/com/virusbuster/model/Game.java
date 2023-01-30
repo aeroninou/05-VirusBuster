@@ -36,7 +36,6 @@ public class Game {
         } else {
             verb = String.valueOf(validCommand(wordlist.get(0)));
             noun = wordlist.get(1).toLowerCase();
-
             //takes the noun of the user's input (e.g go east, noun = east)
             move(noun);
 
