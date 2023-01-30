@@ -110,6 +110,8 @@ public class GameMap {
                 return laboratory;
             case "Cafeteria":
                 return cafeteria;
+            case "Armory":
+                return armory;
             default:
                 return null;
         }
@@ -119,7 +121,7 @@ public class GameMap {
         private String name;
         private HashMap<String, String> directions;
         private String description;
-        private List<String> items;
+        private List<String> item;
 
         public LocationLayout() {
 
@@ -150,11 +152,11 @@ public class GameMap {
         }
 
         public List<String> getItems() {
-            return items;
+            return item;
         }
 
-        public void setItems(List<String> items) {
-            this.items = items;
+        public void setItems(List<String> item) {
+            this.item = item;
         }
     }
         public static class Armory extends LocationLayout {
