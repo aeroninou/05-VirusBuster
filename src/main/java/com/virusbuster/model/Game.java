@@ -10,64 +10,23 @@ import java.util.*;
 
 public class Game {
 
-<<<<<<< Updated upstream
     private String verb;
     private GameMap.LocationLayout currentLocation;
     private String noun;
-    private View view;
-    public GameMap gameWorld;
-    public Player player = new Player();
+
     public static Character character = new Character();
-=======
-<<<<<<< Updated upstream
-    private static String verb;
-    private static GameMap.LocationLayout currentLocation;
-    private static String noun;
-    private static View view;
-    public static GameMap gameWorld;
-    public static Player player = new Player();
-=======
-    private String verb;
-    private GameMap.LocationLayout currentLocation;
-    private String noun;
     public static View view = new View();
     public GameMap gameWorld;
     public Player player = new Player();
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
 
     public Game() {
     }
 
-<<<<<<< Updated upstream
-    private List<String> items = new ArrayList<>(Arrays.asList("CAMU CAMU", "CAMEL MILK", "SUMALAK", "RAINCOAT", "GLACIER MAGICAL PLANT", "BUBBLE GUM", "JACK DANIELS", "ICE CONTAINER", "GOLD ROLEX WATCH"));
-    private List<String> commands = new ArrayList<>(Arrays.asList("GO", "GET", "ENTER", "TRADE", "TALK", "BAG", "QUIT", "HELP", "LOOK"));
-=======
-<<<<<<< Updated upstream
-    private static List<String> items = new ArrayList<>(Arrays.asList("CAMU CAMU", "CAMEL MILK", "SUMALAK", "RAINCOAT", "GLACIER MAGICAL PLANT"));
-    private static List<String> commands = new ArrayList<>(Arrays.asList("GO", "GET", "ENTER", "TRADE", "TALK", "BAG", "QUIT", "HELP"));
->>>>>>> Stashed changes
-
-    //parsing user's inout
-    public void parseCommand(List<String> wordlist) {
-
-        if ("help".equalsIgnoreCase(wordlist.get(0))) {
-            System.out.println("See above for valid commands");
-        } else if (wordlist.size() != 2) {
-            System.out.println("Error! Enter 2 words for command");
-        } else {
-            verb = String.valueOf(validCommand(wordlist.get(0)));
-<<<<<<< Updated upstream
-            noun = wordlist.get(1).toLowerCase();
-            //takes the noun of the user's input (e.g go east, noun = east)
-            move(noun);
-=======
-            noun = wordlist.get(1);
-=======
     private List<String> items = new ArrayList<>(Arrays.asList("camu camu", "camel milk", "sumalak", "raincoat", "glacier magical plant",
             "bubble gum", "jack daniels", "ice container", "gold rolex watch", "east", "west", "north", "south", "room1", "room2", "room3", "room4"));
     private List<String> commands = new ArrayList<>(Arrays.asList("go", "get", "enter", "trade", "talk", "bag", "quit", "help", "look"));
->>>>>>> Stashed changes
+
 
     //parsing user's inout
     public List<String> parseCommand(String wordInput) {
@@ -75,7 +34,6 @@ public class Game {
 
         verb = result.get(0);
         noun = "";
->>>>>>> Stashed changes
 
         if (result.size() == 1 && "help".equalsIgnoreCase(verb)) {
             return result;
@@ -104,65 +62,6 @@ public class Game {
         return result;
     }
 
-<<<<<<< Updated upstream
-    //splits input string to define a set of delimeter characters
-    public List<String> wordList(String input) {
-        String delims = "[ \t,.:;?!\"']+";
-        List<String> strlist = new ArrayList<>();
-        String[] words = input.split(delims, 2);
-
-        for (String word : words) {
-            strlist.add(word);
-        }
-        return strlist;
-    }
-
-    //inout validation for user input
-    public String runCommand(String inputstr) {
-        List<String> wl;
-        String s = "gucci";
-        String lowstr = inputstr.trim().toUpperCase();
-
-        if (!lowstr.equalsIgnoreCase("q")) {
-            if (lowstr.equals(" ")) {
-                s = "Enter a command";
-            } else {
-                wl = wordList(lowstr);
-                parseCommand(wl);
-            }
-        }
-        return s;
-    }
-=======
-//    //splits input string to define a set of delimeter characters
-//    public List<String> wordList(String input) {
-//        String delims = "[ \t,.:;?!\"']+";
-//        List<String> strlist = new ArrayList<>();
-//        String[] words = input.split(delims, 2);
-//
-//        for (String word : words) {
-//            strlist.add(word);
-//        }
-//        return strlist;
-//    }
-
-//    //inout validation for user input
-//    public String runCommand(String inputstr) {
-//        List<String> wl;
-//        String s = "gucci";
-//        String lowstr = inputstr.toUpperCase();
-//
-//        if (!lowstr.equalsIgnoreCase("q")) {
-//            if (lowstr.equals(" ")) {
-//                s = "Enter a command";
-//            } else {
-//                wl = wordList(lowstr);
-//                parseCommand(wl);
-//            }
-//        }
-//        return s;
-//    }
->>>>>>> Stashed changes
 
     //game method
     public void gameTest() {
@@ -175,23 +74,6 @@ public class Game {
         while (!inputVaild) {
             System.out.println("\n↓");
             String moveInput = commandInput();
-<<<<<<< Updated upstream
-
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-            if ("quit".equalsIgnoreCase(moveInput) || "q".equalsIgnoreCase(moveInput)) {
-                view.exitMessage();
-                System.exit(0);
-            } else if ("help".equalsIgnoreCase(moveInput)) {
-                view.commandsHelp();
-                Console.pause(2000);
-            }
-            runCommand(moveInput);
-<<<<<<< Updated upstream
-            displayLocation(player);
-=======
-=======
 
             List<String> moveCommand = parseCommand(moveInput);
             if ("help".equalsIgnoreCase(moveCommand.get(0))){
@@ -204,51 +86,9 @@ public class Game {
             }
 
             displayLocation(player);
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
             //move(runCommand(moveInput));
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-            } else if ("get".equalsIgnoreCase(String.valueOf(verb))) {
-                //inputVaild = isValid(noun);
->>>>>>> Stashed changes
-
-
-<<<<<<< Updated upstream
-//            if ("go".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("get".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("enter".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("trade".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("talk".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("look".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//            }
-=======
-            } else if ("trade".equalsIgnoreCase(String.valueOf(verb))) {
-                //inputVaild = isValid(noun);
-
-            } else if ("talk".equalsIgnoreCase(String.valueOf(verb))) {
-                //inputVaild = isValid(noun);
-
-            } else if ("look".equalsIgnoreCase(String.valueOf(verb))) {
-                //inputVaild = isValid(noun);
-            }
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
         }
     }
 
@@ -275,26 +115,7 @@ public class Game {
         return sc.nextLine();
     }
 
-<<<<<<< Updated upstream
-//    private void startCommand(List<String> choice){
-//
-//        for(int i = 0; i < choice.size(); i++){
-//            String verb = choice.get(0);
-//            String noun = choice.get(1);
-//        }
-//
-//        if ("go".equals(verb)) {
-//            move(noun);
-//        } else {
-//            System.out.println("testing");
-//        }
-//
-//    }
 
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
     //sets the new location of the player
     private void move(String direction) {
         //sets the player location
@@ -308,15 +129,9 @@ public class Game {
         }
     }
 
-<<<<<<< Updated upstream
+
     //loads the location from location.json(parsing it)
     private void loadsLocation() {
-=======
->>>>>>> Stashed changes
-    //parses the location
-    public void generateWorld () {
->>>>>>> Stashed changes
-
         //noinspection ConstantConditions
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/location.json");
              Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -344,7 +159,6 @@ public class Game {
         List<String> item = player.getCurrentLocation().getItems();
 
         HashMap<String, String> directions = player.getCurrentLocation().getDirections();
-<<<<<<< Updated upstream
 
         //initialize Characters to utilize attributes
         Character.NPC1 npc1 = character.getNpc1();
@@ -354,7 +168,7 @@ public class Game {
         Character.NPC5 npc5 = character.getNpc5();
 
         System.out.printf("\n\n%s, You are located at: %s \nitems: %s \ndirections: %s\n",
-                player.getName(), currentLocation, items, directions);
+                player.getName(), currentLocation, item, directions);
 
         if(currentLocation.equals(npc1.getLocation())){
             System.out.printf("You see : %s",npc1.getName());
@@ -369,10 +183,6 @@ public class Game {
         } else {
             System.out.println("You see no one in this location");
         }
-=======
-        System.out.printf("\n\n%s, you are located at: %s \nitems: %s \ndirections: %s\n",
-                player.getName(), currentLocation, item, directions);
->>>>>>> Stashed changes
     }
 }
 

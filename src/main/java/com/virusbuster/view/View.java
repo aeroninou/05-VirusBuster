@@ -19,17 +19,8 @@ public class View {
     private static final String EXIT_MESSAGE = "ascii/exitmessage.txt";
     private static final String GAME_COMMANDS = "ascii/commandshelp.txt";
     private static final Prompter prompter = new Prompter(new Scanner(System.in));
-<<<<<<< Updated upstream
-    private  String banner;
     private Game game = new Game();
-=======
-<<<<<<< Updated upstream
-    private static String banner;
-=======
-    private String banner;
-    private Game game = new Game();
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
 
 
     //welcome the player with a title/splash screen
@@ -85,16 +76,9 @@ public class View {
     }
 
     //prints out the verbs/nouns
-<<<<<<< Updated upstream
-    public  void commandsHelp() {
-=======
-<<<<<<< Updated upstream
-    public static void commandsHelp() {
->>>>>>> Stashed changes
-        Console.clear();
-=======
+
     public void commandsHelp() {
->>>>>>> Stashed changes
+        Console.clear();
         //noinspection ConstantConditions
         try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(GAME_COMMANDS);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
