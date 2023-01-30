@@ -12,11 +12,24 @@ public class GsonParse {
 
         //Create GameMap
         GameMap gameMap = new GameMap();
+        //Create Character
+        Character character = new Character();
+        //testing location json
         try(Reader reader = new FileReader("src/main/resources/data/location.json")){
             gameMap = new Gson().fromJson(reader, GameMap.class);
             GameMap.Area51 area51 = gameMap.getArea51();
             GameMap.Cafeteria cafeteria = gameMap.getCafeteria();
             System.out.println("Your current location:" + area51.getName() + "Cafeteria: " + cafeteria.getItems());
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        //testing character json
+        try(Reader reader = new FileReader("src/main/resources/data/characters.json")){
+            character = new Gson().fromJson(reader, Character.class);
+            Character.NPC1 npc1 = character.getNpc1();
+            System.out.printf("NPC: %s Quote: %s",npc1.getName(), npc1.getQuote());
 
         }catch(IOException e){
             e.printStackTrace();
