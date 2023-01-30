@@ -5,7 +5,6 @@ import java.util.Locale;
 import static com.virusbuster.view.View.prompt;
 
 public class Player {
-
     private String name;
     private GameMap.LocationLayout currentLocation;
 
