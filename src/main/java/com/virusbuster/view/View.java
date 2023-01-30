@@ -8,11 +8,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class View {
 
@@ -21,8 +19,8 @@ public class View {
     private static final String EXIT_MESSAGE = "ascii/exitmessage.txt";
     private static final String GAME_COMMANDS = "ascii/commandshelp.txt";
     private static final Prompter prompter = new Prompter(new Scanner(System.in));
-    private  String banner;
     private Game game = new Game();
+
 
 
     //welcome the player with a title/splash screen
@@ -62,24 +60,24 @@ public class View {
 
     //prints out game instructions
     public void gameInstructions() {
-        Console.clear();
         //noinspection ConstantConditions
         try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(GAME_INSTRUCTIONS);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
         ){
             for(String line = reader.readLine(); line!=null; line = reader.readLine()){
-                System.out.println(line);
+                for (char ch : line.toCharArray()){
+                    System.out.print(ch);
+                }
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Console.pause(3000);
-        Console.clear();
     }
 
     //prints out the verbs/nouns
-    public  void commandsHelp() {
+
+    public void commandsHelp() {
         Console.clear();
         //noinspection ConstantConditions
         try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(GAME_COMMANDS);
@@ -91,7 +89,6 @@ public class View {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Console.pause(3000);
     }
 
     //asking player if they want to play game or quit. will execute

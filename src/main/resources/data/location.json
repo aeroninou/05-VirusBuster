@@ -1,100 +1,111 @@
 {
   "area51": {
-      "name": "Area51",
-      "directions": {
-        "east": "Portal Room"
-      },
-      "description": "Headquarters",
-      "item": []
+    "name": "Area51",
+    "directions": {
+      "east": "Portal Room"
     },
-  "portal":{
-      "name": "Portal Room",
-      "directions": {
-        "north": "Laboratory",
-        "south": "Armory",
-        "west": "Area51",
-        "room1": "Amazon Jungle Fever, Brazil"
-      },
-      "description": "Once you grab your items, report back here to start your journey",
-      "item": []
+    "description": "Headquarters",
+    "item": []
+  },
+  "portal": {
+    "name": "Portal Room",
+    "directions": {
+      "north": "Laboratory",
+      "south": "Armory",
+      "west": "Area51",
+      "room1": "Amazon Jungle Fever, Brazil"
     },
-  "amazon":{
-      "name": "Amazon Jungle Fever, Brazil",
-      "directions": {
-        "portal": "Portal Room",
-        "room2": "Burj Khalifa, Dubai",
-        "room3": "Tashkent, Uzbekistan",
-        "room4": "Nuuk, Greenland"
-      },
-      "description": "You arrive notice tribe members struggling to build a fire",
-      "item": "Camu Camu"
+    "description": "Once you grab your items, report back here to start your journey",
+    "item": []
+  },
+  "amazon": {
+    "name": "Amazon Jungle Fever, Brazil",
+    "directions": {
+      "portal": "Portal Room",
+      "room2": "Burj Khalifa, Dubai",
+      "room3": "Tashkent, Uzbekistan",
+      "room4": "Nuuk, Greenland"
     },
-  "dubai":{
-      "name": "Burj Khalifa, Dubai",
-      "directions": {
-        "portal": "Portal Room",
-        "room1": "Amazon Jungle Fever",
-        "room3": "Tashkent, Uzbekistan",
-        "room4": "Nuuk, Greenland"
-      },
-      "description": "You meet with the Prince, who loves gold",
-      "item": "Camel Milk"
+    "description": "You arrive notice tribe members struggling to build a fire",
+    "item": [
+      "Camu Camu"
+    ]
+  },
+  "dubai": {
+    "name": "Burj Khalifa, Dubai",
+    "directions": {
+      "portal": "Portal Room",
+      "room1": "Amazon Jungle Fever",
+      "room3": "Tashkent, Uzbekistan",
+      "room4": "Nuuk, Greenland"
     },
-  "uzbekistan":{
-      "name": "Tashkent, Uzbekistan",
-      "directions": {
-        "portal": "Portal Room",
-        "room1": "Amazon Jungle Fever",
-        "room2": "Burj Khalifa, Dubai",
-        "room4": "Nuuk, Greenland"
-      },
-      "description": "You notice that the vendor notices that you are blowing a bubble gum",
-      "item": "Sumalak"
+    "description": "You meet with the Prince, who loves gold",
+    "item": [
+      "Camel Milk"
+    ]
+  },
+  "uzbekistan": {
+    "name": "Tashkent, Uzbekistan",
+    "directions": {
+      "portal": "Portal Room",
+      "room1": "Amazon Jungle Fever",
+      "room2": "Burj Khalifa, Dubai",
+      "room4": "Nuuk, Greenland"
     },
-  "greenland":{
-      "name": "Nuuk, Greenland",
-      "directions": {
-        "portal": "Portal Room",
-        "room1": "Amazon Jungle Fever",
-        "room2": "Burj Khalifa, Dubai",
-        "room3": "Tashkent, Uzbekistan"
-      },
-      "description": "The farmer loves that Jack",
-      "item": "Magical Glacier Plant"
+    "description": "You notice that the vendor notices that you are blowing a bubble gum",
+    "item": [
+      "Sumalak"
+    ]
+  },
+  "greenland": {
+    "name": "Nuuk, Greenland",
+    "directions": {
+      "portal": "Portal Room",
+      "room1": "Amazon Jungle Fever",
+      "room2": "Burj Khalifa, Dubai",
+      "room3": "Tashkent, Uzbekistan"
     },
-  "laboratory":{
-      "name": "Laboratory",
-      "directions": {
-        "south": "Portal Room"
-      },
-      "description": "Bunch of scientists looking at you to bring back the elements...",
-      "item": [
-        "ice container",
-        "raincoat"
-      ]
+    "description": "The farmer loves that Jack",
+    "item": [
+      "Magical Glacier Plant"
+    ]
+  },
+  "laboratory": {
+    "name": "Laboratory",
+    "directions": {
+      "south": "Portal Room"
     },
-  "armory":{
-      "name": "Armory",
-      "directions": {
-        "north": "Portal Room",
-        "south": "Cafeteria"
-      },
-      "description": "Soldiers cleaning out their equipment.. ",
-      "item": [
-        "poncho",
-        "gold rolex watch"
-      ]
+    "description": "Bunch of scientists looking at you to bring back the elements...",
+    "item": [
+      "ice container",
+      "raincoat"
+    ]
+  },
+  "armory": {
+    "name": "Armory",
+    "directions": {
+      "north": "Portal Room",
+      "south": "Cafeteria"
     },
-  "cafeteria":{
-      "name": "Cafeteria",
-      "directions": {
-        "north": "Armory"
-      },
-      "description": "The Cafeteria is serving steak and lobster...",
-      "item": [
-        "zippo ligther",
-        "bubble gum",
-        "jack daniels"
-      ]
-    }
+    "description": "Soldiers cleaning out their equipment.. ",
+    "item": [
+      "poncho",
+      "gold rolex watch"
+    ]
+  },
+  "cafeteria": {
+    "name": "Cafeteria",
+    "directions": {
+      "north": "Armory"
+    },
+    "description": "The Cafeteria is serving steak and lobster...",
+    "item": [
+      "zippo ligther",
+      "bubble gum",
+      "jack daniels"
+    ]
+  },
+  "inventory": {
+    "item": []
+  }
 }

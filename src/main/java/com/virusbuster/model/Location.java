@@ -7,16 +7,16 @@ public class Location {
     private String name;
     private HashMap<String, String> directions = new HashMap<>();
     private String description;
-    private List<String> items;
+    private List<String> item;
 
     public Location(){
     }
 
-    public Location(String name, HashMap<String, String> directions, String description, List<String> items) {
+    public Location(String name, HashMap<String, String> directions, String description, List<String> item) {
         this.name = name;
         this.directions = directions;
         this.description = description;
-        this.items = items;
+        this.item = item;
     }
 
     public String getName() {
@@ -44,11 +44,11 @@ public class Location {
     }
 
     public List<String> getItems() {
-        return items;
+        return item;
     }
 
-    public void setItems(List<String> items) {
-        this.items = items;
+    public void setItems(List<String> item) {
+        this.item = item;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class Location {
                 "name='" + name + '\'' +
                 ", directions=" + directions +
                 ", description='" + description + '\'' +
-                ", items=" + items +
+                ", items=" + item +
                 '}';
     }
 }

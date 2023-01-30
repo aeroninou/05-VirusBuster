@@ -1,7 +1,6 @@
 package com.virusbuster.model;
 
 
-import com.apps.util.Console;
 import com.google.gson.Gson;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.virusbuster.view.View;
@@ -14,67 +13,55 @@ public class Game {
     private String verb;
     private GameMap.LocationLayout currentLocation;
     private String noun;
-    private View view;
+
+    public static Character character = new Character();
+    public static View view = new View();
     public GameMap gameWorld;
     public Player player = new Player();
-    public static Character character = new Character();
+
 
     public Game() {
     }
 
-    private List<String> items = new ArrayList<>(Arrays.asList("CAMU CAMU", "CAMEL MILK", "SUMALAK", "RAINCOAT", "GLACIER MAGICAL PLANT", "BUBBLE GUM", "JACK DANIELS", "ICE CONTAINER", "GOLD ROLEX WATCH"));
-    private List<String> commands = new ArrayList<>(Arrays.asList("GO", "GET", "ENTER", "TRADE", "TALK", "BAG", "QUIT", "HELP", "LOOK"));
+    private List<String> items = new ArrayList<>(Arrays.asList("camu camu", "camel milk", "sumalak", "raincoat", "glacier magical plant",
+            "bubble gum", "jack daniels", "ice container", "gold rolex watch", "east", "west", "north", "south", "room1", "room2", "room3", "room4"));
+    private List<String> commands = new ArrayList<>(Arrays.asList("go", "get", "enter", "trade", "talk", "bag", "quit", "help", "look"));
+
 
     //parsing user's inout
-    public void parseCommand(List<String> wordlist) {
+    public List<String> parseCommand(String wordInput) {
+        List<String> result = new ArrayList<>(Arrays.asList(wordInput.toLowerCase().trim().split(" ")));
 
-        if ("help".equalsIgnoreCase(wordlist.get(0))) {
-            System.out.println("See above for valid commands");
-        } else if (wordlist.size() != 2) {
-            System.out.println("Error! Enter 2 words for command");
-        } else {
-            verb = String.valueOf(validCommand(wordlist.get(0)));
-            noun = wordlist.get(1).toLowerCase();
-            //takes the noun of the user's input (e.g go east, noun = east)
-            move(noun);
+        verb = result.get(0);
+        noun = "";
 
-            if (!commands.contains(verb)) {
-                System.out.println(verb + " is not a valid verb");
-            }
-            if (!items.contains(noun)) {
-                System.out.println(noun + " is not a valid noun!");
-            }
+        if (result.size() == 1 && "help".equalsIgnoreCase(verb)) {
+            return result;
         }
+        if (result.size() == 1 && "quit".equalsIgnoreCase(verb)) {
+            return result;
+        }
+        else if (result.size() != 2) {
+            System.out.println("Error! Enter 2 words for command.\n");
+            result.set(0, "invalid");
+            return result;
+        }
+        if (!commands.contains(verb) || !items.contains(result.get(1))) {
+            System.out.print("Invalid input, please try again. Type 'help' for assistance\n");
+        }
+
+        if (!commands.contains(verb)) {
+            System.out.println(verb + " is not a valid verb");
+            result.set(0, "invalid");
+        }
+        if (!items.contains(result.get(1))) {
+            System.out.println(noun + " is not a valid noun!");
+            result.set(0, "invalid");
+        }
+
+        return result;
     }
 
-    //splits input string to define a set of delimeter characters
-    public List<String> wordList(String input) {
-        String delims = "[ \t,.:;?!\"']+";
-        List<String> strlist = new ArrayList<>();
-        String[] words = input.split(delims, 2);
-
-        for (String word : words) {
-            strlist.add(word);
-        }
-        return strlist;
-    }
-
-    //inout validation for user input
-    public String runCommand(String inputstr) {
-        List<String> wl;
-        String s = "gucci";
-        String lowstr = inputstr.trim().toUpperCase();
-
-        if (!lowstr.equalsIgnoreCase("q")) {
-            if (lowstr.equals(" ")) {
-                s = "Enter a command";
-            } else {
-                wl = wordList(lowstr);
-                parseCommand(wl);
-            }
-        }
-        return s;
-    }
 
     //game method
     public void gameTest() {
@@ -88,38 +75,20 @@ public class Game {
             System.out.println("\n↓");
             String moveInput = commandInput();
 
-            if ("quit".equalsIgnoreCase(moveInput) || "q".equalsIgnoreCase(moveInput)) {
+            List<String> moveCommand = parseCommand(moveInput);
+            if ("help".equalsIgnoreCase(moveCommand.get(0))){
+                view.commandsHelp();
+            } else if ("quit".equalsIgnoreCase(moveCommand.get(0))){
                 view.exitMessage();
                 System.exit(0);
-            } else if ("help".equalsIgnoreCase(moveInput)) {
-                view.commandsHelp();
-                Console.pause(2000);
+            } else {
+                move(moveCommand.get(1));
             }
-            runCommand(moveInput);
+
             displayLocation(player);
 
             //move(runCommand(moveInput));
 
-
-
-//            if ("go".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("get".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("enter".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("trade".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("talk".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//
-//            } else if ("look".equalsIgnoreCase(String.valueOf(verb))) {
-//                //inputVaild = isValid(noun);
-//            }
         }
     }
 
@@ -135,19 +104,6 @@ public class Game {
         return result;
     }
 
-//    //isValid is checking if the items input is valid
-//    private static boolean isValid (String input){
-//        if (items.contains(input)) {
-//            System.out.printf("Your input was [%s, %s]", verb, noun);
-//            return true;
-//        } else {
-//            Console.clear();
-//            System.out.printf("\nSorry, [%s, %s] is not a valid. See below for valid inputs.", verb, noun);
-//            commandsHelp();
-//            return false;
-//        }
-//    }
-
     //getting the values of the Command enum
     private static Commands[] values() {
         return Commands.values();
@@ -156,23 +112,9 @@ public class Game {
     //prompt user for verb and nouns
     private static String commandInput() {
         Scanner sc = new Scanner(System.in);
-        return sc.nextLine().trim();
+        return sc.nextLine();
     }
 
-//    private void startCommand(List<String> choice){
-//
-//        for(int i = 0; i < choice.size(); i++){
-//            String verb = choice.get(0);
-//            String noun = choice.get(1);
-//        }
-//
-//        if ("go".equals(verb)) {
-//            move(noun);
-//        } else {
-//            System.out.println("testing");
-//        }
-//
-//    }
 
     //sets the new location of the player
     private void move(String direction) {
@@ -187,9 +129,9 @@ public class Game {
         }
     }
 
+
     //loads the location from location.json(parsing it)
     private void loadsLocation() {
-
         //noinspection ConstantConditions
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/location.json");
              Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -214,7 +156,8 @@ public class Game {
 
     public static void displayLocation(Player player) {
         String currentLocation = player.getCurrentLocation().getName();
-        List<String> items = player.getCurrentLocation().getItems();
+        List<String> item = player.getCurrentLocation().getItems();
+
         HashMap<String, String> directions = player.getCurrentLocation().getDirections();
 
         //initialize Characters to utilize attributes
@@ -225,7 +168,7 @@ public class Game {
         Character.NPC5 npc5 = character.getNpc5();
 
         System.out.printf("\n\n%s, You are located at: %s \nitems: %s \ndirections: %s\n",
-                player.getName(), currentLocation, items, directions);
+                player.getName(), currentLocation, item, directions);
 
         if(currentLocation.equals(npc1.getLocation())){
             System.out.printf("You see : %s",npc1.getName());
