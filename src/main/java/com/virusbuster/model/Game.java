@@ -13,6 +13,9 @@ public class Game {
     private String noun;
     private GameMap.LocationLayout currentLocation;
 
+    private static final String INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE = "Invalid input,[%s, %s] please try again. Type 'help' for assistance\n";
+    private static final String ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND = "Error! Enter 2 words for command.";
+
     public List<GameItem.ItemInformation> gameItems;
     public static Character character = new Character();
     public final View view;
@@ -42,14 +45,14 @@ public class Game {
             return result;
         }
         else if (result.size() != 2) {
-            System.out.println("Error! Enter 2 words for command.");
+            System.out.println(ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND);
             result.set(0, "invalid");
             return result;
         }
 
         //checking both inputs if either one is invalid will print message and assign 0 index to invalid.
         if ( verb == null || !items.contains(result.get(1))) {
-            System.out.printf("Invalid input,[%s, %s] please try again. Type 'help' for assistance\n", result.get(0), result.get(1));
+            System.out.printf(INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE, result.get(0), result.get(1));
             result.set(0, "invalid");
             view.promptEnterKey();
         }
@@ -127,7 +130,6 @@ public class Game {
         return sc.nextLine();
     }
 
-
     //sets the new location of the player
     private void move(String direction) {
         //sets the player location
@@ -140,7 +142,6 @@ public class Game {
             player.setCurrentLocation(nextLocation);
         }
     }
-
 
     //loads the location from location.json(parsing it)
     private void loadsLocation() {
@@ -178,6 +179,7 @@ public class Game {
         }
     }
 
+    //method to put item in bag if the item is at the location.
     private void putItemInBag(String noun) {
         GameMap.LocationLayout currentLocation = player.getCurrentLocation();
         List<String> itemList = player.getCurrentLocation().getItems();
@@ -190,8 +192,7 @@ public class Game {
             player.addToBag(singleItem);
             for (int i = 0; i < itemList.size(); i++){
                 if (noun.equalsIgnoreCase(itemList.get(i))){
-                    int indexToRemove = i;
-                    currentLocation.getItems().remove(indexToRemove);
+                    currentLocation.getItems().remove(i);
                 }
             }
         } else {
