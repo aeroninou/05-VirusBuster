@@ -89,7 +89,6 @@
     },
     "description": "Soldiers cleaning out their equipment.. ",
     "item": [
-      "poncho",
       "gold rolex watch"
     ]
   },
@@ -100,7 +99,7 @@
     },
     "description": "The Cafeteria is serving steak and lobster...",
     "item": [
-      "zippo ligther",
+      "zippo lighter",
       "bubble gum",
       "jack daniels"
     ]
