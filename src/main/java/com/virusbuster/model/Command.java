@@ -5,6 +5,7 @@ public enum Command {
     GET("get"),
     TALK("talk"),
     LOOK("look"),
+    DROP("drop"),
     TRADE("trade"),
     BAG("bag"),
     ENTER("enter"),

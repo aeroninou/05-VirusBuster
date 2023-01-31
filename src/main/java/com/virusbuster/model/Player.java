@@ -46,6 +46,10 @@ public class Player {
         bag.add(item);
     }
 
+    public void dropFromBag(GameItem.ItemInformation item) {
+        bag.remove(item);
+    }
+
     public String promptForName(){
         return view.prompt("\nEnter your username?: ", "[A-Za-z]{2,10}", "Error..not valid must be all letters & between 2 and 10 characters.\n");
     }

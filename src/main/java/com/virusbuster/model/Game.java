@@ -1,6 +1,7 @@
 package com.virusbuster.model;
 
 
+import com.apps.util.Console;
 import com.google.gson.Gson;
 import com.virusbuster.view.View;
 
@@ -40,15 +41,14 @@ public class Game {
         }
         if (result.size() == 1 && "quit".equalsIgnoreCase(verb)) {
             return result;
-        }
-        else if (result.size() != 2) {
+        } else if (result.size() != 2) {
             System.out.println("Error! Enter 2 words for command.");
             result.set(0, "invalid");
             return result;
         }
 
         //checking both inputs if either one is invalid will print message and assign 0 index to invalid.
-        if ( verb == null || !items.contains(result.get(1))) {
+        if (verb == null || !items.contains(result.get(1))) {
             System.out.printf("Invalid input,[%s, %s] please try again. Type 'help' for assistance\n", result.get(0), result.get(1));
             result.set(0, "invalid");
             view.promptEnterKey();
@@ -76,9 +76,9 @@ public class Game {
                 moveCommand = parseCommand(moveInput);
             }
 
-            if ("help".equalsIgnoreCase(moveCommand.get(0))){
+            if ("help".equalsIgnoreCase(moveCommand.get(0))) {
                 view.commandsHelp();
-            } else if ("quit".equalsIgnoreCase(moveCommand.get(0))){
+            } else if ("quit".equalsIgnoreCase(moveCommand.get(0))) {
                 view.exitMessage();
                 System.exit(0);
             } else {
@@ -88,6 +88,7 @@ public class Game {
             displayLocation(player);
         }
     }
+
     // execute parsed command based on verb and noun
     private void executeCommand(List<String> command) {
         String verb = command.get(0);
@@ -98,6 +99,9 @@ public class Game {
                 break;
             case "get":
                 putItemInBag(noun);
+                break;
+            case "drop":
+                dropItem(noun);
                 break;
             default:
                 System.out.println("Invaild in ExecuteCommand");
@@ -127,21 +131,6 @@ public class Game {
         return sc.nextLine();
     }
 
-
-    //sets the new location of the player
-    private void move(String direction) {
-        //sets the player location
-        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
-        //input from player for the next location
-        GameMap.LocationLayout nextLocation = gameWorld.getLocation(currentLocation.getDirections().get(direction));
-        if (nextLocation == null) {
-            System.out.println("You cannot go that way");
-        } else {
-            player.setCurrentLocation(nextLocation);
-        }
-    }
-
-
     //loads the location from location.json(parsing it)
     private void loadsLocation() {
         //noinspection ConstantConditions
@@ -157,7 +146,7 @@ public class Game {
     }
 
     //loads the Characters from characters.json
-    private void loadCharacter(){
+    private void loadCharacter() {
         //noinspection ConstantConditions
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/characters.json");
              Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -168,7 +157,7 @@ public class Game {
     }
 
     //loads all items from JSON file.
-    private void loadItemsFromJSONFile(){
+    private void loadItemsFromJSONFile() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/items.json");
              Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             item = new Gson().fromJson(reader, GameItem.class);
@@ -178,18 +167,48 @@ public class Game {
         }
     }
 
+    /* Action verb methods */
+    //sets the new location of the player
+    private void move(String direction) {
+        //sets the player location
+        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
+        //input from player for the next location
+        GameMap.LocationLayout nextLocation = gameWorld.getLocation(currentLocation.getDirections().get(direction));
+        if (nextLocation == null) {
+            System.out.println("You cannot go that way");
+        } else {
+            player.setCurrentLocation(nextLocation);
+        }
+    }
+
+    private void dropItem(String noun) {
+        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
+        List<GameItem.ItemInformation> bag = player.getBag();
+        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
+        if (bag == null || bag.size() == 0) {
+            System.out.println("Nothing to drop");
+        } else if (singleItem == null) {
+            System.out.printf("Can't pick this %s at %s.", noun, currentLocation);
+        } else if (bag.contains(singleItem)) {
+            player.dropFromBag(singleItem);
+            currentLocation.getItems().add(noun);
+        } else {
+            System.out.printf("[%s] is not a valid command at %s. ", noun, currentLocation);
+        }
+    }
+
     private void putItemInBag(String noun) {
         GameMap.LocationLayout currentLocation = player.getCurrentLocation();
         List<String> itemList = player.getCurrentLocation().getItems();
 
         GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
 
-        if (singleItem == null){
+        if (singleItem == null) {
             System.out.printf("Can't pick this %s at %s.", noun, currentLocation);
-        } else if (itemList.contains(noun)){
+        } else if (itemList.contains(noun)) {
             player.addToBag(singleItem);
-            for (int i = 0; i < itemList.size(); i++){
-                if (noun.equalsIgnoreCase(itemList.get(i))){
+            for (int i = 0; i < itemList.size(); i++) {
+                if (noun.equalsIgnoreCase(itemList.get(i))) {
                     int indexToRemove = i;
                     currentLocation.getItems().remove(indexToRemove);
                 }
@@ -209,11 +228,20 @@ public class Game {
     }
 
     private static void displayLocation(Player player) {
+        //will clear at the top and print the location
+        Console.clear();
         String currentLocation = player.getCurrentLocation().getName();
         List<String> item = player.getCurrentLocation().getItems();
 
         HashMap<String, String> directions = player.getCurrentLocation().getDirections();
 
+        System.out.printf("\n%s, Your bag has [%s] \nYou are located at: %s \nitems: %s \ndirections: %s\n",
+                player.getName(), player.stringOfCurrentBagItems(), currentLocation, item, directions);
+
+        displayCharacter(currentLocation);
+    }
+
+    private static void displayCharacter(String currentLocation) {
         //initialize Characters to utilize attributes
         Character.NPC1 npc1 = character.getNpc1();
         Character.NPC2 npc2 = character.getNpc2();
@@ -221,19 +249,16 @@ public class Game {
         Character.NPC4 npc4 = character.getNpc4();
         Character.NPC5 npc5 = character.getNpc5();
 
-        System.out.printf("\n%s, Your bag has [%s] \nYou are located at: %s \nitems: %s \ndirections: %s\n",
-                player.getName(), player.stringOfCurrentBagItems(), currentLocation, item, directions);
-
-        if(currentLocation.equals(npc1.getLocation())){
-            System.out.printf("You see : %s",npc1.getName());
-        }else if(currentLocation.equals(npc2.getLocation())){
-            System.out.printf("You see The : %s",npc2.getName());
-        }else if(currentLocation.equals(npc3.getLocation())){
-            System.out.printf("You see The : %s",npc3.getName());
-        } else if (currentLocation.equals(npc4.getLocation())){
-            System.out.printf("You see a : %s",npc4.getName());
-        } else if(currentLocation.equals(npc5.getLocation())){
-            System.out.printf("You see a : %s",npc5.getName());
+        if (currentLocation.equals(npc1.getLocation())) {
+            System.out.printf("You see : %s", npc1.getName());
+        } else if (currentLocation.equals(npc2.getLocation())) {
+            System.out.printf("You see The : %s", npc2.getName());
+        } else if (currentLocation.equals(npc3.getLocation())) {
+            System.out.printf("You see The : %s", npc3.getName());
+        } else if (currentLocation.equals(npc4.getLocation())) {
+            System.out.printf("You see a : %s", npc4.getName());
+        } else if (currentLocation.equals(npc5.getLocation())) {
+            System.out.printf("You see a : %s", npc5.getName());
         } else {
             System.out.println("You see no one in this location");
         }
