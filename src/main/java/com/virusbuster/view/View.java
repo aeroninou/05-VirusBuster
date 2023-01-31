@@ -97,7 +97,6 @@ public class View {
             e.printStackTrace();
         }
         promptEnterKey();
-        Console.clear();
     }
 
     //asking player if they want to play game or quit. will execute

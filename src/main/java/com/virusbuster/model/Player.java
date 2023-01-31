@@ -52,6 +52,10 @@ public class Player {
         bag.add(item);
     }
 
+    public void dropFromBag(GameItem.ItemInformation item) {
+        bag.remove(item);
+    }
+
     public String promptForName(){
         return view.prompt(ENTER_YOUR_USERNAME_MESSAGE, REGEX_FOR_USERNAME, ERROR_MESSAGE_FOR_USERNAME);
     }
