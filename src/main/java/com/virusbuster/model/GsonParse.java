@@ -34,6 +34,5 @@ public class GsonParse {
         }catch(IOException e){
             e.printStackTrace();
         }
-
     }
 }

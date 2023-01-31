@@ -11,8 +11,13 @@ class GameItem {
     private IceContainer icecontainer;
     private RainCoat raincoat;
     private GoldRolexWatch goldrolexwatch;
+    private CamuCamu camucamu;
+    private CamelMilk camelmilk;
+    private Sumalak sumalak;
+    private GlacierMagicalPlant glaciermagicalplant;
 
-    public List<ItemInformation> loadAllItems(){
+
+    public List<ItemInformation> loadAllItems() {
         List<GameItem.ItemInformation> itemList = new ArrayList<>();
         itemList.add(zippolighter);
         itemList.add(bubblegum);
@@ -20,14 +25,19 @@ class GameItem {
         itemList.add(icecontainer);
         itemList.add(raincoat);
         itemList.add(goldrolexwatch);
+        itemList.add(camucamu);
+        itemList.add(camelmilk);
+        itemList.add(sumalak);
+        itemList.add(glaciermagicalplant);
+
         return itemList;
     }
 
-    public ItemInformation getItemInformation(String item){
-        if(item == null){
+    public ItemInformation getItemInformation(String item) {
+        if (item == null) {
             return null;
         }
-        switch(item){
+        switch (item) {
             case "zippo lighter":
                 return zippolighter;
             case "bubble gum":
@@ -40,9 +50,49 @@ class GameItem {
                 return raincoat;
             case "gold rolex watch":
                 return goldrolexwatch;
+            case "camu camu":
+                return camucamu;
+            case "sumalak":
+                return sumalak;
+            case "camel milk":
+                return camelmilk;
+            case "glacier magical plant":
+                return glaciermagicalplant;
             default:
                 return null;
         }
+    }
+
+    public CamuCamu getCamucamu() {
+        return camucamu;
+    }
+
+    public void setCamucamu(CamuCamu camucamu) {
+        this.camucamu = camucamu;
+    }
+
+    public CamelMilk getCamelmilk() {
+        return camelmilk;
+    }
+
+    public void setCamelmilk(CamelMilk camelmilk) {
+        this.camelmilk = camelmilk;
+    }
+
+    public Sumalak getSumalak() {
+        return sumalak;
+    }
+
+    public void setSumalak(Sumalak sumalak) {
+        this.sumalak = sumalak;
+    }
+
+    public GlacierMagicalPlant getGlaciermagicalplant() {
+        return glaciermagicalplant;
+    }
+
+    public void setGlaciermagicalplant(GlacierMagicalPlant glaciermagicalplant) {
+        this.glaciermagicalplant = glaciermagicalplant;
     }
 
     public ZippoLighter getZippolighter() {
@@ -98,7 +148,8 @@ class GameItem {
         private String name;
         private String description;
 
-        public ItemInformation(){}
+        public ItemInformation() {
+        }
 
         public String getName() {
             return name;
@@ -119,23 +170,54 @@ class GameItem {
 
 
     private static class ZippoLighter extends ItemInformation {
-        public ZippoLighter(){}
+        public ZippoLighter() {
+        }
     }
+
     private static class BubbleGum extends ItemInformation {
-        public BubbleGum(){}
+        public BubbleGum() {
+        }
     }
+
     private static class JackDaniels extends ItemInformation {
-        public JackDaniels(){}
+        public JackDaniels() {
+        }
     }
+
     private static class IceContainer extends ItemInformation {
-        public IceContainer(){}
+        public IceContainer() {
+        }
     }
+
     private static class RainCoat extends ItemInformation {
-        public RainCoat(){}
+        public RainCoat() {
+        }
     }
+
     private static class GoldRolexWatch extends ItemInformation {
-        public GoldRolexWatch(){}
+        public GoldRolexWatch() {
+        }
     }
 
+    private static class CamuCamu extends ItemInformation {
+        public CamuCamu() {}
 
-}
+
+    }
+
+    private static class CamelMilk extends ItemInformation {
+        public CamelMilk() {
+        }
+
+    }
+        private static class Sumalak extends ItemInformation {
+            public Sumalak() {
+            }
+        }
+
+        private static class GlacierMagicalPlant extends ItemInformation {
+            public GlacierMagicalPlant() {
+            }
+
+        }
+    }

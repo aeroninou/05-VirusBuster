@@ -28,7 +28,7 @@
     },
     "description": "You arrive notice tribe members struggling to build a fire",
     "item": [
-      "Camu Camu"
+      "camu camu"
     ]
   },
   "dubai": {
@@ -41,7 +41,7 @@
     },
     "description": "You meet with the Prince, who loves gold",
     "item": [
-      "Camel Milk"
+      "camel milk"
     ]
   },
   "uzbekistan": {
@@ -54,7 +54,7 @@
     },
     "description": "You notice that the vendor notices that you are blowing a bubble gum",
     "item": [
-      "Sumalak"
+      "sumalak"
     ]
   },
   "greenland": {
@@ -67,7 +67,7 @@
     },
     "description": "The farmer loves that Jack",
     "item": [
-      "Magical Glacier Plant"
+      "glacier magical plant"
     ]
   },
   "laboratory": {

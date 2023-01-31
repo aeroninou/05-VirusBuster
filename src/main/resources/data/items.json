@@ -1,6 +1,5 @@
 {
-  "zippolighter":
-    {
+  "zippolighter": {
       "name": "zippo lighter",
       "description": "This seems useful to start fire in a jungle..."
     },
@@ -23,5 +22,29 @@
   "goldrolexwatch":{
       "name": "gold rolex watch",
       "description": "well, maybe someone might like gold..."
-    }
+    },
+  "camucamu": {
+    "name": "camu camu",
+    "description": "This is a forbidden fruit that is protected by the Amazonian tribe"
+  },
+  "camelmilk":{
+    "name": "camel milk",
+    "description": "This milk brings every prince at yard!"
+  },
+  "sumalak":{
+    "name": "sumalak",
+    "description": "You can only find this pudding during spring ritual"
+  },
+  "glaciermagicalplant":{
+    "name": "glacier magical plant",
+    "description": "This rare plant needs to be transported in a temperature controlled container"
+  }
 }
+
+
+
+
+
+
+
+

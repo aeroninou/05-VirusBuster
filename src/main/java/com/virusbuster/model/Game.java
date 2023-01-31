@@ -8,6 +8,7 @@ import com.virusbuster.view.View;
 import java.io.*;
 import java.util.*;
 
+
 public class Game {
 
     private String verb;
@@ -69,8 +70,8 @@ public class Game {
         loadsLocation();
         //display current location
         displayLocation(player);
-        boolean inputVaild = false;
-        while (!inputVaild) {
+        boolean inputValid = false;
+        while (!inputValid) {
             System.out.println("\n↓");
             String moveInput = commandInput();
             List<String> moveCommand = parseCommand(moveInput);
@@ -81,10 +82,9 @@ public class Game {
                 moveInput = commandInput();
                 moveCommand = parseCommand(moveInput);
             }
-
             if ("help".equalsIgnoreCase(moveCommand.get(0))) {
                 view.commandsHelp();
-            } else if ("quit".equalsIgnoreCase(moveCommand.get(0))) {
+            } else if ("quit".equalsIgnoreCase(moveCommand.get(0))){
                 view.exitMessage();
                 System.exit(0);
             } else {
@@ -109,8 +109,11 @@ public class Game {
             case "drop":
                 dropItem(noun);
                 break;
+            case "look":
+                lookItem(noun);
+                break;
             default:
-                System.out.println("Invaild in ExecuteCommand");
+                System.out.println("Invalid in ExecuteCommand");
         }
     }
 
@@ -136,7 +139,6 @@ public class Game {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }
-
 
     //loads the location from location.json(parsing it)
     private void loadsLocation() {
@@ -214,7 +216,9 @@ public class Game {
 
         if (singleItem == null) {
             System.out.printf("Can't pick this %s at %s.", noun, currentLocation);
-        } else if (itemList.contains(noun)) {
+
+        } else if (itemList.contains(noun)){
+
             player.addToBag(singleItem);
 
             for (int i = 0; i < itemList.size(); i++){
@@ -222,8 +226,25 @@ public class Game {
                     currentLocation.getItems().remove(i);
                 }
             }
-        } else {
+        }
+        else {
             System.out.printf("[%s] is not a valid command at %s. ", noun, currentLocation);
+        }
+    }
+
+    //look function
+    private void lookItem(String noun) {
+        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
+        List<String> itemList = player.getCurrentLocation().getItems();
+
+        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
+
+        if (singleItem == null) {
+            System.out.printf("Can't find %s at %s.", noun, currentLocation);
+        }
+        else if (itemList.contains(noun)) {
+            System.out.printf("%s --> %s \n", noun, singleItem.getDescription());
+            view.promptEnterKey();
         }
     }
 
