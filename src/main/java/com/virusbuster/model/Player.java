@@ -10,7 +10,7 @@ public class Player {
     private String name;
     private GameMap.LocationLayout currentLocation;
     private static View view = new View();
-    private List<GameItems.ItemInformation> bag = new ArrayList<GameItems.ItemInformation>();
+    private List<GameItem.ItemInformation> bag = new ArrayList<GameItem.ItemInformation>();
 
     public String getName() {
         return name;
@@ -28,12 +28,12 @@ public class Player {
         this.currentLocation = currentLocation;
     }
 
-    public List<GameItems.ItemInformation> getBag() {
+    public List<GameItem.ItemInformation> getBag() {
         return bag;
     }
     public String stringOfCurrentBagItems(){
         StringBuilder result = new StringBuilder();
-        for (GameItems.ItemInformation item : getBag()) {
+        for (GameItem.ItemInformation item : getBag()) {
             result.append(item.getName());
             if (bag.size() > 1) {
                 result.append(",");
@@ -42,7 +42,7 @@ public class Player {
         return result.toString();
     }
 
-    public void addToBag(GameItems.ItemInformation item) {
+    public void addToBag(GameItem.ItemInformation item) {
         bag.add(item);
     }
 

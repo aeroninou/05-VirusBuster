@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -19,7 +18,8 @@ public class View {
     private static final String EXIT_MESSAGE = "ascii/exitmessage.txt";
     private static final String GAME_COMMANDS = "ascii/commandshelp.txt";
     private static final Prompter prompter = new Prompter(new Scanner(System.in));
-    private Game game = new Game();
+    private static final String READY_PROMPT = "\nAre you ready to rescue the world?";
+    private final Game game = new Game(this);
 
 
 
@@ -95,7 +95,7 @@ public class View {
 
     //asking player if they want to play game or quit. will execute
     public void promptForPlayorQuit() {
-        System.out.println("\nAre you ready to rescue the world?");
+        System.out.println(READY_PROMPT);
         String answer = prompt("\nEnter 'P'/Play or 'Q'/Quit?: ", "(?i)(P|Q|PLAY|QUIT)", "Error...must be letter P, PLAY, Q, or QUIT").toUpperCase();
 
         if ("P".equals(answer) || "PLAY".equals(answer)) {
