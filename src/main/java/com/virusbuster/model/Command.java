@@ -1,6 +1,6 @@
 package com.virusbuster.model;
 
-public enum Commands {
+public enum Command {
     GO("go"),
     GET("get"),
     TALK("talk"),
@@ -13,7 +13,7 @@ public enum Commands {
 
     private final String value;
 
-    Commands (String value) {
+    Command(String value) {
         this.value = value;
     }
 

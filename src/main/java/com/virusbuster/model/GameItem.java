@@ -3,7 +3,7 @@ package com.virusbuster.model;
 import java.util.ArrayList;
 import java.util.List;
 
-class GameItems {
+class GameItem {
 
     private ZippoLighter zippolighter;
     private BubbleGum bubblegum;
@@ -13,7 +13,7 @@ class GameItems {
     private GoldRolexWatch goldrolexwatch;
 
     public List<ItemInformation> loadAllItems(){
-        List<GameItems.ItemInformation> itemList = new ArrayList<>();
+        List<GameItem.ItemInformation> itemList = new ArrayList<>();
         itemList.add(zippolighter);
         itemList.add(bubblegum);
         itemList.add(jackdaniels);

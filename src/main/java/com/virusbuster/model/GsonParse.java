@@ -17,8 +17,8 @@ public class GsonParse {
         //testing location json
         try(Reader reader = new FileReader("src/main/resources/data/location.json")){
             gameMap = new Gson().fromJson(reader, GameMap.class);
-            GameMap.Area51 area51 = gameMap.getArea51();
-            GameMap.Cafeteria cafeteria = gameMap.getCafeteria();
+            GameMap.LocationLayout area51 = gameMap.getArea51();
+            GameMap.LocationLayout cafeteria = gameMap.getCafeteria();
             System.out.println("Your current location:" + area51.getName() + "Cafeteria: " + cafeteria.getItems());
 
         }catch(IOException e){

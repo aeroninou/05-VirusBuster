@@ -13,14 +13,15 @@ public class Game {
     private String noun;
     private GameMap.LocationLayout currentLocation;
 
-    public List<GameItems.ItemInformation> gameItems;
+    public List<GameItem.ItemInformation> gameItems;
     public static Character character = new Character();
-    public static View view = new View();
-    public static GameItems item = new GameItems();
+    public final View view;
+    public static GameItem item = new GameItem();
     public GameMap gameWorld;
     public Player player = new Player();
 
-    public Game() {
+    public Game(View view) {
+        this.view = view;
     }
 
     private List<String> items = new ArrayList<>(Arrays.asList("camu camu", "camel milk", "sumalak", "raincoat", "glacier magical plant",
@@ -106,7 +107,7 @@ public class Game {
     //Checking if the commands are valid from Commands enums
     private static String validCommand(String input) {
         String result = null;
-        for (Commands command : values()) {
+        for (Command command : values()) {
             if (command.getValue().equalsIgnoreCase(input)) {
                 result = command.getValue();
                 break;
@@ -116,8 +117,8 @@ public class Game {
     }
 
     //returning the values of the Command enum
-    private static Commands[] values() {
-        return Commands.values();
+    private static Command[] values() {
+        return Command.values();
     }
 
     //prompt user for verb and nouns
@@ -170,7 +171,7 @@ public class Game {
     private void loadItemsFromJSONFile(){
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/items.json");
              Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            item = new Gson().fromJson(reader, GameItems.class);
+            item = new Gson().fromJson(reader, GameItem.class);
             gameItems = item.loadAllItems();
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,7 +182,7 @@ public class Game {
         GameMap.LocationLayout currentLocation = player.getCurrentLocation();
         List<String> itemList = player.getCurrentLocation().getItems();
 
-        GameItems.ItemInformation singleItem = findTheItemByNoun(noun);
+        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
 
         if (singleItem == null){
             System.out.printf("Can't pick this %s at %s.", noun, currentLocation);
@@ -198,8 +199,8 @@ public class Game {
         }
     }
 
-    private GameItems.ItemInformation findTheItemByNoun(String noun) {
-        for (GameItems.ItemInformation item : gameItems) {
+    private GameItem.ItemInformation findTheItemByNoun(String noun) {
+        for (GameItem.ItemInformation item : gameItems) {
             if (noun.equalsIgnoreCase(item.getName())) {
                 return item;
             }
