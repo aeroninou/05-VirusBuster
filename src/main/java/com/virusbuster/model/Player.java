@@ -1,12 +1,12 @@
 package com.virusbuster.model;
 
-import java.util.Locale;
+import com.virusbuster.view.View;
 
-import static com.virusbuster.view.View.prompt;
 
 public class Player {
     private String name;
     private GameMap.LocationLayout currentLocation;
+    private static View view = new View();
 
     public String getName() {
         return name;
@@ -24,7 +24,7 @@ public class Player {
         this.currentLocation = currentLocation;
     }
 
-    public static String promptForName(){
-        return prompt("\nEnter your username?: ", "[A-Za-z]{2,10}", "Error..not valid must be all letters & between 2 and 10 characters.\n").toUpperCase();
+    public String promptForName(){
+        return view.prompt("\nEnter your username?: ", "[A-Za-z]{2,10}", "Error..not valid must be all letters & between 2 and 10 characters.\n");
     }
 }

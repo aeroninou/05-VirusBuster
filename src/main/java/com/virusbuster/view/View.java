@@ -65,18 +65,17 @@ public class View {
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
         ){
             for(String line = reader.readLine(); line!=null; line = reader.readLine()){
-                for (char ch : line.toCharArray()){
-                    System.out.print(ch);
-                }
+                System.out.println(line);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        promptEnterKey();
+        Console.clear();
     }
 
     //prints out the verbs/nouns
-
     public void commandsHelp() {
         Console.clear();
         //noinspection ConstantConditions
@@ -105,7 +104,7 @@ public class View {
     }
 
     //create a prompt method to uses for error checking
-    public static String prompt(String promptMessage, String regex, String helpMessage) {
+    public String prompt(String promptMessage, String regex, String helpMessage) {
 
         try {
             return prompter.prompt(promptMessage, regex, helpMessage).toUpperCase();
@@ -113,6 +112,13 @@ public class View {
             System.exit(0);
         }
         return null;
+    }
+
+    //will pause until Enter is pressed.
+    private void promptEnterKey(){
+        System.out.println("Press \"ENTER\" to continue...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
 }
