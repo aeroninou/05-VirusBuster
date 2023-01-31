@@ -11,29 +11,28 @@ import java.util.*;
 public class Game {
 
     private String verb;
-    private GameMap.LocationLayout currentLocation;
     private String noun;
+    private GameMap.LocationLayout currentLocation;
+
 
     public static Character character = new Character();
     public static View view = new View();
     public GameMap gameWorld;
     public Player player = new Player();
 
-
     public Game() {
     }
 
     private List<String> items = new ArrayList<>(Arrays.asList("camu camu", "camel milk", "sumalak", "raincoat", "glacier magical plant",
             "bubble gum", "jack daniels", "ice container", "gold rolex watch", "east", "west", "north", "south", "room1", "room2", "room3", "room4"));
-    private List<String> commands = new ArrayList<>(Arrays.asList("go", "get", "enter", "trade", "talk", "bag", "quit", "help", "look"));
-
+    //private List<String> commands = new ArrayList<>(Arrays.asList("go", "get", "enter", "trade", "talk", "bag", "quit", "help", "look"));
 
     //parsing user's inout
     public List<String> parseCommand(String wordInput) {
-        List<String> result = new ArrayList<>(Arrays.asList(wordInput.toLowerCase().trim().split(" ")));
+        List<String> result = new ArrayList<>(Arrays.asList(wordInput.toLowerCase().trim().split(" ", 2)));
 
-        verb = result.get(0);
-        noun = "";
+        verb = validCommand(result.get(0));
+        noun = noun;
 
         if (result.size() == 1 && "help".equalsIgnoreCase(verb)) {
             return result;
@@ -42,31 +41,23 @@ public class Game {
             return result;
         }
         else if (result.size() != 2) {
-            System.out.println("Error! Enter 2 words for command.\n");
+            System.out.println("Error! Enter 2 words for command.");
             result.set(0, "invalid");
             return result;
         }
-        if (!commands.contains(verb) || !items.contains(result.get(1))) {
-            System.out.print("Invalid input, please try again. Type 'help' for assistance\n");
-        }
 
-        if (!commands.contains(verb)) {
-            System.out.println(verb + " is not a valid verb");
+        //checking both inputs if either one is invalid will print message and assign 0 index to invalid.
+        if ( verb == null || !items.contains(result.get(1))) {
+            System.out.printf("Invalid input,[%s, %s] please try again. Type 'help' for assistance\n", result.get(0), result.get(1));
             result.set(0, "invalid");
         }
-        if (!items.contains(result.get(1))) {
-            System.out.println(noun + " is not a valid noun!");
-            result.set(0, "invalid");
-        }
-
         return result;
     }
-
 
     //game method
     public void gameTest() {
         //prompt for name and set player name
-        player.setName(Player.promptForName());
+        player.setName(player.promptForName());
         loadsLocation();
         //display current location
         displayLocation(player);
@@ -74,8 +65,15 @@ public class Game {
         while (!inputVaild) {
             System.out.println("\n↓");
             String moveInput = commandInput();
-
             List<String> moveCommand = parseCommand(moveInput);
+
+            while ("invalid".equalsIgnoreCase(moveCommand.get(0))) {
+                displayLocation(player);
+                System.out.println("\n↓");
+                moveInput = commandInput();
+                moveCommand = parseCommand(moveInput);
+            }
+
             if ("help".equalsIgnoreCase(moveCommand.get(0))){
                 view.commandsHelp();
             } else if ("quit".equalsIgnoreCase(moveCommand.get(0))){
@@ -84,27 +82,23 @@ public class Game {
             } else {
                 move(moveCommand.get(1));
             }
-
             displayLocation(player);
-
-            //move(runCommand(moveInput));
-
         }
     }
 
-    //Checking if the commands are valid by looping Commands enums
-    private static Commands validCommand(String input) {
-        Commands result = null;
+    //Checking if the commands are valid from Commands enums
+    private static String validCommand(String input) {
+        String result = null;
         for (Commands command : values()) {
             if (command.getValue().equalsIgnoreCase(input)) {
-                result = command;
+                result = command.getValue();
                 break;
             }
         }
         return result;
     }
 
-    //getting the values of the Command enum
+    //returning the values of the Command enum
     private static Commands[] values() {
         return Commands.values();
     }
@@ -167,7 +161,7 @@ public class Game {
         Character.NPC4 npc4 = character.getNpc4();
         Character.NPC5 npc5 = character.getNpc5();
 
-        System.out.printf("\n\n%s, You are located at: %s \nitems: %s \ndirections: %s\n",
+        System.out.printf("\n%s, You are located at: %s \nitems: %s \ndirections: %s\n",
                 player.getName(), currentLocation, item, directions);
 
         if(currentLocation.equals(npc1.getLocation())){
