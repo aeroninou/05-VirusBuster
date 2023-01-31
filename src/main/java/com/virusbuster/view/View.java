@@ -115,7 +115,7 @@ public class View {
     }
 
     //will pause until Enter is pressed.
-    private void promptEnterKey(){
+    public void promptEnterKey(){
         System.out.println("Press \"ENTER\" to continue...");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();

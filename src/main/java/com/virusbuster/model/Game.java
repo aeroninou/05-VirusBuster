@@ -2,7 +2,6 @@ package com.virusbuster.model;
 
 
 import com.google.gson.Gson;
-import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.virusbuster.view.View;
 
 import java.io.*;
@@ -14,9 +13,10 @@ public class Game {
     private String noun;
     private GameMap.LocationLayout currentLocation;
 
-
+    public List<GameItems.ItemInformation> gameItems;
     public static Character character = new Character();
     public static View view = new View();
+    public static GameItems item = new GameItems();
     public GameMap gameWorld;
     public Player player = new Player();
 
@@ -24,7 +24,7 @@ public class Game {
     }
 
     private List<String> items = new ArrayList<>(Arrays.asList("camu camu", "camel milk", "sumalak", "raincoat", "glacier magical plant",
-            "bubble gum", "jack daniels", "ice container", "gold rolex watch", "east", "west", "north", "south", "room1", "room2", "room3", "room4"));
+            "bubble gum", "jack daniels", "ice container", "gold rolex watch", "zippo lighter", "east", "west", "north", "south", "room1", "room2", "room3", "room4"));
     //private List<String> commands = new ArrayList<>(Arrays.asList("go", "get", "enter", "trade", "talk", "bag", "quit", "help", "look"));
 
     //parsing user's inout
@@ -50,6 +50,7 @@ public class Game {
         if ( verb == null || !items.contains(result.get(1))) {
             System.out.printf("Invalid input,[%s, %s] please try again. Type 'help' for assistance\n", result.get(0), result.get(1));
             result.set(0, "invalid");
+            view.promptEnterKey();
         }
         return result;
     }
@@ -80,9 +81,25 @@ public class Game {
                 view.exitMessage();
                 System.exit(0);
             } else {
-                move(moveCommand.get(1));
+                //move(moveCommand.get(1));
+                executeCommand(moveCommand);
             }
             displayLocation(player);
+        }
+    }
+    // execute parsed command based on verb and noun
+    private void executeCommand(List<String> command) {
+        String verb = command.get(0);
+        String noun = command.get(1);
+        switch (verb) {
+            case "go":
+                move(noun);
+                break;
+            case "get":
+                putItemInBag(noun);
+                break;
+            default:
+                System.out.println("Invaild in ExecuteCommand");
         }
     }
 
@@ -135,6 +152,7 @@ public class Game {
             e.printStackTrace();
         }
         loadCharacter();
+        loadItemsFromJSONFile();
     }
 
     //loads the Characters from characters.json
@@ -148,7 +166,48 @@ public class Game {
         }
     }
 
-    public static void displayLocation(Player player) {
+    //loads all items from JSON file.
+    private void loadItemsFromJSONFile(){
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/items.json");
+             Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            item = new Gson().fromJson(reader, GameItems.class);
+            gameItems = item.loadAllItems();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void putItemInBag(String noun) {
+        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
+        List<String> itemList = player.getCurrentLocation().getItems();
+
+        GameItems.ItemInformation singleItem = findTheItemByNoun(noun);
+
+        if (singleItem == null){
+            System.out.printf("Can't pick this %s at %s.", noun, currentLocation);
+        } else if (itemList.contains(noun)){
+            player.addToBag(singleItem);
+            for (int i = 0; i < itemList.size(); i++){
+                if (noun.equalsIgnoreCase(itemList.get(i))){
+                    int indexToRemove = i;
+                    currentLocation.getItems().remove(indexToRemove);
+                }
+            }
+        } else {
+            System.out.printf("[%s] is not a valid command at %s. ", noun, currentLocation);
+        }
+    }
+
+    private GameItems.ItemInformation findTheItemByNoun(String noun) {
+        for (GameItems.ItemInformation item : gameItems) {
+            if (noun.equalsIgnoreCase(item.getName())) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private static void displayLocation(Player player) {
         String currentLocation = player.getCurrentLocation().getName();
         List<String> item = player.getCurrentLocation().getItems();
 
@@ -161,8 +220,8 @@ public class Game {
         Character.NPC4 npc4 = character.getNpc4();
         Character.NPC5 npc5 = character.getNpc5();
 
-        System.out.printf("\n%s, You are located at: %s \nitems: %s \ndirections: %s\n",
-                player.getName(), currentLocation, item, directions);
+        System.out.printf("\n%s, Your bag has [%s] \nYou are located at: %s \nitems: %s \ndirections: %s\n",
+                player.getName(), player.stringOfCurrentBagItems(), currentLocation, item, directions);
 
         if(currentLocation.equals(npc1.getLocation())){
             System.out.printf("You see : %s",npc1.getName());
