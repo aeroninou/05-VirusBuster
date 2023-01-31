@@ -7,6 +7,12 @@ import java.util.List;
 
 
 public class Player {
+
+    //const for all string literals
+    private static final String ENTER_YOUR_USERNAME_MESSAGE = "\nEnter your username?: ";
+    private static final String REGEX_FOR_USERNAME = "[A-Za-z]{2,10}";
+    private static final String ERROR_MESSAGE_FOR_USERNAME = "Error..not valid must be all letters & between 2 and 10 characters.\n";
+
     private String name;
     private GameMap.LocationLayout currentLocation;
     private static View view = new View();
@@ -51,6 +57,6 @@ public class Player {
     }
 
     public String promptForName(){
-        return view.prompt("\nEnter your username?: ", "[A-Za-z]{2,10}", "Error..not valid must be all letters & between 2 and 10 characters.\n");
+        return view.prompt(ENTER_YOUR_USERNAME_MESSAGE, REGEX_FOR_USERNAME, ERROR_MESSAGE_FOR_USERNAME);
     }
 }
