@@ -37,7 +37,8 @@ public class View {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Console.pause(3000);
+        //Console.pause(3000);
+        promptEnterKey();
         Console.clear();
     }
 
@@ -88,6 +89,8 @@ public class View {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        promptEnterKey();
+        Console.clear();
     }
 
     //asking player if they want to play game or quit. will execute
