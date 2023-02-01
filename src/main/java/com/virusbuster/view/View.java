@@ -29,56 +29,25 @@ public class View {
     private final Game game = new Game(this);
 
 
-
     //welcome the player with a title/splash screen
-    public  void welcome() {
+    public void welcome() {
         Console.clear();
-        //noinspection ConstantConditions
-        try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(TITLE_BANNER);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
-        ){
-            for(String line = reader.readLine(); line!=null; line = reader.readLine()){
-                System.out.println(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //Console.pause(3000);
-        promptEnterKey();
+        textLoader(TITLE_BANNER);
+        Console.pause(4000);
         Console.clear();
     }
 
     //print exit message on quit
-    public  void exitMessage() {
+    public void exitMessage() {
         Console.clear();
-        //noinspection ConstantConditions
-        try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(EXIT_MESSAGE);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
-        ){
-            for(String line = reader.readLine(); line!=null; line = reader.readLine()){
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        textLoader(EXIT_MESSAGE);
         Console.pause(3000);
         Console.clear();
     }
 
     //prints out game instructions
     public void gameInstructions() {
-        //noinspection ConstantConditions
-        try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(GAME_INSTRUCTIONS);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
-        ){
-            for(String line = reader.readLine(); line!=null; line = reader.readLine()){
-                System.out.println(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        textLoader(GAME_INSTRUCTIONS);
         promptEnterKey();
         Console.clear();
     }
@@ -86,27 +55,32 @@ public class View {
     //prints out the verbs/nouns
     public void commandsHelp() {
         Console.clear();
+        textLoader(GAME_COMMANDS);
+        promptEnterKey();
+    }
+
+    //loads the text files
+    private void textLoader(String filepath) {
         //noinspection ConstantConditions
-        try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(GAME_COMMANDS);
+        try (InputStream inputStream = View.class.getClassLoader().getResourceAsStream(filepath);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
-        ){
-            for(String line = reader.readLine(); line!=null; line = reader.readLine()){
+        ) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        promptEnterKey();
     }
 
     //asking player if they want to play game or quit. will execute
-    public void promptForPlayorQuit() {
+    public void promptForPlayOrQuit() {
         System.out.println(READY_PROMPT);
         String answer = prompt(ENTER_P_PLAY_OR_Q_QUIT_PROMPT_MESSAGE, REGEX_FOR_PLAY_OR_QUIT_PROMPT, ERROR_MESSAGE_FOR_PLAY_OR_QUIT_PROMPT).toUpperCase();
 
         if ("P".equals(answer) || "PLAY".equals(answer)) {
             commandsHelp();
-            game.gameTest();
+            game.startGame();
         } else if ("Q".equals(answer) || "QUIT".equals(answer)) {
             exitMessage();
         }
@@ -114,7 +88,6 @@ public class View {
 
     //create a prompt method to uses for error checking
     public String prompt(String promptMessage, String regex, String helpMessage) {
-
         try {
             return prompter.prompt(promptMessage, regex, helpMessage).toUpperCase();
         } catch (NoSuchElementException e) {
@@ -124,7 +97,7 @@ public class View {
     }
 
     //will pause until Enter is pressed.
-    public void promptEnterKey(){
+    public void promptEnterKey() {
         System.out.println(PRESS_ENTER_TO_CONTINUE_PROMPT_MESSAGE);
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
