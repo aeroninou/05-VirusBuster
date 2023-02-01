@@ -1,10 +1,11 @@
 package com.virusbuster.model;
 
-public enum Commands {
+public enum Command {
     GO("go"),
     GET("get"),
     TALK("talk"),
     LOOK("look"),
+    DROP("drop"),
     TRADE("trade"),
     BAG("bag"),
     ENTER("enter"),
@@ -13,7 +14,7 @@ public enum Commands {
 
     private final String value;
 
-    Commands (String value) {
+    Command(String value) {
         this.value = value;
     }
 

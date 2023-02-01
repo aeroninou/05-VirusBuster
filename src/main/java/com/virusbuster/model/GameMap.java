@@ -4,9 +4,9 @@ package com.virusbuster.model;
 import java.util.HashMap;
 import java.util.List;
 
+class GameMap {
 
-public class GameMap {
-
+    //fields from Json objects
     private Armory armory;
     private Cafeteria cafeteria;
     private Area51 area51;
@@ -17,6 +17,7 @@ public class GameMap {
     private Greenland greenland;
     private Laboratory laboratory;
 
+    //setters and getters to populate the values from JSON
     public Armory getArmory() {
         return armory;
     }
@@ -89,11 +90,12 @@ public class GameMap {
         this.laboratory = laboratory;
     }
 
-    public LocationLayout getLocation(String name){
-        if(name == null){
+    //checks from input request and finds the specific location
+    public LocationLayout getLocation(String name) {
+        if (name == null) {
             return null;
         }
-        switch(name){
+        switch (name) {
             case "Area51":
                 return area51;
             case "Portal Room":
@@ -110,16 +112,19 @@ public class GameMap {
                 return laboratory;
             case "Cafeteria":
                 return cafeteria;
+            case "Armory":
+                return armory;
             default:
                 return null;
         }
     }
 
+    //getter and setters that is being extended to the JSON object class to utilize the getters and setters
     public static class LocationLayout {
         private String name;
         private HashMap<String, String> directions;
         private String description;
-        private List<String> items;
+        private List<String> item;
 
         public LocationLayout() {
 
@@ -150,63 +155,65 @@ public class GameMap {
         }
 
         public List<String> getItems() {
-            return items;
+            return item;
         }
 
-        public void setItems(List<String> items) {
-            this.items = items;
+        public void setItems(List<String> item) {
+            this.item = item;
         }
     }
-        public static class Armory extends LocationLayout {
-            public Armory() {
 
-            }
+    private static class Armory extends LocationLayout {
+        public Armory() {
+
         }
+    }
 
-        public static class Cafeteria extends LocationLayout {
-            public Cafeteria() {
+    private static class Cafeteria extends LocationLayout {
+        public Cafeteria() {
 
-            }
         }
+    }
 
-        public static class Area51 extends LocationLayout {
-            public Area51() {
+    private static class Area51 extends LocationLayout {
+        public Area51() {
 
-            }
         }
+    }
 
-        public static class PortalRoom extends LocationLayout {
-            public PortalRoom() {
+    private static class PortalRoom extends LocationLayout {
+        public PortalRoom() {
 
-            }
         }
+    }
 
-        public static class Amazon extends LocationLayout {
-            public Amazon() {
+    private static class Amazon extends LocationLayout {
+        public Amazon() {
 
-            }
         }
+    }
 
-        public static class Dubai extends LocationLayout {
-            public Dubai() {
+    public static class Dubai extends LocationLayout {
+        public Dubai() {
 
-            }
         }
+    }
 
-        public static class Uzbekistan extends LocationLayout {
-            public Uzbekistan() {
+    private static class Uzbekistan extends LocationLayout {
+        public Uzbekistan() {
 
-            }
         }
+    }
 
-        public static class Greenland extends LocationLayout {
-            public Greenland() {
+    private static class Greenland extends LocationLayout {
+        public Greenland() {
 
-            }
         }
+    }
 
-        public static class Laboratory extends LocationLayout {
-            public Laboratory() {
-            }
+    private static class Laboratory extends LocationLayout {
+        public Laboratory() {
         }
+    }
+
 }

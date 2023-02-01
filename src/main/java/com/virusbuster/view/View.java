@@ -8,11 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class View {
 
@@ -21,100 +18,89 @@ public class View {
     private static final String EXIT_MESSAGE = "ascii/exitmessage.txt";
     private static final String GAME_COMMANDS = "ascii/commandshelp.txt";
     private static final Prompter prompter = new Prompter(new Scanner(System.in));
-    private static String banner;
+
+    //const for all string literals.
+    private static final String READY_PROMPT = "\nAre you ready to rescue the world?";
+    private static final String ENTER_P_PLAY_OR_Q_QUIT_PROMPT_MESSAGE = "\nEnter 'P'/Play or 'Q'/Quit?: ";
+    private static final String REGEX_FOR_PLAY_OR_QUIT_PROMPT = "(?i)(P|Q|PLAY|QUIT)";
+    private static final String ERROR_MESSAGE_FOR_PLAY_OR_QUIT_PROMPT = "Error...must be letter P, PLAY, Q, or QUIT";
+    private static final String PRESS_ENTER_TO_CONTINUE_PROMPT_MESSAGE = "Press \"ENTER\" to continue...";
+
+    private final Game game = new Game(this);
 
 
     //welcome the player with a title/splash screen
-    public static void welcome() {
+    public void welcome() {
         Console.clear();
-        //noinspection ConstantConditions
-        try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(TITLE_BANNER);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
-        ){
-            for(String line = reader.readLine(); line!=null; line = reader.readLine()){
-                System.out.println(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Console.pause(3000);
+        textLoader(TITLE_BANNER);
+        Console.pause(4000);
         Console.clear();
     }
 
     //print exit message on quit
-    public static void exitMessage() {
+    public void exitMessage() {
         Console.clear();
-        //noinspection ConstantConditions
-        try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(EXIT_MESSAGE);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
-        ){
-            for(String line = reader.readLine(); line!=null; line = reader.readLine()){
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        textLoader(EXIT_MESSAGE);
         Console.pause(3000);
         Console.clear();
     }
 
     //prints out game instructions
     public void gameInstructions() {
-        Console.clear();
-        //noinspection ConstantConditions
-        try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(GAME_INSTRUCTIONS);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
-        ){
-            for(String line = reader.readLine(); line!=null; line = reader.readLine()){
-                System.out.println(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Console.pause(3000);
+        textLoader(GAME_INSTRUCTIONS);
+        promptEnterKey();
         Console.clear();
     }
 
     //prints out the verbs/nouns
-    public static void commandsHelp() {
+    public void commandsHelp() {
         Console.clear();
+        textLoader(GAME_COMMANDS);
+        promptEnterKey();
+    }
+
+    //loads the text files
+    private void textLoader(String filepath) {
         //noinspection ConstantConditions
-        try (InputStream inputStream  = View.class.getClassLoader().getResourceAsStream(GAME_COMMANDS);
+        try (InputStream inputStream = View.class.getClassLoader().getResourceAsStream(filepath);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
-        ){
-            for(String line = reader.readLine(); line!=null; line = reader.readLine()){
+        ) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Console.pause(3000);
     }
 
     //asking player if they want to play game or quit. will execute
-    public void promptForPlayorQuit() {
-        System.out.println("\nAre you ready to rescue the world?");
-        String answer = prompt("\nEnter 'P'/Play or 'Q'/Quit?: ", "(?i)(P|Q|PLAY|QUIT)", "Error...must be letter P, PLAY, Q, or QUIT").toUpperCase();
+    public void promptForPlayOrQuit() {
+        System.out.println(READY_PROMPT);
+        String answer = prompt(ENTER_P_PLAY_OR_Q_QUIT_PROMPT_MESSAGE, REGEX_FOR_PLAY_OR_QUIT_PROMPT, ERROR_MESSAGE_FOR_PLAY_OR_QUIT_PROMPT).toUpperCase();
 
         if ("P".equals(answer) || "PLAY".equals(answer)) {
             commandsHelp();
-            Game.gameTest();
+            game.startGame();
         } else if ("Q".equals(answer) || "QUIT".equals(answer)) {
             exitMessage();
         }
     }
 
     //create a prompt method to uses for error checking
-    public static String prompt(String promptMessage, String regex, String helpMessage) {
-
+    public String prompt(String promptMessage, String regex, String helpMessage) {
         try {
             return prompter.prompt(promptMessage, regex, helpMessage).toUpperCase();
         } catch (NoSuchElementException e) {
             System.exit(0);
         }
         return null;
+    }
+
+    //will pause until Enter is pressed.
+    public void promptEnterKey() {
+        System.out.println(PRESS_ENTER_TO_CONTINUE_PROMPT_MESSAGE);
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
 }
