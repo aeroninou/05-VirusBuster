@@ -2,7 +2,6 @@ package com.virusbuster.controller;
 
 import com.virusbuster.model.Game;
 //import com.virusbuster.model.GameMap;
-import com.virusbuster.model.Player;
 import com.virusbuster.view.View;
 
 public class Controller {
@@ -23,7 +22,7 @@ public class Controller {
         view.welcome();
         view.gameInstructions();
         //game.generateWorld();
-        view.promptForPlayorQuit();
+        view.promptForPlayOrQuit();
 
     }
 }

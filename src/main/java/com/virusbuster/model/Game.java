@@ -17,7 +17,9 @@ public class Game {
 
     private static final String INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE = "Invalid input,[%s, %s] please try again. Type 'help' for assistance\n";
     private static final String ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND = "Error! Enter 2 words for command.";
-
+    private static final String ITEMS_JSON = "data/items.json";
+    private static final String LOCATIONS_JSON = "data/location.json";
+    private static final String CHARACTERS_JSON = "data/characters.json";
     public List<GameItem.ItemInformation> gameItems;
     public static Character character = new Character();
     public final View view;
@@ -31,7 +33,6 @@ public class Game {
 
     private List<String> items = new ArrayList<>(Arrays.asList("camu camu", "camel milk", "sumalak", "raincoat", "glacier magical plant",
             "bubble gum", "jack daniels", "ice container", "gold rolex watch", "zippo lighter", "east", "west", "north", "south", "room1", "room2", "room3", "room4"));
-    //private List<String> commands = new ArrayList<>(Arrays.asList("go", "get", "enter", "trade", "talk", "bag", "quit", "help", "look"));
 
     //parsing user's inout
     public List<String> parseCommand(String wordInput) {
@@ -48,9 +49,10 @@ public class Game {
         }
         else if (result.size() != 2) {
             System.out.println(ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND);
-
             result.set(0, "invalid");
+            view.promptEnterKey();
             return result;
+
         }
 
         //checking both inputs if either one is invalid will print message and assign 0 index to invalid.
@@ -64,7 +66,7 @@ public class Game {
     }
 
     //game method
-    public void gameTest() {
+    public void startGame() {
         //prompt for name and set player name
         player.setName(player.promptForName());
         loadsLocation();
@@ -88,7 +90,6 @@ public class Game {
                 view.exitMessage();
                 System.exit(0);
             } else {
-                //move(moveCommand.get(1));
                 executeCommand(moveCommand);
             }
             displayLocation(player);
@@ -142,43 +143,43 @@ public class Game {
 
     //loads the location from location.json(parsing it)
     private void loadsLocation() {
-        //noinspection ConstantConditions
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/location.json");
-             Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            gameWorld = new Gson().fromJson(reader, GameMap.class);
-            player.setCurrentLocation(gameWorld.getArea51());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        jsonLoader(LOCATIONS_JSON);
         loadCharacter();
         loadItemsFromJSONFile();
     }
 
     //loads the Characters from characters.json
     private void loadCharacter() {
-        //noinspection ConstantConditions
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/characters.json");
-             Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            character = new Gson().fromJson(reader, Character.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        jsonLoader(CHARACTERS_JSON);
     }
 
     //loads all items from JSON file.
     private void loadItemsFromJSONFile() {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/items.json");
+        jsonLoader(ITEMS_JSON);
+    }
+
+    //loads the json via different filepath
+    private void jsonLoader(String filePath) {
+        //noinspection ConstantConditions
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
              Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            item = new Gson().fromJson(reader, GameItem.class);
-            gameItems = item.loadAllItems();
+            if(Objects.equals(filePath, ITEMS_JSON)){
+                item = new Gson().fromJson(reader, GameItem.class);
+                gameItems = item.loadAllItems();
+        } else if (Objects.equals(filePath, CHARACTERS_JSON)){
+                character = new Gson().fromJson(reader, Character.class);
+            } else if (Objects.equals(filePath, LOCATIONS_JSON)){
+                gameWorld = new Gson().fromJson(reader, GameMap.class);
+                player.setCurrentLocation(gameWorld.getArea51());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    //method to put item in bag if the item is at the location.
     /* Action verb methods */
+
     //sets the new location of the player
     private void move(String direction) {
         //sets the player location
@@ -192,6 +193,7 @@ public class Game {
         }
     }
 
+    //drops item
     private void dropItem(String noun) {
         GameMap.LocationLayout currentLocation = player.getCurrentLocation();
         List<GameItem.ItemInformation> bag = player.getBag();
@@ -208,6 +210,7 @@ public class Game {
         }
     }
 
+    //gets item
     private void putItemInBag(String noun) {
         GameMap.LocationLayout currentLocation = player.getCurrentLocation();
         List<String> itemList = player.getCurrentLocation().getItems();
@@ -266,7 +269,7 @@ public class Game {
 
         HashMap<String, String> directions = player.getCurrentLocation().getDirections();
 
-        System.out.printf("\n%s, Your bag has: [%s] \nYou are located at: %s \nitems: %s \ndirections: %s \nLocation Info: %s\n",
+        System.out.printf("\n%s, Your bag has: [%s] \nYou are located at: %s \nAvailable Items: %s \nDirections: %s \nLocation Info: %s\n",
                 player.getName(), player.stringOfCurrentBagItems(), currentLocation, item, directions, description);
 
         displayCharacter(currentLocation);
@@ -279,6 +282,7 @@ public class Game {
         Character.NPC3 npc3 = character.getNpc3();
         Character.NPC4 npc4 = character.getNpc4();
         Character.NPC5 npc5 = character.getNpc5();
+
 
         if (currentLocation.equals(npc1.getLocation())) {
             System.out.printf("You see : %s", npc1.getName());
