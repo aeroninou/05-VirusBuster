@@ -261,12 +261,13 @@ public class Game {
         //will clear at the top and print the location
         Console.clear();
         String currentLocation = player.getCurrentLocation().getName();
+        String description = player.getCurrentLocation().getDescription();
         List<String> item = player.getCurrentLocation().getItems();
 
         HashMap<String, String> directions = player.getCurrentLocation().getDirections();
 
-        System.out.printf("\n%s, Your bag has [%s] \nYou are located at: %s \nitems: %s \ndirections: %s\n",
-                player.getName(), player.stringOfCurrentBagItems(), currentLocation, item, directions);
+        System.out.printf("\n%s, Your bag has: [%s] \nYou are located at: %s \nitems: %s \ndirections: %s \nLocation Info: %s\n",
+                player.getName(), player.stringOfCurrentBagItems(), currentLocation, item, directions, description);
 
         displayCharacter(currentLocation);
     }
