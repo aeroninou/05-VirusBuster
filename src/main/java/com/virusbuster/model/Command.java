@@ -10,7 +10,10 @@ public enum Command {
     BAG("bag"),
     ENTER("enter"),
     QUIT("quit"),
-    HELP("help");
+    HELP("help"),
+    GRAB("grab"),
+    PICKUP("pickup"),
+    TAKE("take");
 
     private final String value;
 

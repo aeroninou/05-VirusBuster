@@ -1,43 +1,43 @@
 {
   "user": {
-    "name": "Player",
+    "name": "player",
     "quotes": [
-      "I’m looking for Camu Camu.\"",
-      "I’m looking for Camel Milk. I have a rare gold Rolex watch to trade.\"",
-      "“I’m willing to trade my bubble gum pack for Sumalak?”\"",
-      "“I’m willing to trade my bottle of Jack Daniels for Glacier Magical Plant?\""
+      "I’m looking for Camu Camu.",
+      "Oh mighty Prince! I'm looking for Camel Milk.",
+      "I’m willing to trade my bubble gum pack for Sumalak?",
+      "I’m willing to trade my bottle of Jack Daniels for Glacier Magical Plant?"
     ]
   },
   "npc1": {
-    "name": "Dr. WW",
+    "name": "dr. ww",
     "quotes":[
       "We are counting on you! Return back to me, when you collect all the elements!"
     ],
     "location": "Area51"
   },
   "npc2": {
-    "name": "Chief",
+    "name": "chief",
     "quotes": [
-      "\"Stranger! What brings you here?\""
+      "Stranger! What brings you here?"
     ],
     "location": "Amazon Jungle Fever, Brazil"
   },
   "npc3": {
-    "name": "Prince",
+    "name": "prince",
     "quotes": [
       "Give me something I don’t already have!"
     ],
     "location": "Burj Khalifa, Dubai"
   },
   "npc4": {
-    "name": "Local Vendor",
-    "quotes": [],
+    "name": "local vendor",
+    "quotes": ["This week is a holiday for us, it's tradition to exchange gifts."],
     "location": "Tashkent, Uzbekistan"
   },
   "npc5": {
-    "name": "Farmer",
+    "name": "farmer",
     "quotes": [
-      "\"I can take you up the mountain but need that drink.”\""
+      "I can take you up the mountain but need that drink."
     ],
     "location": "Nuuk, Greenland"
   }
