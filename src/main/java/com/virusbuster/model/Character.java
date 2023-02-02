@@ -60,28 +60,7 @@ public class Character {
         this.npc5 = npc5;
     }
 
-    public String getCharacter(String characterName){
-        List<String> character = null;
-        if(characterName.equals(getNpc1().getName())){
-            character = getNpc1().getQuote();
-        }
-        else if (characterName.equals(getNpc2().getName())){
-            character = getNpc2().getQuote();
-        }
-        else if (characterName.equals(getNpc3().getName())){
-            character = getNpc3().getQuote();
-        }
-        else if (characterName.equals(getNpc4().getName())){
-            character = getNpc4().getQuote();
-        }
-        else if (characterName.equals(getNpc5().getName())){
-            character = getNpc5().getQuote();
-        } else {
-            //noinspection ConstantConditions
-            character.add("No Character Found");
-        }
-        return characterName;
-    }
+
 
     //class to get the key and values from Json
     public static class CharacterLayout {

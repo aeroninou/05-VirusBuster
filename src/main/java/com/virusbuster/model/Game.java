@@ -32,7 +32,10 @@ public class Game {
     }
 
     private List<String> items = new ArrayList<>(Arrays.asList("camu camu", "camel milk", "sumalak", "raincoat", "glacier magical plant",
-            "bubble gum", "jack daniels", "ice container", "gold rolex watch", "zippo lighter", "east", "west", "north", "south", "room1", "room2", "room3", "room4"));
+            "bubble gum", "jack daniels", "ice container", "gold rolex watch", "zippo lighter", "east",
+            "west", "north", "south", "room1", "room2", "room3", "room4", "player", "dr. ww", "chief", "prince", "local vendor", "farmer"));
+
+
 
     //parsing user's inout
     public List<String> parseCommand(String wordInput) {
@@ -58,7 +61,6 @@ public class Game {
         //checking both inputs if either one is invalid will print message and assign 0 index to invalid.
         if ( verb == null || !items.contains(result.get(1))) {
             System.out.printf(INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE, result.get(0), result.get(1));
-
             result.set(0, "invalid");
             view.promptEnterKey();
         }
@@ -105,6 +107,9 @@ public class Game {
                 move(noun);
                 break;
             case "get":
+            case "grab":
+            case "pickup":
+            case "take":
                 putItemInBag(noun);
                 break;
             case "drop":
@@ -112,6 +117,9 @@ public class Game {
                 break;
             case "look":
                 lookItem(noun);
+                break;
+            case "talk":
+                talkToNPC(noun);
                 break;
             default:
                 System.out.println("Invalid in ExecuteCommand");
@@ -297,6 +305,47 @@ public class Game {
         } else {
             System.out.println("You see no one in this location");
         }
+    }
+
+    //TODO:needs refactor later
+    private void talkToNPC(String name){
+
+        String currentLocation = player.getCurrentLocation().getName();
+
+        //initialize Characters to utilize attributes
+        Character.NPC1 npc1 = character.getNpc1();
+        Character.NPC2 npc2 = character.getNpc2();
+        Character.NPC3 npc3 = character.getNpc3();
+        Character.NPC4 npc4 = character.getNpc4();
+        Character.NPC5 npc5 = character.getNpc5();
+        Character.User user = character.getPlayer();
+
+
+        List<String> test = user.getQuote();
+
+        if (name.equals(npc1.getName()) && Objects.equals(currentLocation, npc1.getLocation())) {
+            System.out.printf("%s: %s", npc1.getName(), npc1.getQuote().get(0));
+        } else if (name.equals(npc2.getName()) && Objects.equals(currentLocation, npc2.getLocation())) {
+            System.out.printf("%s: %s\n", npc2.getName(), npc2.getQuote().get(0));
+            System.out.printf("%s: %s\n", player.getName(), test.get(0));
+
+        } else if (name.equals(npc3.getName()) && Objects.equals(currentLocation, npc3.getLocation())) {
+            System.out.printf("%s: %s\n", npc3.getName(), npc3.getQuote().get(0));
+            System.out.printf("%s: %s\n", player.getName(), test.get(1));
+
+        } else if (name.equals(npc4.getName()) && Objects.equals(currentLocation, npc4.getLocation()))  {
+            System.out.printf("%s: %s\n", npc4.getName(), npc4.getQuote().get(0));
+            System.out.printf("%s: %s\n", player.getName(), test.get(2));
+
+        } else if (name.equals(npc5.getName()) && Objects.equals(currentLocation, npc4.getLocation()))  {
+            System.out.printf("%s: %s\n", npc5.getName(), npc5.getQuote().get(0));
+            System.out.printf("%s: %s\n", player.getName(), test.get(3));
+
+        } else {
+            System.out.printf("No one here to talk with. %s isn't here.", name);
+        }
+        System.out.println("You must [trade] an item in your bag based on the Location Info.");
+        view.promptEnterKey();
     }
 }
 
