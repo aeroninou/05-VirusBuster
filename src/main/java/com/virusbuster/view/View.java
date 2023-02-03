@@ -14,6 +14,8 @@ public class View {
     private static final String GAME_INSTRUCTIONS = "ascii/gameinstruction.txt";
     private static final String EXIT_MESSAGE = "ascii/exitmessage.txt";
     private static final String GAME_COMMANDS = "ascii/commandshelp.txt";
+    private static final String EMPTY_MAP = "mapImages/emptyMap.txt";
+    private static final String AREA51_MAP = "mapImages/area51Room.txt";
     private static final Prompter prompter = new Prompter(new Scanner(System.in));
 
     //const for all string literals.
@@ -24,7 +26,6 @@ public class View {
     private static final String PRESS_ENTER_TO_CONTINUE_PROMPT_MESSAGE = "\nPress \"ENTER\" to continue...";
 
     private final Game game = new Game(this);
-
 
 
     //welcome the player with a title/splash screen
@@ -59,6 +60,11 @@ public class View {
         promptEnterKey();
     }
 
+    //display map for the user on "map"
+    public void displayEmptyMap() {
+        Console.clear();
+        textLoader(EMPTY_MAP);
+    }
     //loads the text files
     private void textLoader(String filepath) {
         //noinspection ConstantConditions
@@ -124,5 +130,4 @@ public class View {
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
-
 }

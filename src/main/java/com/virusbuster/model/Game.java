@@ -48,6 +48,9 @@ public class Game {
         if (result.size() == 1 && "quit".equalsIgnoreCase(verb)) {
             return result;
         }
+        if (result.size() == 1 && "map".equalsIgnoreCase(verb)) {
+            return result;
+        }
         if (result.size() == 1 && "save".equalsIgnoreCase(verb)) {
             return result;
         }
@@ -86,6 +89,8 @@ public class Game {
                 view.commandsHelp();
             } else if ("quit".equalsIgnoreCase(moveCommand.get(0))){
                 view.exitMessage();
+            } else if ("map".equalsIgnoreCase(moveCommand.get(0))){
+                view.displayEmptyMap();
             } else {
                 executeCommand(moveCommand);
             }
@@ -117,6 +122,9 @@ public class Game {
                 break;
             case "talk":
                 talkToNPC(noun);
+                break;
+            case "see":
+                //fx;
                 break;
             default:
                 System.out.println("Invalid in ExecuteCommand");
@@ -244,6 +252,13 @@ public class Game {
             System.out.println("You see no one in this location");
         }
     }
+
+//    private void displayMap(String currentLocation) {
+//        for (Map.Entry<String>, C)
+//
+//    }
+
+
 
     private void talkToNPC(String name){
         String currentLocationName = locationMap.get(player.getCurrentLocation()).getName();
