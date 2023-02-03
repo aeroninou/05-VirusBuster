@@ -4,7 +4,6 @@ package com.virusbuster.model;
 import com.apps.util.Console;
 import com.google.gson.Gson;
 import com.virusbuster.view.View;
-
 import java.io.*;
 import java.util.*;
 
@@ -20,29 +19,25 @@ public class Game {
     private static final String ITEMS_JSON = "data/items.json";
     private static final String LOCATIONS_JSON = "data/Location.json";
     private static final String CHARACTERS_JSON = "data/characters.json";
-
     private static final String STARTING = "Area51";
 
-    private static final String PATH = "src/main/resources/gamedata/playerData.txt";
-
-    public List<GameItem.ItemInformation> gameItems;
     //public static Character character = new Character();
-    public final  View view;
-    public static GameItem item = new GameItem();
+    public final View view;
+
     //public GameMap gameWorld;
     public Player player = new Player();
 
     //loads the json
     private final Map<String,Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
     private final Map<String,Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
+    //loads the items json
+    private final Map<String, String> mapItem = Item.loadItems(ITEMS_JSON);
+
 
     public Game(View view) {
         this.view = view;
     }
 
-    private final List<String> items = new ArrayList<>(Arrays.asList("camu camu", "camel milk", "sumalak", "raincoat", "glacier magical plant",
-            "bubble gum", "jack daniels", "ice container", "gold rolex watch", "zippo lighter", "east",
-            "west", "north", "south", "room1", "room2", "room3", "room4", "player", "dr. ww", "chief", "prince", "local vendor", "farmer"));
 
     //parsing user's inout
     public List<String> parseCommand(String wordInput) {
@@ -71,18 +66,11 @@ public class Game {
 
         }
 
-//        //checking both inputs if either one is invalid will print message and assign 0 index to invalid.
-//        if ( verb == null || !items.contains(result.get(1))) {
-//            System.out.printf(INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE, result.get(0), result.get(1));
-//            result.set(0, "invalid");
-//            view.promptEnterKey();
-//        }
         return result;
     }
 
     //game method
     public void startGame() {
-        loadsLocation();
         //prompt for name and set player name
         player.setName(player.promptForName());
         player.setCurrentLocation(STARTING);
@@ -104,16 +92,14 @@ public class Game {
                 view.commandsHelp();
             } else if ("quit".equalsIgnoreCase(moveCommand.get(0))){
                 view.exitMessage();
-            } //else if ("save".equalsIgnoreCase(moveCommand.get(0))){
-//                view.exitMessage();
-//            else if ("load".equalsIgnoreCase(moveCommand.get(0))){
-//                option.loadGame();
-           else {
+            } else {
                 executeCommand(moveCommand);
             }
             displayLocation(player);
         }
     }
+
+    //TODO:MUST CREATE LOGIC FOR JSON CASE MATCHING WITH INPUT
 
     // execute parsed command based on verb and noun
     private void executeCommand(List<String> command) {
@@ -123,18 +109,18 @@ public class Game {
             case "go":
                 move(noun);
                 break;
-//            case "get":
-//            case "grab":
-//            case "pickup":
-//            case "take":
-//                putItemInBag(noun);
-//                break;
-//            case "drop":
-//                dropItem(noun);
-//                break;
-//            case "look":
-//                lookItem(noun);
-//                break;
+            case "get":
+            case "grab":
+            case "pickup":
+            case "take":
+                putItemInBag(noun);
+                break;
+            case "drop":
+                dropItem(noun);
+                break;
+            case "look":
+                lookItem(noun);
+                break;
             case "talk":
                 talkToNPC(noun);
                 break;
@@ -166,44 +152,6 @@ public class Game {
         return sc.nextLine();
     }
 
-    //loads the location from location.json(parsing it)
-    private void loadsLocation() {
-        Location.loadLocation(LOCATIONS_JSON);
-        loadCharacter();
-        loadItemsFromJSONFile();
-    }
-
-    //loads the Characters from characters.json
-    private void loadCharacter() {
-        jsonLoader(CHARACTERS_JSON);
-    }
-
-    //loads all items from JSON file.
-    private void loadItemsFromJSONFile() {
-        jsonLoader(ITEMS_JSON);
-    }
-
-    //loads the json via different filepath
-    private void jsonLoader(String filePath) {
-        //noinspection ConstantConditions
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
-             Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            if(Objects.equals(filePath, ITEMS_JSON)){
-                item = new Gson().fromJson(reader, GameItem.class);
-                gameItems = item.loadAllItems();
-        }
-//            else if (Objects.equals(filePath, CHARACTERS_JSON)){
-//                character = new Gson().fromJson(reader, Character.class);
-//            }
-//            else if (Objects.equals(filePath, LOCATIONS_JSON)){
-//                gameWorld = new Gson().fromJson(reader, GameMap.class);
-//                player.setCurrentLocation(gameWorld.getArea51());
-//            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /* Action verb methods */
 
@@ -222,97 +170,58 @@ public class Game {
     }
 
     //drops item
-//    private void dropItem(String noun) {
-//        Location currentLocation = player.getCurrentLocation();
-//        List<GameItem.ItemInformation> bag = player.getBag();
-//        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
-//        if (bag == null || bag.size() == 0) {
-//            System.out.println("Nothing to drop");
-//        } else if (singleItem == null) {
-//            System.out.printf("Can't pick this %s at %s.", noun, currentLocation);
-//        } else if (bag.contains(singleItem)) {
-//            player.dropFromBag(singleItem);
-//            currentLocation.getItems().add(noun);
-//        } else {
-//            System.out.printf("[%s] is not a valid command at %s. ", noun, currentLocation);
-//        }
-//    }
+    private void dropItem(String noun) {
+
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
+        List<String> currentBag = player.getBag();
+
+        if (currentBag == null || currentBag.size() == 0) {
+            System.out.println("Nothing to drop");
+        } else if (currentBag.contains(noun)) {
+            player.dropFromBag(noun);
+            currentLocation.getItem().add(noun);
+        } else {
+            System.out.printf("[%s] is not a valid command at %s. ", noun, currentLocation.getName());
+        }
+    }
 
     //gets item
-//    private void putItemInBag(String noun) {
-//        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
-//        List<String> itemList = player.getCurrentLocation().getItems();
-//
-//        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
-//
-//        if (singleItem == null) {
-//            System.out.printf("Can't pick this %s at %s.", noun, currentLocation);
-//
-//        } else if (itemList.contains(noun)){
-//
-//            player.addToBag(singleItem);
-//
-//            for (int i = 0; i < itemList.size(); i++){
-//                if (noun.equalsIgnoreCase(itemList.get(i))){
-//                    currentLocation.getItems().remove(i);
-//                }
-//            }
-//        }
-//        else {
-//            System.out.printf("[%s] is not a valid command at %s. ", noun, currentLocation);
-//        }
-//    }
-//
-//    //look function
-//    private void lookItem(String noun) {
-//        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
-//        List<String> itemList = player.getCurrentLocation().getItems();
-//
-//        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
-//
-//        if (singleItem == null) {
-//            System.out.printf("Can't find %s at %s.", noun, currentLocation);
-//        }
-//        else if (itemList.contains(noun)) {
-//            System.out.printf("%s --> %s \n", noun, singleItem.getDescription());
-//            view.promptEnterKey();
-//        }
-//    }
-//
-//    private GameItem.ItemInformation findTheItemByNoun(String noun) {
-//        for (GameItem.ItemInformation item : gameItems) {
-//            if (noun.equalsIgnoreCase(item.getName())) {
-//                return item;
-//            }
-//        }
-//        return null;
-//    }
+    private void putItemInBag(String noun) {
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
+
+
+        boolean singleItem = mapItem.containsKey(noun);
+        boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
+
+        if (singleItem && isItemInCurrentLocation) {
+            player.addToBag(noun);
+            currentLocation.getItem().remove(noun);
+        }
+        else {
+            System.out.printf("[%s] is not a at %s. ", noun, currentLocation.getName());
+        }
+    }
 
 
     //look function
-//    private void lookItem(String noun) {
-//        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
-//        List<String> itemList = player.getCurrentLocation().getItems();
-//
-//        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
-//
-//        if (singleItem == null) {
-//            System.out.printf("Can't find %s at %s.", noun, currentLocation);
-//        }
-//        else if (itemList.contains(noun)) {
-//            System.out.printf("%s --> %s \n", noun, singleItem.getDescription());
-//            view.promptEnterKey();
-//        }
-//    }
+    private void lookItem(String noun) {
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
 
-    private GameItem.ItemInformation findTheItemByNoun(String noun) {
-        for (GameItem.ItemInformation item : gameItems) {
-            if (noun.equalsIgnoreCase(item.getName())) {
-                return item;
-            }
+        boolean singleItem = mapItem.containsKey(noun);
+        boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
+
+
+        if (singleItem && isItemInCurrentLocation) {
+            System.out.printf("%s --> %s \n", noun, mapItem.get(noun));
+            view.promptEnterKey();
+        } else if (singleItem && player.getBag().contains(noun)){
+            System.out.printf("%s --> %s \n", noun, mapItem.get(noun));
+            view.promptEnterKey();
+        } else {
+            System.out.printf("Can't look at [%s], item not at %s or in your bag.", noun, currentLocation.getName());
         }
-        return null;
     }
+
 
     public void displayLocation(Player player) {
 
@@ -325,7 +234,7 @@ public class Game {
         HashMap<String, String> directions = locationMap.get(currentLocation).getDirections();
 
         System.out.printf("\n%s, Your bag has: [%s] \nYou are located at: %s \nAvailable Items: %s \nDirections: %s \nLocation Info: %s\n",
-                player.getName(), player.stringOfCurrentBagItems(), currentLocation, item, directions, description);
+                player.getName(), player.printCurrentBag(), currentLocation, item, directions, description);
 
         displayCharacter(currentLocation);
     }
@@ -355,7 +264,6 @@ public class Game {
 //            System.out.printf("\nNo one here to talk with. %s isn't here.", name);
 //            break;
 //        }
-
         view.promptEnterKey();
     }
 }
