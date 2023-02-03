@@ -4,10 +4,7 @@ import com.apps.util.Prompter;
 import com.apps.util.Console;
 import com.virusbuster.model.Game;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -29,6 +26,7 @@ public class View {
     private final Game game = new Game(this);
 
 
+
     //welcome the player with a title/splash screen
     public void welcome() {
         Console.clear();
@@ -40,9 +38,11 @@ public class View {
     //print exit message on quit
     public void exitMessage() {
         Console.clear();
+        //promptToSave();
         textLoader(EXIT_MESSAGE);
         Console.pause(3000);
         Console.clear();
+        System.exit(0);
     }
 
     //prints out game instructions
@@ -85,6 +85,28 @@ public class View {
             exitMessage();
         }
     }
+//    public void promptToSave() {
+//        String answer = prompt("Would you like to save? Press Y|YES or N|No",
+//                "(?i)(Y|N|YES|NO)","Invalid Input").toUpperCase();
+//
+//        if ("Y".equals(answer) || "YES".equals(answer)) {
+//            option.saveGame();
+//        } else if ("N".equals(answer) || "NO".equals(answer)) {
+//            textLoader(EXIT_MESSAGE);
+//            System.exit(0);
+//        }
+//    }
+//    public void promptToLoad() {
+//        String answer = prompt("Would you like to continue previous game? Press Y|YES or N|No",
+//                "(?i)(Y|N|YES|NO)","Invalid Input").toUpperCase();
+//
+//        if ("Y".equals(answer) || "YES".equals(answer)) {
+//            option.loadGame();
+//        } else if ("N".equals(answer) || "NO".equals(answer)) {
+//            game.startGame();
+//        }
+//    }
+
 
     //create a prompt method to uses for error checking
     public String prompt(String promptMessage, String regex, String helpMessage) {

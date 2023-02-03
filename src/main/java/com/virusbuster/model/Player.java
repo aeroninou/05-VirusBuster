@@ -2,18 +2,19 @@ package com.virusbuster.model;
 
 import com.virusbuster.view.View;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Player {
+public class Player implements Serializable{
 
     //const for all string literals
     private static final String ENTER_YOUR_USERNAME_MESSAGE = "\nEnter your username?: ";
     private static final String REGEX_FOR_USERNAME = "[A-Za-z]{2,10}";
     private static final String ERROR_MESSAGE_FOR_USERNAME = "Error..not valid must be all letters & between 2 and 10 characters.\n";
     private String name;
-    private GameMap.LocationLayout currentLocation;
+    private String currentLocation;
     private static View view = new View();
     private List<GameItem.ItemInformation> bag = new ArrayList<GameItem.ItemInformation>();
 
@@ -25,11 +26,11 @@ public class Player {
         this.name = name;
     }
 
-    public GameMap.LocationLayout getCurrentLocation() {
+    public String getCurrentLocation() {
         return currentLocation;
     }
 
-    public void setCurrentLocation(GameMap.LocationLayout currentLocation) {
+    public void setCurrentLocation(String currentLocation) {
         this.currentLocation = currentLocation;
     }
 

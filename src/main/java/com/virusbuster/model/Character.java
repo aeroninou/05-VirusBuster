@@ -1,9 +1,10 @@
 package com.virusbuster.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 //Class for NPC & User
-public class Character {
+public class Character implements Serializable{
     private User user;
     private NPC1 npc1;
     private NPC2 npc2;
@@ -63,7 +64,7 @@ public class Character {
 
 
     //class to get the key and values from Json
-    public static class CharacterLayout {
+    public static class CharacterLayout implements Serializable {
         private String name;
         private List<String> quotes;
         private String location;

@@ -1,9 +1,10 @@
 package com.virusbuster.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-class GameItem {
+class GameItem implements Serializable{
 
     private ZippoLighter zippolighter;
     private BubbleGum bubblegum;
@@ -143,7 +144,7 @@ class GameItem {
         this.goldrolexwatch = goldrolexwatch;
     }
 
-    public static class ItemInformation {
+    public static class ItemInformation implements Serializable  {
 
         private String name;
         private String description;
@@ -169,7 +170,7 @@ class GameItem {
     }
 
 
-    private static class ZippoLighter extends ItemInformation {
+    private static class ZippoLighter extends ItemInformation{
         public ZippoLighter() {
         }
     }
