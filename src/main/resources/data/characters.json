@@ -1,5 +1,5 @@
-{
-  "user": {
+[
+  {
     "name": "player",
     "quotes": [
       "I’m looking for Camu Camu.",
@@ -8,37 +8,37 @@
       "I’m willing to trade my bottle of Jack Daniels for Glacier Magical Plant?"
     ]
   },
-  "npc1": {
+  {
     "name": "dr. ww",
     "quotes":[
       "We are counting on you! Return back to me, when you collect all the elements!"
     ],
     "location": "Area51"
   },
-  "npc2": {
+  {
     "name": "chief",
     "quotes": [
       "Stranger! What brings you here?"
     ],
     "location": "Amazon Jungle Fever, Brazil"
   },
-  "npc3": {
+  {
     "name": "prince",
     "quotes": [
       "Give me something I don’t already have!"
     ],
     "location": "Burj Khalifa, Dubai"
   },
-  "npc4": {
+  {
     "name": "local vendor",
     "quotes": ["This week is a holiday for us, it's tradition to exchange gifts."],
     "location": "Tashkent, Uzbekistan"
   },
-  "npc5": {
-    "name": "farmer",
+  {
+    "name": "Veronica",
     "quotes": [
       "I can take you up the mountain but need that drink."
     ],
     "location": "Nuuk, Greenland"
   }
-}
+]

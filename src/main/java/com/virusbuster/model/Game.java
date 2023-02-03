@@ -4,7 +4,6 @@ package com.virusbuster.model;
 import com.apps.util.Console;
 import com.google.gson.Gson;
 import com.virusbuster.view.View;
-import jdk.jshell.execution.LoaderDelegate;
 
 import java.io.*;
 import java.util.*;
@@ -19,7 +18,7 @@ public class Game {
     private static final String INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE = "Invalid input,[%s, %s] please try again. Type 'help' for assistance\n";
     private static final String ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND = "Error! Enter 2 words for command.";
     private static final String ITEMS_JSON = "data/items.json";
-    private static final String LOCATIONS_JSON = "data/testLocation.json";
+    private static final String LOCATIONS_JSON = "data/Location.json";
     private static final String CHARACTERS_JSON = "data/characters.json";
 
     private static final String STARTING = "Area51";
@@ -27,7 +26,7 @@ public class Game {
     private static final String PATH = "src/main/resources/gamedata/playerData.txt";
 
     public List<GameItem.ItemInformation> gameItems;
-    public static Character character = new Character();
+    //public static Character character = new Character();
     public final  View view;
     public static GameItem item = new GameItem();
     //public GameMap gameWorld;
@@ -35,6 +34,7 @@ public class Game {
 
     //loads the json
     private final Map<String,Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
+    private final Map<String,Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
 
     public Game(View view) {
         this.view = view;
@@ -71,12 +71,12 @@ public class Game {
 
         }
 
-        //checking both inputs if either one is invalid will print message and assign 0 index to invalid.
-        if ( verb == null || !items.contains(result.get(1))) {
-            System.out.printf(INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE, result.get(0), result.get(1));
-            result.set(0, "invalid");
-            view.promptEnterKey();
-        }
+//        //checking both inputs if either one is invalid will print message and assign 0 index to invalid.
+//        if ( verb == null || !items.contains(result.get(1))) {
+//            System.out.printf(INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE, result.get(0), result.get(1));
+//            result.set(0, "invalid");
+//            view.promptEnterKey();
+//        }
         return result;
     }
 
@@ -135,9 +135,9 @@ public class Game {
 //            case "look":
 //                lookItem(noun);
 //                break;
-//            case "talk":
-//                talkToNPC(noun);
-//                break;
+            case "talk":
+                talkToNPC(noun);
+                break;
             default:
                 System.out.println("Invalid in ExecuteCommand");
         }
@@ -191,9 +191,10 @@ public class Game {
             if(Objects.equals(filePath, ITEMS_JSON)){
                 item = new Gson().fromJson(reader, GameItem.class);
                 gameItems = item.loadAllItems();
-        } else if (Objects.equals(filePath, CHARACTERS_JSON)){
-                character = new Gson().fromJson(reader, Character.class);
-            }
+        }
+//            else if (Objects.equals(filePath, CHARACTERS_JSON)){
+//                character = new Gson().fromJson(reader, Character.class);
+//            }
 //            else if (Objects.equals(filePath, LOCATIONS_JSON)){
 //                gameWorld = new Gson().fromJson(reader, GameMap.class);
 //                player.setCurrentLocation(gameWorld.getArea51());
@@ -326,73 +327,37 @@ public class Game {
         System.out.printf("\n%s, Your bag has: [%s] \nYou are located at: %s \nAvailable Items: %s \nDirections: %s \nLocation Info: %s\n",
                 player.getName(), player.stringOfCurrentBagItems(), currentLocation, item, directions, description);
 
-        //displayCharacter(currentLocation);
+        displayCharacter(currentLocation);
     }
 
-//    private static void displayCharacter(String currentLocation) {
-//        //initialize Characters to utilize attributes
-//        Character.NPC1 npc1 = character.getNpc1();
-//        Character.NPC2 npc2 = character.getNpc2();
-//        Character.NPC3 npc3 = character.getNpc3();
-//        Character.NPC4 npc4 = character.getNpc4();
-//        Character.NPC5 npc5 = character.getNpc5();
-//
-//
-//        if (currentLocation.equals(npc1.getLocation())) {
-//            System.out.printf("You see : %s", npc1.getName());
-//        } else if (currentLocation.equals(npc2.getLocation())) {
-//            System.out.printf("You see The : %s", npc2.getName());
-//        } else if (currentLocation.equals(npc3.getLocation())) {
-//            System.out.printf("You see The : %s", npc3.getName());
-//        } else if (currentLocation.equals(npc4.getLocation())) {
-//            System.out.printf("You see a : %s", npc4.getName());
-//        } else if (currentLocation.equals(npc5.getLocation())) {
-//            System.out.printf("You see a : %s", npc5.getName());
-//        } else {
-//            System.out.println("You see no one in this location");
-//        }
-//    }
+    private  void displayCharacter(String currentLocation) {
+        for (Map.Entry<String, Character> entry : characterMap.entrySet()) {
+            if (currentLocation.equalsIgnoreCase(entry.getKey())) {
+                System.out.printf("You see the : %s", entry.getValue().getName());
+            }
+        }
+        if(!characterMap.containsKey(currentLocation)){
+            System.out.println("You see no one in this location");
+        }
+    }
 
-    //TODO:needs refactor later
-//    private void talkToNPC(String name){
-//
-//        String currentLocation = player.getCurrentLocation().getName();
-//
-//        //initialize Characters to utilize attributes
-//        Character.NPC1 npc1 = character.getNpc1();
-//        Character.NPC2 npc2 = character.getNpc2();
-//        Character.NPC3 npc3 = character.getNpc3();
-//        Character.NPC4 npc4 = character.getNpc4();
-//        Character.NPC5 npc5 = character.getNpc5();
-//        Character.User user = character.getPlayer();
-//
-//
-//        List<String> test = user.getQuote();
-//
-//        if (name.equals(npc1.getName()) && Objects.equals(currentLocation, npc1.getLocation())) {
-//            System.out.printf("%s: %s", npc1.getName(), npc1.getQuote().get(0));
-//        } else if (name.equals(npc2.getName()) && Objects.equals(currentLocation, npc2.getLocation())) {
-//            System.out.printf("%s: %s\n", npc2.getName(), npc2.getQuote().get(0));
-//            System.out.printf("%s: %s\n", player.getName(), test.get(0));
-//
-//        } else if (name.equals(npc3.getName()) && Objects.equals(currentLocation, npc3.getLocation())) {
-//            System.out.printf("%s: %s\n", npc3.getName(), npc3.getQuote().get(0));
-//            System.out.printf("%s: %s\n", player.getName(), test.get(1));
-//
-//        } else if (name.equals(npc4.getName()) && Objects.equals(currentLocation, npc4.getLocation()))  {
-//            System.out.printf("%s: %s\n", npc4.getName(), npc4.getQuote().get(0));
-//            System.out.printf("%s: %s\n", player.getName(), test.get(2));
-//
-//        } else if (name.equals(npc5.getName()) && Objects.equals(currentLocation, npc4.getLocation()))  {
-//            System.out.printf("%s: %s\n", npc5.getName(), npc5.getQuote().get(0));
-//            System.out.printf("%s: %s\n", player.getName(), test.get(3));
-//
-//        } else {
-//            System.out.printf("No one here to talk with. %s isn't here.", name);
+    private void talkToNPC(String name){
+        //String currentLocationName = locationMap.get(player.getCurrentLocation()).getName();
+
+        for (Map.Entry<String, Character> entry : characterMap.entrySet()) {
+            if (name.equals(entry.getValue().getName())) {
+                System.out.printf("%s : %s", name, entry.getValue().getQuotes());
+                System.out.println("\nYou must [trade] an item in your bag based on the Location Info.");
+            }
+        }
+        //TODO: need to fix this
+//        else {
+//            System.out.printf("\nNo one here to talk with. %s isn't here.", name);
+//            break;
 //        }
-//        System.out.println("You must [trade] an item in your bag based on the Location Info.");
-//        view.promptEnterKey();
-//    }
+
+        view.promptEnterKey();
+    }
 }
 
 
