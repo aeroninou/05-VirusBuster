@@ -1,7 +1,7 @@
 package com.virusbuster.controller;
 
-import com.virusbuster.model.Game;
 //import com.virusbuster.model.GameMap;
+import com.virusbuster.model.Game;
 import com.virusbuster.view.View;
 
 public class Controller {
