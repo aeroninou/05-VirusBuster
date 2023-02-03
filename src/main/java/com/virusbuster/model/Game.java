@@ -261,12 +261,9 @@ public class Game {
                 System.out.println("\nYou must [trade] an item in your bag based on the Location Info.");
             }
         }
-        //TODO: need to fix this
-            if(!name.equalsIgnoreCase(characterName)){
-                System.out.printf("\nNo one here to talk with. %s isn't here.", name);
-            }
+        if(!name.equalsIgnoreCase(characterName)){
+            System.out.printf("\nNo one here to talk with. %s isn't here.", name);
+        }
         view.promptEnterKey();
     }
 }
-
-
