@@ -10,7 +10,7 @@ import java.util.List;
 public class GsonParse {
     public static void main(String[] args) {
 //        Gson gson = new Gson();
-//        try (InputStream inputStream = Location.class.getClassLoader().getResourceAsStream("data/Location.json");
+//        try (InputStream inputStream = Location.class.getClassLoader().getResourceAsStream("data/location.json");
 //             Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
 //            Type type = new TypeToken<List<Location>>(){}.getType();
 //            List<Location> location = gson.fromJson(reader,type);

@@ -32,8 +32,11 @@ public class Location {
         this.name = name;
     }
 
-    public HashMap<String, String> getDirections() {
-        return directions;
+    //receiving all json directions into lowercase
+    public Map<String, String> getDirections() {
+        return directions.entrySet().stream().
+                collect(Collectors.toMap(entry ->entry.getKey().
+                        toLowerCase(), entry->entry.getValue()));
     }
 
     public void setDirections(HashMap<String, String> directions) {
@@ -66,6 +69,7 @@ public class Location {
                 '}';
     }
 
+    //refactor create a new class with other json classes (to load the json)
     public static Map<String, Location> loadLocation(String jsonPath) {
         Gson gson = new Gson();
         try (Reader reader = new InputStreamReader(Objects.requireNonNull(Location.class.getClassLoader().

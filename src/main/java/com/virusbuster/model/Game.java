@@ -2,9 +2,8 @@ package com.virusbuster.model;
 
 
 import com.apps.util.Console;
-import com.google.gson.Gson;
 import com.virusbuster.view.View;
-import java.io.*;
+
 import java.util.*;
 
 
@@ -17,7 +16,7 @@ public class Game {
     private static final String INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE = "Invalid input,[%s, %s] please try again. Type 'help' for assistance\n";
     private static final String ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND = "Error! Enter 2 words for command.";
     private static final String ITEMS_JSON = "data/items.json";
-    private static final String LOCATIONS_JSON = "data/Location.json";
+    private static final String LOCATIONS_JSON = "data/location.json";
     private static final String CHARACTERS_JSON = "data/characters.json";
     private static final String STARTING = "Area51";
 
@@ -161,6 +160,7 @@ public class Game {
         //sets the player location
         Location currentLocation = locationMap.get(player.getCurrentLocation());
         //input from player for the next location
+
         String nextLocation = currentLocation.getDirections().get(direction);
         if (nextLocation == null) {
             System.out.println("You cannot go that way");
@@ -231,7 +231,7 @@ public class Game {
         String description = locationMap.get(currentLocation).getDescription();
         List<String> item = locationMap.get(currentLocation).getItem();
 
-        HashMap<String, String> directions = locationMap.get(currentLocation).getDirections();
+        Map<String, String> directions = locationMap.get(currentLocation).getDirections();
 
         System.out.printf("\n%s, Your bag has: [%s] \nYou are located at: %s \nAvailable Items: %s \nDirections: %s \nLocation Info: %s\n",
                 player.getName(), player.printCurrentBag(), currentLocation, item, directions, description);
@@ -251,19 +251,20 @@ public class Game {
     }
 
     private void talkToNPC(String name){
-        //String currentLocationName = locationMap.get(player.getCurrentLocation()).getName();
+        String currentLocationName = locationMap.get(player.getCurrentLocation()).getName();
+        String characterName = characterMap.get(currentLocationName).getName();
 
         for (Map.Entry<String, Character> entry : characterMap.entrySet()) {
-            if (name.equals(entry.getValue().getName())) {
+            String charName = entry.getValue().getName();
+            if (name.equalsIgnoreCase(charName)) {
                 System.out.printf("%s : %s", name, entry.getValue().getQuotes());
                 System.out.println("\nYou must [trade] an item in your bag based on the Location Info.");
             }
         }
         //TODO: need to fix this
-//        else {
-//            System.out.printf("\nNo one here to talk with. %s isn't here.", name);
-//            break;
-//        }
+            if(!name.equalsIgnoreCase(characterName)){
+                System.out.printf("\nNo one here to talk with. %s isn't here.", name);
+            }
         view.promptEnterKey();
     }
 }
