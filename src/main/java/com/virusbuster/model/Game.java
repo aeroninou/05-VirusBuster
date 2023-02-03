@@ -4,6 +4,7 @@ package com.virusbuster.model;
 import com.apps.util.Console;
 import com.virusbuster.view.View;
 
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -17,16 +18,15 @@ public class Game {
     private static final String LOCATIONS_JSON = "data/location.json";
     private static final String CHARACTERS_JSON = "data/characters.json";
     private static final String STARTING = "Area51";
-
-    //public static Character character = new Character();
     public final View view;
 
-    //public GameMap gameWorld;
     public Player player = new Player();
+    private final transient String path = "src/main/resources/gamedata/playerData.txt";
+    public transient PlayerSave playerSave = new PlayerSave(path);
 
     //loads the json
-    private final Map<String,Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
-    private final Map<String,Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
+    private final Map<String, Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
+    private final Map<String, Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
     //loads the items json
     private final Map<String, String> mapItem = Item.loadItems(ITEMS_JSON);
 
@@ -56,8 +56,7 @@ public class Game {
         }
         if (result.size() == 1 && "load".equalsIgnoreCase(verb)) {
             return result;
-        }
-        else if (result.size() != 2) {
+        } else if (result.size() != 2) {
             System.out.println(ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND);
             result.set(0, "invalid");
             view.promptEnterKey();
@@ -71,6 +70,10 @@ public class Game {
         //prompt for name and set player name
         player.setName(player.promptForName());
         player.setCurrentLocation(STARTING);
+        if (playerSave.checkPlayer(player)) {
+            view.promptToLoad();
+        }
+
         //display current location
         displayLocation(player);
         boolean inputValid = false;
@@ -87,18 +90,20 @@ public class Game {
             }
             if ("help".equalsIgnoreCase(moveCommand.get(0))) {
                 view.commandsHelp();
-            } else if ("quit".equalsIgnoreCase(moveCommand.get(0))){
+            } else if ("quit".equalsIgnoreCase(moveCommand.get(0))) {
                 view.exitMessage();
-            } else if ("map".equalsIgnoreCase(moveCommand.get(0))){
+            } else if ("map".equalsIgnoreCase(moveCommand.get(0))) {
                 view.displayEmptyMap();
+            } else if ("save".equalsIgnoreCase(moveCommand.get(0))) {
+                view.promptToSave();
+            } else if ("load".equalsIgnoreCase(moveCommand.get(0))) {
+                view.promptToLoad();
             } else {
                 executeCommand(moveCommand);
             }
             displayLocation(player);
         }
     }
-
-    //TODO:MUST CREATE LOGIC FOR JSON CASE MATCHING WITH INPUT
 
     // execute parsed command based on verb and noun
     private void executeCommand(List<String> command) {
@@ -199,8 +204,7 @@ public class Game {
         if (singleItem && isItemInCurrentLocation) {
             player.addToBag(noun);
             currentLocation.getItem().remove(noun);
-        }
-        else {
+        } else {
             System.out.printf("[%s] is not a at %s. ", noun, currentLocation.getName());
         }
     }
@@ -217,7 +221,7 @@ public class Game {
         if (singleItem && isItemInCurrentLocation) {
             System.out.printf("%s --> %s \n", noun, mapItem.get(noun));
             view.promptEnterKey();
-        } else if (singleItem && player.getBag().contains(noun)){
+        } else if (singleItem && player.getBag().contains(noun)) {
             System.out.printf("%s --> %s \n", noun, mapItem.get(noun));
             view.promptEnterKey();
         } else {
@@ -242,13 +246,13 @@ public class Game {
         displayCharacter(currentLocation);
     }
 
-    private  void displayCharacter(String currentLocation) {
+    private void displayCharacter(String currentLocation) {
         for (Map.Entry<String, Character> entry : characterMap.entrySet()) {
             if (currentLocation.equalsIgnoreCase(entry.getKey())) {
                 System.out.printf("You see the : %s", entry.getValue().getName());
             }
         }
-        if(!characterMap.containsKey(currentLocation)){
+        if (!characterMap.containsKey(currentLocation)) {
             System.out.println("You see no one in this location");
         }
     }
@@ -259,19 +263,19 @@ public class Game {
 //    }
 
 
-
-    private void talkToNPC(String name){
+    private void talkToNPC(String name) {
         String currentLocationName = locationMap.get(player.getCurrentLocation()).getName();
         String characterName = characterMap.get(currentLocationName).getName();
 
         for (Map.Entry<String, Character> entry : characterMap.entrySet()) {
             String charName = entry.getValue().getName();
-            if (name.equalsIgnoreCase(charName)) {
+            String charLocation = entry.getValue().getLocation();
+            if (name.equalsIgnoreCase(charName) && currentLocationName.equalsIgnoreCase(charLocation)) {
                 System.out.printf("%s : %s", name, entry.getValue().getQuotes());
                 System.out.println("\nYou must [trade] an item in your bag based on the Location Info.");
             }
         }
-        if(!name.equalsIgnoreCase(characterName)){
+        if (!name.equalsIgnoreCase(characterName)) {
             System.out.printf("\nNo one here to talk with. %s isn't here.", name);
         }
         view.promptEnterKey();

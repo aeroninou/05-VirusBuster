@@ -3,12 +3,13 @@ package com.virusbuster.model;
 import com.virusbuster.view.View;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
-public class Player {
+public class Player implements Serializable {
 
     //const for all string literals
     private static final String ENTER_YOUR_USERNAME_MESSAGE = "\nEnter your username?: ";
@@ -18,7 +19,6 @@ public class Player {
     private String currentLocation;
     private static final View view = new View();
     private List<String> bag = new ArrayList<>();
-
 
     public String getName() {
         return name;
@@ -53,6 +53,10 @@ public class Player {
 
     public List<String> getBag() {
         return bag;
+    }
+
+    public void setBag(List<String> bag) {
+        this.bag = bag;
     }
 
     public void addToBag(String item) {
