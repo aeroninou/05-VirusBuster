@@ -1,5 +1,5 @@
-{
-  "area51": {
+[
+  {
     "name": "Area51",
     "directions": {
       "east": "Portal Room"
@@ -7,7 +7,7 @@
     "description": "Headquarters",
     "item": []
   },
-  "portal": {
+  {
     "name": "Portal Room",
     "directions": {
       "north": "Laboratory",
@@ -18,7 +18,7 @@
     "description": "Once you grab your items, report back here to start your journey",
     "item": []
   },
-  "amazon": {
+  {
     "name": "Amazon Jungle Fever, Brazil",
     "directions": {
       "portal": "Portal Room",
@@ -31,7 +31,7 @@
       "camu camu"
     ]
   },
-  "dubai": {
+  {
     "name": "Burj Khalifa, Dubai",
     "directions": {
       "portal": "Portal Room",
@@ -44,7 +44,7 @@
       "camel milk"
     ]
   },
-  "uzbekistan": {
+  {
     "name": "Tashkent, Uzbekistan",
     "directions": {
       "portal": "Portal Room",
@@ -57,7 +57,7 @@
       "sumalak"
     ]
   },
-  "greenland": {
+  {
     "name": "Nuuk, Greenland",
     "directions": {
       "portal": "Portal Room",
@@ -70,7 +70,7 @@
       "glacier magical plant"
     ]
   },
-  "laboratory": {
+  {
     "name": "Laboratory",
     "directions": {
       "south": "Portal Room"
@@ -81,7 +81,7 @@
       "raincoat"
     ]
   },
-  "armory": {
+  {
     "name": "Armory",
     "directions": {
       "north": "Portal Room",
@@ -92,7 +92,7 @@
       "gold rolex watch"
     ]
   },
-  "cafeteria": {
+  {
     "name": "Cafeteria",
     "directions": {
       "north": "Armory"
@@ -103,8 +103,5 @@
       "bubble gum",
       "jack daniels"
     ]
-  },
-  "inventory": {
-    "item": []
   }
-}
+]
