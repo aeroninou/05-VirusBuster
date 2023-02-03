@@ -11,9 +11,7 @@ public class Game {
 
     private String verb;
     private String noun;
-    //private GameMap.LocationLayout currentLocation;
 
-    private static final String INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE = "Invalid input,[%s, %s] please try again. Type 'help' for assistance\n";
     private static final String ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND = "Error! Enter 2 words for command.";
     private static final String ITEMS_JSON = "data/items.json";
     private static final String LOCATIONS_JSON = "data/location.json";
@@ -36,7 +34,6 @@ public class Game {
     public Game(View view) {
         this.view = view;
     }
-
 
     //parsing user's inout
     public List<String> parseCommand(String wordInput) {
@@ -62,9 +59,7 @@ public class Game {
             result.set(0, "invalid");
             view.promptEnterKey();
             return result;
-
         }
-
         return result;
     }
 
