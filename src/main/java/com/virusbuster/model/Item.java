@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.Serializable;
 import java.util.List;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.Objects;
 
 
-class Item {
+class Item{
 
     private final String name;
     private final String description;

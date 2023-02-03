@@ -6,13 +6,14 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Character {
+public class Character implements Serializable {
     private String name;
     private List<String> quotes;
     private String location;
