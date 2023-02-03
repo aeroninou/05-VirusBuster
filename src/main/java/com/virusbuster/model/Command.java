@@ -7,8 +7,6 @@ public enum Command {
     LOOK("look"),
     DROP("drop"),
     TRADE("trade"),
-    BAG("bag"),
-    ENTER("enter"),
     QUIT("quit"),
     HELP("help"),
     GRAB("grab"),

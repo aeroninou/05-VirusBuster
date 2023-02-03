@@ -5,10 +5,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Location {
@@ -49,7 +46,7 @@ public class Location {
     }
 
     public List<String> getItem() {
-        return item;
+        return item.stream().map(String::toLowerCase).collect(Collectors.toList());
     }
 
     public void setItem(List<String> item) {
