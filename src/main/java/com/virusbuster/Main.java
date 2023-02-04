@@ -15,6 +15,4 @@ public class Main {
         //calling controller input asking for play or quit.
         controller.userInput();
     }
-
-
 }

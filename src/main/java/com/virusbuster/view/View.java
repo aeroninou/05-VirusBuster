@@ -3,6 +3,8 @@ package com.virusbuster.view;
 import com.apps.util.Prompter;
 import com.apps.util.Console;
 import com.virusbuster.model.Game;
+import com.virusbuster.model.GameSave;
+import com.virusbuster.model.Player;
 
 import java.io.*;
 import java.util.NoSuchElementException;
@@ -15,6 +17,8 @@ public class View {
     private static final String GAME_INSTRUCTIONS = "ascii/gameinstruction.txt";
     private static final String EXIT_MESSAGE = "ascii/exitmessage.txt";
     private static final String GAME_COMMANDS = "ascii/commandshelp.txt";
+    private static final String EMPTY_MAP = "mapImages/emptyMap.txt";
+    private static final String AREA51_MAP = "mapImages/area51Room.txt";
     private static final Prompter prompter = new Prompter(new Scanner(System.in));
 
     //const for all string literals.
@@ -23,8 +27,13 @@ public class View {
     private static final String REGEX_FOR_PLAY_OR_QUIT_PROMPT = "(?i)(P|Q|PLAY|QUIT)";
     private static final String ERROR_MESSAGE_FOR_PLAY_OR_QUIT_PROMPT = "Error...must be letter P, PLAY, Q, or QUIT";
     private static final String PRESS_ENTER_TO_CONTINUE_PROMPT_MESSAGE = "\nPress \"ENTER\" to continue...";
+    public static final String SAVE = "\nWould you like to save? Press Y|YES or N|No\n";
+    public static final String YES_NO = "(?i)(Y|N|YES|NO)";
+    public static final String INVALID_INPUT = "\nInvalid Input";
+    public static final String CONTINUE_PREVIOUS_GAME_PRESS_Y_YES_OR_N_NO = "\nWould you like to continue previous game? Press Y|YES or N|No\n";
 
     private final Game game = new Game(this);
+    public GameSave saveLoad = new GameSave(game.player);
 
 
 
@@ -39,7 +48,7 @@ public class View {
     //print exit message on quit
     public void exitMessage() {
         Console.clear();
-        //promptToSave();
+        promptToSave();
         textLoader(EXIT_MESSAGE);
         Console.pause(3000);
         Console.clear();
@@ -67,6 +76,11 @@ public class View {
         promptEnterKey();
     }
 
+    //display map for the user on "map"
+    public void displayEmptyMap() {
+        Console.clear();
+        textLoader(EMPTY_MAP);
+    }
     //loads the text files
     private void textLoader(String filepath) {
         //noinspection ConstantConditions
@@ -93,27 +107,27 @@ public class View {
             exitMessage();
         }
     }
-//    public void promptToSave() {
-//        String answer = prompt("Would you like to save? Press Y|YES or N|No",
-//                "(?i)(Y|N|YES|NO)","Invalid Input").toUpperCase();
-//
-//        if ("Y".equals(answer) || "YES".equals(answer)) {
-//            option.saveGame();
-//        } else if ("N".equals(answer) || "NO".equals(answer)) {
-//            textLoader(EXIT_MESSAGE);
-//            System.exit(0);
-//        }
-//    }
-//    public void promptToLoad() {
-//        String answer = prompt("Would you like to continue previous game? Press Y|YES or N|No",
-//                "(?i)(Y|N|YES|NO)","Invalid Input").toUpperCase();
-//
-//        if ("Y".equals(answer) || "YES".equals(answer)) {
-//            option.loadGame();
-//        } else if ("N".equals(answer) || "NO".equals(answer)) {
-//            game.startGame();
-//        }
-//    }
+    public void promptToSave() {
+        String answer = prompt(SAVE,
+                YES_NO, INVALID_INPUT).toUpperCase();
+
+        if ("Y".equals(answer) || "YES".equals(answer)) {
+            saveLoad.saveGame();
+        } else if ("N".equals(answer) || "NO".equals(answer)) {
+            textLoader(EXIT_MESSAGE);
+            System.exit(0);
+        }
+    }
+    public void promptToLoad() {
+        String answer = prompt(CONTINUE_PREVIOUS_GAME_PRESS_Y_YES_OR_N_NO,
+                YES_NO,INVALID_INPUT).toUpperCase();
+
+        if ("Y".equals(answer) || "YES".equals(answer)) {
+            saveLoad.loadGame(game.player);
+        } else if ("N".equals(answer) || "NO".equals(answer)) {
+            game.startGame();
+        }
+    }
 
 
     //create a prompt method to uses for error checking
@@ -132,5 +146,4 @@ public class View {
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
-
 }
