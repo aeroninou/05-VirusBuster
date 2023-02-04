@@ -105,7 +105,6 @@ public class Game {
         }
         view.winner();
     }
-
     // execute parsed command based on verb and noun
     private void executeCommand(List<String> command) {
         String verb = command.get(0);
