@@ -33,7 +33,8 @@ public class View {
     public static final String CONTINUE_PREVIOUS_GAME_PRESS_Y_YES_OR_N_NO = "\nWould you like to continue previous game? Press Y|YES or N|No\n";
 
     private final Game game = new Game(this);
-    public GameSave saveLoad = new GameSave(game.player);
+    //public GameSave saveLoad = new GameSave(game.player,game.locationMap.get(game.player.getCurrentLocation()));
+    public GameSave saveLoad = new GameSave(game);
 
 
 

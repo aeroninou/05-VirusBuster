@@ -12,8 +12,8 @@ public enum Command {
     GRAB("grab"),
     PICKUP("pickup"),
     TAKE("take"),
-    SAVE("save"),
-    LOAD("load"),
+//    SAVE("save"),
+//    LOAD("load"),
     MAP("map");
 
     private final String value;

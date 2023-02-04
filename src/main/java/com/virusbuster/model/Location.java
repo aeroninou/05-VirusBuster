@@ -8,17 +8,23 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Location {
+public class Location implements Serializable {
     private String name;
     private HashMap<String, String> directions;
     private String description;
     private List<String> item;
+    private String location;
 
-    public Location(String name, HashMap<String, String> directions, String description, List<String> item) {
+    public Location(){
+
+    }
+
+    public Location(String name, HashMap<String, String> directions, String description, List<String> item,String location) {
         this.name = name;
         this.directions = directions;
         this.description = description;
         this.item = item;
+        this.location=location;
     }
 
     public String getName() {
@@ -27,6 +33,10 @@ public class Location {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setLocation(String location){
+        this.location = location;
     }
 
     //receiving all json directions into lowercase
