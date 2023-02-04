@@ -4,6 +4,7 @@ package com.virusbuster.model;
 import com.apps.util.Console;
 import com.virusbuster.view.View;
 
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -20,10 +21,11 @@ public class Game {
     public final View view;
 
     public Player player = new Player();
+    public Location location = new Location();
     private final transient String path = "src/main/resources/gamedata/playerData.txt";
     public transient PlayerSave playerSave = new PlayerSave(path);
     //loads the json
-    private final Map<String,Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
+    public Map<String,Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
     //loads the charcters from json
     private final Map<String,Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
     //loads the items json
@@ -93,11 +95,13 @@ public class Game {
                 view.exitMessage();
             } else if ("map".equalsIgnoreCase(moveCommand.get(0))) {
                 view.displayEmptyMap();
-            } else if ("save".equalsIgnoreCase(moveCommand.get(0))) {
-                view.promptToSave();
-            } else if ("load".equalsIgnoreCase(moveCommand.get(0))) {
-                view.promptToLoad();
-            } else {
+            }
+//            else if ("save".equalsIgnoreCase(moveCommand.get(0))) {
+//                view.promptToSave();
+//            } else if ("load".equalsIgnoreCase(moveCommand.get(0))) {
+//                view.promptToLoad();
+//            }
+        else {
                 executeCommand(moveCommand);
             }
             displayLocation(player);
@@ -206,11 +210,11 @@ public class Game {
         boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
 
         if (singleItem && isItemInCurrentLocation) {
-            if (currentBag.size() < 5) {
+            if (currentBag.size() < 6) {
                 player.addToBag(noun);
                 currentLocation.getItem().remove(noun);
             } else {
-                System.out.println("Max number of Items in your bag is 4.");
+                System.out.println("Max number of Items in your bag is 5.");
                 view.promptEnterKey();
             }
         }

@@ -1,17 +1,22 @@
 package com.virusbuster.model;
 
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 public class GameSave {
-    private Player player;
-    public GameSave(Player player){
-        this.player=player;
+    private final Game game;
+
+    public GameSave(Game game){
+        this.game=game;
+
     }
     public void saveGame(){
         try{
             FileOutputStream saveFile = new FileOutputStream("src/main/resources/gamedata/Game.sav");
             ObjectOutputStream status = new ObjectOutputStream(saveFile);
-            status.writeObject(player);
+            status.writeObject(game.player);
+            status.writeObject(game.locationMap);
             status.flush();
             status.close();
             System.out.println("Game saved\n");
@@ -24,10 +29,12 @@ public class GameSave {
         try{
             FileInputStream loadFile = new FileInputStream("src/main/resources/gamedata/Game.sav");
             ObjectInputStream status = new ObjectInputStream(loadFile);
-            player = (Player) status.readObject();
-            this.player.setCurrentLocation(player.getCurrentLocation());
-            this.player.setName(player.getName());
-            this.player.setBag(player.getBag());
+            game.player = (Player) status.readObject();
+            //noinspection unchecked
+            game.locationMap = (Map<String, Location>) status.readObject();
+            player.setCurrentLocation(this.game.player.getCurrentLocation());
+            player.setBag(this.game.player.getBag());
+            player.setName(this.game.player.getName());
             System.out.println("Game Loaded\n");
         } catch (Exception e) {
             System.out.println("Can't load game\n");
