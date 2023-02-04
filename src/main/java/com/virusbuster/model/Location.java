@@ -49,7 +49,10 @@ public class Location {
     }
 
     public List<String> getItem() {
-        return item.stream().map(String::toLowerCase).collect(Collectors.toList());
+        for(int i=0; i<item.size(); i++){
+            item.set(i,item.get(i).toLowerCase());
+        }
+        return item;
     }
 
     public void setItem(List<String> item) {

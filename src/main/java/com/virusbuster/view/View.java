@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class View {
 
+    private static final String WINNER_TEXT = "ascii/winner.txt";
     private static final String TITLE_BANNER = "ascii/welcome.txt";
     private static final String GAME_INSTRUCTIONS = "ascii/gameinstruction.txt";
     private static final String EXIT_MESSAGE = "ascii/exitmessage.txt";
@@ -42,6 +43,13 @@ public class View {
         textLoader(EXIT_MESSAGE);
         Console.pause(3000);
         Console.clear();
+        System.exit(0);
+    }
+
+    //prints winner message.
+    public void winner(){
+        Console.clear();
+        textLoader(WINNER_TEXT);
         System.exit(0);
     }
 

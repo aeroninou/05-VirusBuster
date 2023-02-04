@@ -70,8 +70,8 @@ public class Game {
         player.setCurrentLocation(STARTING);
         //display current location
         displayLocation(player);
-        boolean inputValid = false;
-        while (!inputValid) {
+        boolean isWinner = false;
+        while (!isWinner) {
             System.out.println("\n↓");
             String moveInput = commandInput();
             List<String> moveCommand = parseCommand(moveInput);
@@ -90,10 +90,11 @@ public class Game {
                 executeCommand(moveCommand);
             }
             displayLocation(player);
+            isWinner = checkIfWinner();
         }
+        view.winner();
     }
 
-    //TODO:MUST CREATE LOGIC FOR JSON CASE MATCHING WITH INPUT
 
     // execute parsed command based on verb and noun
     private void executeCommand(List<String> command) {
@@ -117,6 +118,9 @@ public class Game {
                 break;
             case "talk":
                 talkToNPC(noun);
+                break;
+            case "trade":
+                tradeSpecialElements(noun);
                 break;
             default:
                 System.out.println("Invalid in ExecuteCommand");
@@ -183,14 +187,20 @@ public class Game {
     //gets item
     private void putItemInBag(String noun) {
         Location currentLocation = locationMap.get(player.getCurrentLocation());
+        List<String> currentBag = player.getBag();
 
 
         boolean singleItem = mapItem.containsKey(noun);
         boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
 
         if (singleItem && isItemInCurrentLocation) {
-            player.addToBag(noun);
-            currentLocation.getItem().remove(noun);
+            if (currentBag.size() < 5) {
+                player.addToBag(noun);
+                currentLocation.getItem().remove(noun);
+            } else {
+                System.out.println("Max number of Items in your bag is 4.");
+                view.promptEnterKey();
+            }
         }
         else {
             System.out.printf("[%s] is not a at %s. ", noun, currentLocation.getName());
@@ -217,6 +227,61 @@ public class Game {
         }
     }
 
+    //check if you are a winner
+    private boolean checkIfWinner(){
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
+        List<String> currentBag = player.getBag();
+
+        if (currentLocation.getName().equalsIgnoreCase("Area51")){
+            if (currentBag.contains("camu camu") && currentBag.contains("camel milk") && currentBag.contains("sumalak") && currentBag.contains("glacier magical plant")){
+                    return true;
+                }
+        }
+        return false;
+    }
+
+    //can only trade certain items for special elements.
+    //Implement commands in json instead of hard code values.
+    private void tradeSpecialElements(String noun){
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
+        List<String> currentBag = player.getBag();
+
+        boolean singleItem = mapItem.containsKey(noun);
+        boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
+
+        if (singleItem && isItemInCurrentLocation) {
+            switch (noun){
+                case "camu camu":
+                    if(currentBag.contains("zippo lighter")){
+                        dropItem("zippo lighter");
+                        putItemInBag(noun);
+                    }
+                    break;
+                case "camel milk":
+                    if(currentBag.contains("gold rolex")){
+                        dropItem("gold rolex");
+                        putItemInBag(noun);
+                    }
+                    break;
+                case "sumalak":
+                    if(currentBag.contains("bubble gum")) {
+                        dropItem("bubble gum");
+                        putItemInBag(noun);
+                    }
+                    break;
+                case "glacier magical plant":
+                    if(currentBag.contains("jack daniels") && currentBag.contains("ice container")){
+                        dropItem("jack daniels");
+                        putItemInBag(noun);
+                    }
+                    break;
+                default:
+                    System.out.println("Can't complete trade, look at clues to what items you need");
+                    break;
+            }
+        }
+    }
+
 
     public void displayLocation(Player player) {
 
@@ -237,7 +302,7 @@ public class Game {
     private  void displayCharacter(String currentLocation) {
         for (Map.Entry<String, Character> entry : characterMap.entrySet()) {
             if (currentLocation.equalsIgnoreCase(entry.getKey())) {
-                System.out.printf("You see the : %s", entry.getValue().getName());
+                System.out.printf("You see the : %s\n", entry.getValue().getName());
             }
         }
         if(!characterMap.containsKey(currentLocation)){
