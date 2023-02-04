@@ -11,7 +11,6 @@ public class Game {
 
     private String verb;
     private String noun;
-
     private static final String ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND = "Error! Enter 2 words for command.";
     private static final String ITEMS_JSON = "data/items.json";
     private static final String LOCATIONS_JSON = "data/location.json";
@@ -26,6 +25,7 @@ public class Game {
 
     //loads the json
     private final Map<String,Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
+    //loads the charcters from json
     private final Map<String,Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
     //loads the items json
     private final Map<String, String> mapItem = Item.loadItems(ITEMS_JSON);
