@@ -103,7 +103,7 @@ public class View {
 
         if ("P".equals(answer) || "PLAY".equals(answer)) {
             commandsHelp();
-            game.startGame();
+            game.checkPlayer();
         } else if ("Q".equals(answer) || "QUIT".equals(answer)) {
             exitMessage();
         }
@@ -126,7 +126,7 @@ public class View {
         if ("Y".equals(answer) || "YES".equals(answer)) {
             saveLoad.loadGame(game.player);
         } else if ("N".equals(answer) || "NO".equals(answer)) {
-            game.startGame();
+            game.gameStart();
         }
     }
 

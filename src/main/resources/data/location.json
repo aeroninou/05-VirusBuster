@@ -36,7 +36,7 @@
     "name": "Burj Khalifa, Dubai",
     "directions": {
       "portal": "Portal Room",
-      "room1": "Amazon Jungle Fever",
+      "room1": "Amazon Jungle Fever, Brazil",
       "room3": "Tashkent, Uzbekistan",
       "room4": "Nuuk, Greenland"
     },
@@ -49,7 +49,7 @@
     "name": "Tashkent, Uzbekistan",
     "directions": {
       "portal": "Portal Room",
-      "room1": "Amazon Jungle Fever",
+      "room1": "Amazon Jungle Fever, Brazil",
       "room2": "Burj Khalifa, Dubai",
       "room4": "Nuuk, Greenland"
     },
@@ -62,7 +62,7 @@
     "name": "Nuuk, Greenland",
     "directions": {
       "portal": "Portal Room",
-      "room1": "Amazon Jungle Fever",
+      "room1": "Amazon Jungle Fever, Brazil",
       "room2": "Burj Khalifa, Dubai",
       "room3": "Tashkent, Uzbekistan"
     },
