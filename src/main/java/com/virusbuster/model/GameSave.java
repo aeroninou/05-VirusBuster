@@ -17,6 +17,7 @@ public class GameSave {
             ObjectOutputStream status = new ObjectOutputStream(saveFile);
             status.writeObject(game.player);
             status.writeObject(game.locationMap);
+            status.writeObject((game.portalUse));
             status.flush();
             status.close();
             System.out.println("Game saved\n");
@@ -32,9 +33,11 @@ public class GameSave {
             game.player = (Player) status.readObject();
             //noinspection unchecked
             game.locationMap = (Map<String, Location>) status.readObject();
+            game.portalUse = (int) status.readObject();
             player.setCurrentLocation(this.game.player.getCurrentLocation());
             player.setBag(this.game.player.getBag());
             player.setName(this.game.player.getName());
+            //player.setPortalUsage(this.game.player.getPortalUsage());
             System.out.println("Game Loaded\n");
         } catch (Exception e) {
             System.out.println("Can't load game\n");
