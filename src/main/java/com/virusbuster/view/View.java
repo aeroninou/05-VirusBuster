@@ -69,6 +69,9 @@ public class View {
         promptEnterKey();
         Console.clear();
     }
+    public void gameOverMessage(){
+        textLoader(EXIT_MESSAGE);
+    }
 
     //prints out the verbs/nouns
     public void commandsHelp() {
@@ -105,7 +108,7 @@ public class View {
             commandsHelp();
             game.checkPlayer();
         } else if ("Q".equals(answer) || "QUIT".equals(answer)) {
-            exitMessage();
+            gameOverMessage();
         }
     }
     public void promptToSave() {
@@ -115,7 +118,7 @@ public class View {
         if ("Y".equals(answer) || "YES".equals(answer)) {
             saveLoad.saveGame();
         } else if ("N".equals(answer) || "NO".equals(answer)) {
-            textLoader(EXIT_MESSAGE);
+            gameOverMessage();
             System.exit(0);
         }
     }

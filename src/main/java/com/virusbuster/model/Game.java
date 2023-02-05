@@ -29,7 +29,8 @@ public class Game {
     private final Map<String, Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
     //loads the items json
     private final Map<String, String> mapItem = Item.loadItems(ITEMS_JSON);
-    public int portalUse = 0;
+    //its overriden the data from saved game.
+    public int portalUse=0;
 
 
     public Game(View view) {
@@ -113,11 +114,10 @@ public class Game {
             displayLocation(player);
             isWinner = checkIfWinner();
 
-            //TODO:need to update this
             if(portalUse == 8){
                 System.out.printf("\n%s, no more portal usage. Failed to save the world and stuck at %s",
                         player.getName(),player.getCurrentLocation());
-                view.exitMessage();
+                view.gameOverMessage();
         }
         }
         view.winner();
@@ -127,6 +127,18 @@ public class Game {
     private void executeCommand(List<String> command) {
         String verb = command.get(0);
         String noun = command.get(1);
+        //if player uses portal, increment by 1
+        switch (noun) {
+            case "room1":
+            case "room2":
+            case "room3":
+            case "room4":
+            case "portal":
+                portalUse++;
+                //player.setPortalUsage(portalUse);
+                break;
+        }
+
         switch (verb) {
             case "go":
                 move(noun);
@@ -196,16 +208,6 @@ public class Game {
             System.out.println("You cannot go that way");
         } else {
             player.setCurrentLocation(nextLocation);
-        }
-        //if player uses portal, increment by 1
-        switch (direction) {
-            case "room1":
-            case "room2":
-            case "room3":
-            case "room4":
-            case "portal":
-                portalUse++;
-                break;
         }
 
     }
@@ -289,6 +291,7 @@ public class Game {
 
         boolean singleItem = mapItem.containsKey(noun);
         boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
+
 
         if (singleItem && isItemInCurrentLocation) {
             switch (noun) {
