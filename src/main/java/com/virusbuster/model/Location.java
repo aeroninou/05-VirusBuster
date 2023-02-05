@@ -13,18 +13,13 @@ public class Location implements Serializable {
     private HashMap<String, String> directions;
     private String description;
     private List<String> item;
-    private String location;
 
-    public Location(){
 
-    }
-
-    public Location(String name, HashMap<String, String> directions, String description, List<String> item,String location) {
+    public Location(String name, HashMap<String, String> directions, String description, List<String> item) {
         this.name = name;
         this.directions = directions;
         this.description = description;
         this.item = item;
-        this.location=location;
     }
 
     public String getName() {
@@ -35,15 +30,12 @@ public class Location implements Serializable {
         this.name = name;
     }
 
-    public void setLocation(String location){
-        this.location = location;
-    }
 
     //receiving all json directions into lowercase
     public Map<String, String> getDirections() {
         return directions.entrySet().stream().
-                collect(Collectors.toMap(entry ->entry.getKey().
-                        toLowerCase(), entry->entry.getValue()));
+                collect(Collectors.toMap(entry -> entry.getKey().
+                        toLowerCase(), entry -> entry.getValue()));
     }
 
     public void setDirections(HashMap<String, String> directions) {
@@ -59,8 +51,8 @@ public class Location implements Serializable {
     }
 
     public List<String> getItem() {
-        for(int i=0; i<item.size(); i++){
-            item.set(i,item.get(i).toLowerCase());
+        for (int i = 0; i < item.size(); i++) {
+            item.set(i, item.get(i).toLowerCase());
         }
         return item;
     }
@@ -84,10 +76,11 @@ public class Location implements Serializable {
         Gson gson = new Gson();
         try (Reader reader = new InputStreamReader(Objects.requireNonNull(Location.class.getClassLoader().
                 getResourceAsStream(jsonPath)))) {
-            Type locationType = new TypeToken<List<Location>>() {}.getType();
+            Type locationType = new TypeToken<List<Location>>() {
+            }.getType();
             List<Location> locations = gson.fromJson(reader, locationType);
             return locations.stream().collect(Collectors.
-                    toMap(location -> location.getName(), location -> location ));
+                    toMap(location -> location.getName(), location -> location));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

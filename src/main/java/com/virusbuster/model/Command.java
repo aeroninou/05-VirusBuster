@@ -12,6 +12,7 @@ public enum Command {
     GRAB("grab"),
     PICKUP("pickup"),
     TAKE("take"),
+    //TODO:verify with team if we need this?
 //    SAVE("save"),
 //    LOAD("load"),
     MAP("map");

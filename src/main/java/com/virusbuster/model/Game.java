@@ -21,15 +21,15 @@ public class Game {
     public final View view;
 
     public Player player = new Player();
-    public Location location = new Location();
     private final transient String path = "src/main/resources/gamedata/playerData.txt";
     public transient PlayerSave playerSave = new PlayerSave(path);
     //loads the json
-    public Map<String,Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
+    public Map<String, Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
     //loads the charcters from json
-    private final Map<String,Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
+    private final Map<String, Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
     //loads the items json
     private final Map<String, String> mapItem = Item.loadItems(ITEMS_JSON);
+    public int portalUse = 0;
 
 
     public Game(View view) {
@@ -66,8 +66,8 @@ public class Game {
         return result;
     }
 
-    //game method
-    public void startGame() {
+
+    public void checkPlayer() {
         //prompt for name and set player name
         player.setName(player.promptForName());
         player.setCurrentLocation(STARTING);
@@ -75,10 +75,15 @@ public class Game {
             view.promptToLoad();
         }
 
-        //display current location
+        //starts the game
+        gameStart();
+    }
+
+    //game method
+    public void gameStart() {
         displayLocation(player);
         boolean isWinner = false;
-        while (!isWinner) {
+        while (!isWinner && portalUse < 9) {
             System.out.println("\n↓");
             String moveInput = commandInput();
             List<String> moveCommand = parseCommand(moveInput);
@@ -96,19 +101,28 @@ public class Game {
             } else if ("map".equalsIgnoreCase(moveCommand.get(0))) {
                 view.displayEmptyMap();
             }
+            //TODO:verify with team if we need this?
 //            else if ("save".equalsIgnoreCase(moveCommand.get(0))) {
 //                view.promptToSave();
 //            } else if ("load".equalsIgnoreCase(moveCommand.get(0))) {
 //                view.promptToLoad();
 //            }
-        else {
+            else {
                 executeCommand(moveCommand);
             }
             displayLocation(player);
             isWinner = checkIfWinner();
+
+            //TODO:need to update this
+            if(portalUse == 8){
+                System.out.printf("\n%s, no more portal usage. Failed to save the world and stuck at %s",
+                        player.getName(),player.getCurrentLocation());
+                view.exitMessage();
+        }
         }
         view.winner();
     }
+
     // execute parsed command based on verb and noun
     private void executeCommand(List<String> command) {
         String verb = command.get(0);
@@ -135,6 +149,7 @@ public class Game {
             case "trade":
                 tradeSpecialElements(noun);
                 break;
+                //TODO:is this something that we need?
             case "see":
                 //fx;
                 break;
@@ -182,6 +197,17 @@ public class Game {
         } else {
             player.setCurrentLocation(nextLocation);
         }
+        //if player uses portal, increment by 1
+        switch (direction) {
+            case "room1":
+            case "room2":
+            case "room3":
+            case "room4":
+            case "portal":
+                portalUse++;
+                break;
+        }
+
     }
 
     //drops item
@@ -217,8 +243,7 @@ public class Game {
                 System.out.println("Max number of Items in your bag is 5.");
                 view.promptEnterKey();
             }
-        }
-        else {
+        } else {
             System.out.printf("[%s] is not a at %s. ", noun, currentLocation.getName());
         }
     }
@@ -235,7 +260,7 @@ public class Game {
         if (singleItem && isItemInCurrentLocation) {
             System.out.printf("%s --> %s \n", noun, mapItem.get(noun));
             view.promptEnterKey();
-        } else if (singleItem && player.getBag().contains(noun)){
+        } else if (singleItem && player.getBag().contains(noun)) {
             System.out.printf("%s --> %s \n", noun, mapItem.get(noun));
             view.promptEnterKey();
         } else {
@@ -244,21 +269,21 @@ public class Game {
     }
 
     //check if you are a winner
-    private boolean checkIfWinner(){
+    private boolean checkIfWinner() {
         Location currentLocation = locationMap.get(player.getCurrentLocation());
         List<String> currentBag = player.getBag();
 
-        if (currentLocation.getName().equalsIgnoreCase("Area51")){
-            if (currentBag.contains("camu camu") && currentBag.contains("camel milk") && currentBag.contains("sumalak") && currentBag.contains("glacier magical plant")){
-                    return true;
-                }
+        if (currentLocation.getName().equalsIgnoreCase("Area51")) {
+            if (currentBag.contains("camu camu") && currentBag.contains("camel milk") && currentBag.contains("sumalak") && currentBag.contains("glacier magical plant")) {
+                return true;
+            }
         }
         return false;
     }
 
     //can only trade certain items for special elements.
     //Implement commands in json instead of hard code values.
-    private void tradeSpecialElements(String noun){
+    private void tradeSpecialElements(String noun) {
         Location currentLocation = locationMap.get(player.getCurrentLocation());
         List<String> currentBag = player.getBag();
 
@@ -266,27 +291,27 @@ public class Game {
         boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
 
         if (singleItem && isItemInCurrentLocation) {
-            switch (noun){
+            switch (noun) {
                 case "camu camu":
-                    if(currentBag.contains("zippo lighter")){
+                    if (currentBag.contains("zippo lighter")) {
                         dropItem("zippo lighter");
                         putItemInBag(noun);
                     }
                     break;
                 case "camel milk":
-                    if(currentBag.contains("gold rolex")){
+                    if (currentBag.contains("gold rolex")) {
                         dropItem("gold rolex");
                         putItemInBag(noun);
                     }
                     break;
                 case "sumalak":
-                    if(currentBag.contains("bubble gum")) {
+                    if (currentBag.contains("bubble gum")) {
                         dropItem("bubble gum");
                         putItemInBag(noun);
                     }
                     break;
                 case "glacier magical plant":
-                    if(currentBag.contains("jack daniels") && currentBag.contains("ice container")){
+                    if (currentBag.contains("jack daniels") && currentBag.contains("ice container")) {
                         dropItem("jack daniels");
                         putItemInBag(noun);
                     }
@@ -306,11 +331,14 @@ public class Game {
         String currentLocation = player.getCurrentLocation();
         String description = locationMap.get(currentLocation).getDescription();
         List<String> item = locationMap.get(currentLocation).getItem();
-
         Map<String, String> directions = locationMap.get(currentLocation).getDirections();
 
-        System.out.printf("\n%s, Your bag has: [%s] \nYou are located at: %s \nAvailable Items: %s \nDirections: %s \nLocation Info: %s\n",
-                player.getName(), player.printCurrentBag(), currentLocation, item, directions, description);
+        System.out.printf("\n%s, Your bag has: [%s] " +
+                        "\nYou are located at: %s " +
+                        "\nAvailable Items: %s " +
+                        "\nDirections: %s \nLocation Info: %s\n" +
+                        "Portal Usage: %s\n",
+                player.getName(), player.printCurrentBag(), currentLocation, item, directions, description, portalUse);
 
         displayCharacter(currentLocation);
     }
@@ -326,7 +354,7 @@ public class Game {
         }
     }
 
-    private void talkToNPC(String name){
+    private void talkToNPC(String name) {
         String currentLocationName = locationMap.get(player.getCurrentLocation()).getName();
         String characterName = characterMap.get(currentLocationName).getName();
 
