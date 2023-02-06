@@ -7,10 +7,15 @@ public enum Command {
     LOOK("look"),
     DROP("drop"),
     TRADE("trade"),
-    BAG("bag"),
-    ENTER("enter"),
     QUIT("quit"),
-    HELP("help");
+    HELP("help"),
+    GRAB("grab"),
+    PICKUP("pickup"),
+    TAKE("take"),
+    //TODO:verify with team if we need this?
+//    SAVE("save"),
+//    LOAD("load"),
+    MAP("map");
 
     private final String value;
 

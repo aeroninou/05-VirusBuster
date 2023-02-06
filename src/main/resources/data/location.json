@@ -1,5 +1,5 @@
-{
-  "area51": {
+[
+  {
     "name": "Area51",
     "directions": {
       "east": "Portal Room"
@@ -7,7 +7,7 @@
     "description": "Headquarters",
     "item": []
   },
-  "portal": {
+  {
     "name": "Portal Room",
     "directions": {
       "north": "Laboratory",
@@ -18,7 +18,7 @@
     "description": "Once you grab your items, report back here to start your journey",
     "item": []
   },
-  "amazon": {
+  {
     "name": "Amazon Jungle Fever, Brazil",
     "directions": {
       "portal": "Portal Room",
@@ -30,12 +30,13 @@
     "item": [
       "camu camu"
     ]
+
   },
-  "dubai": {
+  {
     "name": "Burj Khalifa, Dubai",
     "directions": {
       "portal": "Portal Room",
-      "room1": "Amazon Jungle Fever",
+      "room1": "Amazon Jungle Fever, Brazil",
       "room3": "Tashkent, Uzbekistan",
       "room4": "Nuuk, Greenland"
     },
@@ -44,11 +45,11 @@
       "camel milk"
     ]
   },
-  "uzbekistan": {
+  {
     "name": "Tashkent, Uzbekistan",
     "directions": {
       "portal": "Portal Room",
-      "room1": "Amazon Jungle Fever",
+      "room1": "Amazon Jungle Fever, Brazil",
       "room2": "Burj Khalifa, Dubai",
       "room4": "Nuuk, Greenland"
     },
@@ -57,11 +58,11 @@
       "sumalak"
     ]
   },
-  "greenland": {
+  {
     "name": "Nuuk, Greenland",
     "directions": {
       "portal": "Portal Room",
-      "room1": "Amazon Jungle Fever",
+      "room1": "Amazon Jungle Fever, Brazil",
       "room2": "Burj Khalifa, Dubai",
       "room3": "Tashkent, Uzbekistan"
     },
@@ -70,7 +71,7 @@
       "glacier magical plant"
     ]
   },
-  "laboratory": {
+  {
     "name": "Laboratory",
     "directions": {
       "south": "Portal Room"
@@ -81,7 +82,7 @@
       "raincoat"
     ]
   },
-  "armory": {
+  {
     "name": "Armory",
     "directions": {
       "north": "Portal Room",
@@ -89,10 +90,10 @@
     },
     "description": "Soldiers cleaning out their equipment.. ",
     "item": [
-      "gold rolex watch"
+      "gold rolex"
     ]
   },
-  "cafeteria": {
+  {
     "name": "Cafeteria",
     "directions": {
       "north": "Armory"
@@ -103,8 +104,5 @@
       "bubble gum",
       "jack daniels"
     ]
-  },
-  "inventory": {
-    "item": []
   }
-}
+]

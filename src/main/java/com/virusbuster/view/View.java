@@ -4,19 +4,26 @@ import com.apps.util.Prompter;
 import com.apps.util.Console;
 import com.virusbuster.model.Game;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class View {
 
+    private static final String WINNER_TEXT = "ascii/winner.txt";
     private static final String TITLE_BANNER = "ascii/welcome.txt";
     private static final String GAME_INSTRUCTIONS = "ascii/gameinstruction.txt";
     private static final String EXIT_MESSAGE = "ascii/exitmessage.txt";
     private static final String GAME_COMMANDS = "ascii/commandshelp.txt";
+    private static final String EMPTY_MAP = "mapImages/emptyMap.txt";
+    private static final String AREA51_MAP = "mapImages/area51Room.txt";
+    private static final String LABORATORY_MAP = "mapImages/labMap.txt";
+    private static final String PORTAL_ROOM_MAP = "mapImages/portalRoom.txt";
+    private static final String ARMORY_MAP = "mapImages/armoryRoom.txt";
+    private static final String CAFETERIA_MAP = "mapImages/cafeteriaRoom.txt";
+    private static final String AMAZON_JUNGLE_MAP = "mapImages/amazonJungleRoom.txt";
+    private static final String DUBAI_MAP = "mapImages/dubaiRoom.txt";
+    private static final String UZBEKIZTAN_MAP = "mapImages/uzbekiRoom.txt";
+    private static final String GREENLAND_MAP = "mapImages/greenlandRoom.txt";
     private static final Prompter prompter = new Prompter(new Scanner(System.in));
 
     //const for all string literals.
@@ -24,7 +31,11 @@ public class View {
     private static final String ENTER_P_PLAY_OR_Q_QUIT_PROMPT_MESSAGE = "\nEnter 'P'/Play or 'Q'/Quit?: ";
     private static final String REGEX_FOR_PLAY_OR_QUIT_PROMPT = "(?i)(P|Q|PLAY|QUIT)";
     private static final String ERROR_MESSAGE_FOR_PLAY_OR_QUIT_PROMPT = "Error...must be letter P, PLAY, Q, or QUIT";
-    private static final String PRESS_ENTER_TO_CONTINUE_PROMPT_MESSAGE = "Press \"ENTER\" to continue...";
+    private static final String PRESS_ENTER_TO_CONTINUE_PROMPT_MESSAGE = "\nPress \"ENTER\" to continue...";
+    public static final String SAVE = "\nWould you like to save? Press Y|YES or N|No\n";
+    public static final String YES_NO = "(?i)(Y|N|YES|NO)";
+    public static final String INVALID_INPUT = "\nInvalid Input";
+    public static final String CONTINUE_PREVIOUS_GAME_PRESS_Y_YES_OR_N_NO = "\nWould you like to continue previous game? Press Y|YES or N|No\n";
 
     private final Game game = new Game(this);
 
@@ -43,6 +54,14 @@ public class View {
         textLoader(EXIT_MESSAGE);
         Console.pause(3000);
         Console.clear();
+        System.exit(0);
+    }
+
+    //prints winner message.
+    public void winner() {
+        Console.clear();
+        textLoader(WINNER_TEXT);
+        System.exit(0);
     }
 
     //prints out game instructions
@@ -52,6 +71,10 @@ public class View {
         Console.clear();
     }
 
+    public void gameOverMessage() {
+        textLoader(EXIT_MESSAGE);
+    }
+
     //prints out the verbs/nouns
     public void commandsHelp() {
         Console.clear();
@@ -59,8 +82,54 @@ public class View {
         promptEnterKey();
     }
 
+    //display map for the user on "map"
+    public void displayEmptyMap() {
+        Console.clear();
+        textLoader(EMPTY_MAP);
+    }
+
+    //TODO: Create a MAP class and map json file for ticket 178
+    //display map based on user current location
+
+    public void displayArea51Map() {
+        textLoader(AREA51_MAP);
+    }
+
+    public void displayPortalRoomMap() {
+        textLoader(PORTAL_ROOM_MAP);
+    }
+
+    public void displayLabMap() {
+        textLoader(LABORATORY_MAP);
+    }
+
+    public void displayArmoryMap() {
+        textLoader(ARMORY_MAP);
+    }
+
+    public void displayCafeMap() {
+        textLoader(CAFETERIA_MAP);
+    }
+
+    public void displayAmazonJungleMap() {
+        textLoader(AMAZON_JUNGLE_MAP);
+    }
+
+    public void displayDubaiMap() {
+        textLoader(DUBAI_MAP);
+    }
+
+    public void displayUzbekiMap() {
+        textLoader(UZBEKIZTAN_MAP);
+    }
+
+    public void displayGreenlandMap() {
+        textLoader(GREENLAND_MAP);
+    }
+
+
     //loads the text files
-    private void textLoader(String filepath) {
+    public void textLoader(String filepath) {
         //noinspection ConstantConditions
         try (InputStream inputStream = View.class.getClassLoader().getResourceAsStream(filepath);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
@@ -80,9 +149,9 @@ public class View {
 
         if ("P".equals(answer) || "PLAY".equals(answer)) {
             commandsHelp();
-            game.startGame();
+            game.checkPlayer();
         } else if ("Q".equals(answer) || "QUIT".equals(answer)) {
-            exitMessage();
+            gameOverMessage();
         }
     }
 
@@ -102,5 +171,4 @@ public class View {
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
-
 }
