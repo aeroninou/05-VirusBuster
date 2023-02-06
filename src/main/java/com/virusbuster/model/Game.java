@@ -322,8 +322,12 @@ public class Game {
                     break;
                 default:
                     System.out.println("Can't complete trade, look at clues to what items you need");
+                    view.promptEnterKey();
                     break;
             }
+        } else {
+            System.out.println("Can't complete trade, look at clues to what items you need");
+            view.promptEnterKey();
         }
     }
 
