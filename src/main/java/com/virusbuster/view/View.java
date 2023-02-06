@@ -4,11 +4,9 @@ import com.apps.util.Prompter;
 import com.apps.util.Console;
 import com.virusbuster.model.Game;
 import com.virusbuster.model.GameSave;
-import com.virusbuster.model.Player;
 
 import java.io.*;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class View {
 
@@ -19,6 +17,14 @@ public class View {
     private static final String GAME_COMMANDS = "ascii/commandshelp.txt";
     private static final String EMPTY_MAP = "mapImages/emptyMap.txt";
     private static final String AREA51_MAP = "mapImages/area51Room.txt";
+    private static final String LABORATORY_MAP = "mapImages/labMap.txt";
+    private static final String PORTAL_ROOM_MAP = "mapImages/portalRoom.txt";
+    private static final String ARMORY_MAP = "mapImages/armoryRoom.txt";
+    private static final String CAFETERIA_MAP = "mapImages/cafeteriaRoom.txt";
+    private static final String AMAZON_JUNGLE_MAP = "mapImages/amazonJungleRoom.txt";
+    private static final String DUBAI_MAP = "mapImages/dubaiRoom.txt";
+    private static final String UZBEKIZTAN_MAP = "mapImages/uzbekiRoom.txt";
+    private static final String GREENLAND_MAP = "mapImages/greenlandRoom.txt";
     private static final Prompter prompter = new Prompter(new Scanner(System.in));
 
     //const for all string literals.
@@ -35,7 +41,6 @@ public class View {
     private final Game game = new Game(this);
     //public GameSave saveLoad = new GameSave(game.player,game.locationMap.get(game.player.getCurrentLocation()));
     public GameSave saveLoad = new GameSave(game);
-
 
 
     //welcome the player with a title/splash screen
@@ -57,7 +62,7 @@ public class View {
     }
 
     //prints winner message.
-    public void winner(){
+    public void winner() {
         Console.clear();
         textLoader(WINNER_TEXT);
         System.exit(0);
@@ -69,7 +74,8 @@ public class View {
         promptEnterKey();
         Console.clear();
     }
-    public void gameOverMessage(){
+
+    public void gameOverMessage() {
         textLoader(EXIT_MESSAGE);
     }
 
@@ -85,8 +91,49 @@ public class View {
         Console.clear();
         textLoader(EMPTY_MAP);
     }
+
+    //TODO: Create a MAP class and map json file for ticket 178
+    //display map based on user current location
+
+    public void displayArea51Map() {
+        textLoader(AREA51_MAP);
+    }
+
+    public void displayPortalRoomMap() {
+        textLoader(PORTAL_ROOM_MAP);
+    }
+
+    public void displayLabMap() {
+        textLoader(LABORATORY_MAP);
+    }
+
+    public void displayArmoryMap() {
+        textLoader(ARMORY_MAP);
+    }
+
+    public void displayCafeMap() {
+        textLoader(CAFETERIA_MAP);
+    }
+
+    public void displayAmazonJungleMap() {
+        textLoader(AMAZON_JUNGLE_MAP);
+    }
+
+    public void displayDubaiMap() {
+        textLoader(DUBAI_MAP);
+    }
+
+    public void displayUzbekiMap() {
+        textLoader(UZBEKIZTAN_MAP);
+    }
+
+    public void displayGreenlandMap() {
+        textLoader(GREENLAND_MAP);
+    }
+
+
     //loads the text files
-    private void textLoader(String filepath) {
+    public void textLoader(String filepath) {
         //noinspection ConstantConditions
         try (InputStream inputStream = View.class.getClassLoader().getResourceAsStream(filepath);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
