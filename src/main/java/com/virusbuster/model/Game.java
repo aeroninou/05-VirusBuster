@@ -22,15 +22,12 @@ public class Game {
     public final View view;
 
     public Player player = new Player();
-    private final transient String path = "src/main/resources/gamedata/playerData.txt";
-    public transient PlayerSave playerSave = new PlayerSave(path);
     //loads the json
-    public Map<String, Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
+    private final Map<String, Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
     //loads the charcters from json
     private final Map<String, Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
     //loads the items json
     private final Map<String, String> mapItem = Item.loadItems(ITEMS_JSON);
-    //its overriden the data from saved game.
     public int portalUse=0;
 
 
@@ -53,12 +50,6 @@ public class Game {
         }
         if (result.size() == 1 && "map".equalsIgnoreCase(verb)) {
             return result;
-        }
-        if (result.size() == 1 && "save".equalsIgnoreCase(verb)) {
-            return result;
-        }
-        if (result.size() == 1 && "load".equalsIgnoreCase(verb)) {
-            return result;
         } else if (result.size() != 2) {
             System.out.println(ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND);
             result.set(0, "invalid");
@@ -73,10 +64,6 @@ public class Game {
         //prompt for name and set player name
         player.setName(player.promptForName());
         player.setCurrentLocation(STARTING);
-        if (playerSave.checkPlayer(player)) {
-            view.promptToLoad();
-        }
-
         //starts the game
         gameStart();
     }

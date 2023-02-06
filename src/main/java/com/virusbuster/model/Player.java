@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class Player implements Serializable {
+public class Player {
 
     //const for all string literals
     private static final String ENTER_YOUR_USERNAME_MESSAGE = "\nEnter your username?: ";
