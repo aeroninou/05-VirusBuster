@@ -1,3 +1,4 @@
+
 package com.virusbuster.model;
 
 
@@ -118,7 +119,7 @@ public class Game {
                 System.out.printf("\n%s, no more portal usage. Failed to save the world and stuck at %s",
                         player.getName(),player.getCurrentLocation());
                 view.gameOverMessage();
-        }
+            }
         }
         view.winner();
     }
@@ -161,7 +162,7 @@ public class Game {
             case "trade":
                 tradeSpecialElements(noun);
                 break;
-                //TODO:is this something that we need?
+            //TODO:is this something that we need?
             case "see":
                 //fx;
                 break;
@@ -326,7 +327,6 @@ public class Game {
         }
     }
 
-
     public void displayLocation(Player player) {
 
         //will clear at the top and print the location
@@ -338,12 +338,41 @@ public class Game {
 
         System.out.printf("\n%s, Your bag has: [%s] " +
                         "\nYou are located at: %s " +
+                        "\nThis is your current position inside the map: " +
                         "\nAvailable Items: %s " +
                         "\nDirections: %s \nLocation Info: %s\n" +
                         "Portal Usage: %s\n",
                 player.getName(), player.printCurrentBag(), currentLocation, item, directions, description, portalUse);
 
+        if (Objects.equals(currentLocation, "Area51")) {
+            view.displayArea51Map();
+        }
+        if (Objects.equals(currentLocation, "Portal Room")) {
+            view.displayPortalRoomMap();
+        }
+        if (Objects.equals(currentLocation, "Amazon Jungle Fever, Brazil")) {
+            view.displayAmazonJungleMap();
+        }
+        if (Objects.equals(currentLocation, "Burj Khalifa, Dubai")) {
+            view.displayDubaiMap();
+        }
+        if (Objects.equals(currentLocation, "Tashkent, Uzbekistan")) {
+            view.displayUzbekiMap();
+        }
+        if (Objects.equals(currentLocation, "Nuuk, Greenland")) {
+            view.displayGreenlandMap();
+        }
+        if (Objects.equals(currentLocation, "Laboratory")) {
+            view.displayLabMap();
+        }
+        if (Objects.equals(currentLocation, "Armory")) {
+            view.displayArmoryMap();
+        }
+        if (Objects.equals(currentLocation, "Cafeteria")) {
+            view.displayCafeMap();
+        }
         displayCharacter(currentLocation);
+
     }
 
     private void displayCharacter(String currentLocation) {
