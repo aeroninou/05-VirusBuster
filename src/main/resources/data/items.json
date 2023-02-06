@@ -1,50 +1,42 @@
-{
-  "zippolighter": {
-      "name": "zippo lighter",
-      "description": "This seems useful to start fire in a jungle..."
-    },
-  "bubblegum":{
-      "name": "bubble gum",
-      "description": "mmm...I love myself some bubble gum."
-    },
-  "jackdaniels":{
-      "name": "jack daniels",
-      "description": "This might be useful, when I get cold.."
-    },
-  "icecontainer":{
-      "name": "ice container",
-      "description": "mmm...I wonder if this is to contain something cold.."
-    },
-  "raincoat":{
-      "name": "raincoat",
-      "description": "Depending where I go, it might rain like cats and dogs."
-    },
-  "goldrolexwatch":{
-      "name": "gold rolex watch",
-      "description": "well, maybe someone might like gold..."
-    },
-  "camucamu": {
+[
+  {
+    "name": "zippo lighter",
+    "description": "This seems useful to start fire in a jungle..."
+  },
+  {
+    "name": "bubble gum",
+    "description": "mmm...I love myself some bubble gum."
+  },
+  {
+    "name": "jack daniels",
+    "description": "This might be useful, when I get cold.."
+  },
+  {
+    "name": "ice container",
+    "description": "mmm...I wonder if this is to contain something cold.."
+  },
+  {
+    "name": "raincoat",
+    "description": "Depending where I go, it might rain like cats and dogs."
+  },
+  {
+    "name": "gold rolex",
+    "description": "well, maybe someone might like gold..."
+  },
+  {
     "name": "camu camu",
     "description": "This is a forbidden fruit that is protected by the Amazonian tribe"
   },
-  "camelmilk":{
+  {
     "name": "camel milk",
     "description": "This milk brings every prince at yard!"
   },
-  "sumalak":{
+  {
     "name": "sumalak",
     "description": "You can only find this pudding during spring ritual"
   },
-  "glaciermagicalplant":{
+  {
     "name": "glacier magical plant",
     "description": "This rare plant needs to be transported in a temperature controlled container"
   }
-}
-
-
-
-
-
-
-
-
+]

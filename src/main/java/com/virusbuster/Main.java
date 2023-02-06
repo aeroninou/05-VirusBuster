@@ -1,8 +1,9 @@
+
 package com.virusbuster;
 
 import com.virusbuster.controller.Controller;
-import com.virusbuster.model.Game;
 //import com.virusbuster.model.GameMap;
+import com.virusbuster.model.Game;
 import com.virusbuster.view.View;
 
 public class Main {
@@ -15,6 +16,4 @@ public class Main {
         //calling controller input asking for play or quit.
         controller.userInput();
     }
-
-
 }

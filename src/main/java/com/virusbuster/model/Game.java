@@ -1,11 +1,11 @@
+
 package com.virusbuster.model;
 
 
 import com.apps.util.Console;
-import com.google.gson.Gson;
 import com.virusbuster.view.View;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -13,26 +13,27 @@ public class Game {
 
     private String verb;
     private String noun;
-    private GameMap.LocationLayout currentLocation;
 
-    private static final String INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE = "Invalid input,[%s, %s] please try again. Type 'help' for assistance\n";
     private static final String ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND = "Error! Enter 2 words for command.";
     private static final String ITEMS_JSON = "data/items.json";
     private static final String LOCATIONS_JSON = "data/location.json";
     private static final String CHARACTERS_JSON = "data/characters.json";
-    public List<GameItem.ItemInformation> gameItems;
-    public static Character character = new Character();
+    private static final String STARTING = "Area51";
     public final View view;
-    public static GameItem item = new GameItem();
-    public GameMap gameWorld;
+
     public Player player = new Player();
+    //loads the json
+    private final Map<String, Location> locationMap = Location.loadLocation(LOCATIONS_JSON);
+    //loads the charcters from json
+    private final Map<String, Character> characterMap = Character.loadCharacter(CHARACTERS_JSON);
+    //loads the items json
+    private final Map<String, String> mapItem = Item.loadItems(ITEMS_JSON);
+    public int portalUse=0;
+
 
     public Game(View view) {
         this.view = view;
     }
-
-    private List<String> items = new ArrayList<>(Arrays.asList("camu camu", "camel milk", "sumalak", "raincoat", "glacier magical plant",
-            "bubble gum", "jack daniels", "ice container", "gold rolex watch", "zippo lighter", "east", "west", "north", "south", "room1", "room2", "room3", "room4"));
 
     //parsing user's inout
     public List<String> parseCommand(String wordInput) {
@@ -47,33 +48,31 @@ public class Game {
         if (result.size() == 1 && "quit".equalsIgnoreCase(verb)) {
             return result;
         }
-        else if (result.size() != 2) {
+        if (result.size() == 1 && "map".equalsIgnoreCase(verb)) {
+            return result;
+        } else if (result.size() != 2) {
             System.out.println(ERROR_MESSAGE_ENTER_2_WORDS_FOR_COMMAND);
             result.set(0, "invalid");
             view.promptEnterKey();
             return result;
-
-        }
-
-        //checking both inputs if either one is invalid will print message and assign 0 index to invalid.
-        if ( verb == null || !items.contains(result.get(1))) {
-            System.out.printf(INVALID_INPUT_TRY_AGAIN_TYPE_HELP_FOR_ASSISTANCE, result.get(0), result.get(1));
-
-            result.set(0, "invalid");
-            view.promptEnterKey();
         }
         return result;
     }
 
-    //game method
-    public void startGame() {
+
+    public void checkPlayer() {
         //prompt for name and set player name
         player.setName(player.promptForName());
-        loadsLocation();
-        //display current location
+        player.setCurrentLocation(STARTING);
+        //starts the game
+        gameStart();
+    }
+
+    //game method
+    public void gameStart() {
         displayLocation(player);
-        boolean inputValid = false;
-        while (!inputValid) {
+        boolean isWinner = false;
+        while (!isWinner && portalUse < 9) {
             System.out.println("\n↓");
             String moveInput = commandInput();
             List<String> moveCommand = parseCommand(moveInput);
@@ -86,25 +85,56 @@ public class Game {
             }
             if ("help".equalsIgnoreCase(moveCommand.get(0))) {
                 view.commandsHelp();
-            } else if ("quit".equalsIgnoreCase(moveCommand.get(0))){
+            } else if ("quit".equalsIgnoreCase(moveCommand.get(0))) {
                 view.exitMessage();
-                System.exit(0);
-            } else {
+            } else if ("map".equalsIgnoreCase(moveCommand.get(0))) {
+                view.displayEmptyMap();
+            }
+            //TODO:verify with team if we need this?
+//            else if ("save".equalsIgnoreCase(moveCommand.get(0))) {
+//                view.promptToSave();
+//            } else if ("load".equalsIgnoreCase(moveCommand.get(0))) {
+//                view.promptToLoad();
+//            }
+            else {
                 executeCommand(moveCommand);
             }
             displayLocation(player);
+            isWinner = checkIfWinner();
+
+            if(portalUse == 8){
+                System.out.printf("\n%s, no more portal usage. Failed to save the world and stuck at %s",
+                        player.getName(),player.getCurrentLocation());
+                view.gameOverMessage();
+            }
         }
+        view.winner();
     }
 
     // execute parsed command based on verb and noun
     private void executeCommand(List<String> command) {
         String verb = command.get(0);
         String noun = command.get(1);
+        //if player uses portal, increment by 1
+        switch (noun) {
+            case "room1":
+            case "room2":
+            case "room3":
+            case "room4":
+            case "portal":
+                portalUse++;
+                //player.setPortalUsage(portalUse);
+                break;
+        }
+
         switch (verb) {
             case "go":
                 move(noun);
                 break;
             case "get":
+            case "grab":
+            case "pickup":
+            case "take":
                 putItemInBag(noun);
                 break;
             case "drop":
@@ -112,6 +142,41 @@ public class Game {
                 break;
             case "look":
                 lookItem(noun);
+                break;
+            case "talk":
+                talkToNPC(noun);
+                break;
+            case "trade":
+                tradeSpecialElements(noun);
+                break;
+            case "see":
+                if (Objects.equals(player.getCurrentLocation(), "Area51")) {
+                    view.displayArea51Map();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Portal Room")) {
+                    view.displayPortalRoomMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Amazon Jungle Fever, Brazil")) {
+                    view.displayAmazonJungleMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Burj Khalifa, Dubai")) {
+                    view.displayDubaiMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Tashkent, Uzbekistan")) {
+                    view.displayUzbekiMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Nuuk, Greenland")) {
+                    view.displayGreenlandMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Laboratory")) {
+                    view.displayLabMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Armory")) {
+                    view.displayArmoryMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Cafeteria")) {
+                    view.displayCafeMap();
+                }
                 break;
             default:
                 System.out.println("Invalid in ExecuteCommand");
@@ -141,163 +206,189 @@ public class Game {
         return sc.nextLine();
     }
 
-    //loads the location from location.json(parsing it)
-    private void loadsLocation() {
-        jsonLoader(LOCATIONS_JSON);
-        loadCharacter();
-        loadItemsFromJSONFile();
-    }
-
-    //loads the Characters from characters.json
-    private void loadCharacter() {
-        jsonLoader(CHARACTERS_JSON);
-    }
-
-    //loads all items from JSON file.
-    private void loadItemsFromJSONFile() {
-        jsonLoader(ITEMS_JSON);
-    }
-
-    //loads the json via different filepath
-    private void jsonLoader(String filePath) {
-        //noinspection ConstantConditions
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
-             Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            if(Objects.equals(filePath, ITEMS_JSON)){
-                item = new Gson().fromJson(reader, GameItem.class);
-                gameItems = item.loadAllItems();
-        } else if (Objects.equals(filePath, CHARACTERS_JSON)){
-                character = new Gson().fromJson(reader, Character.class);
-            } else if (Objects.equals(filePath, LOCATIONS_JSON)){
-                gameWorld = new Gson().fromJson(reader, GameMap.class);
-                player.setCurrentLocation(gameWorld.getArea51());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /* Action verb methods */
 
     //sets the new location of the player
     private void move(String direction) {
+
         //sets the player location
-        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
         //input from player for the next location
-        GameMap.LocationLayout nextLocation = gameWorld.getLocation(currentLocation.getDirections().get(direction));
+
+        String nextLocation = currentLocation.getDirections().get(direction);
         if (nextLocation == null) {
             System.out.println("You cannot go that way");
         } else {
             player.setCurrentLocation(nextLocation);
         }
+
     }
 
     //drops item
     private void dropItem(String noun) {
-        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
-        List<GameItem.ItemInformation> bag = player.getBag();
-        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
-        if (bag == null || bag.size() == 0) {
+
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
+        List<String> currentBag = player.getBag();
+
+        if (currentBag == null || currentBag.size() == 0) {
             System.out.println("Nothing to drop");
-        } else if (singleItem == null) {
-            System.out.printf("Can't pick this %s at %s.", noun, currentLocation);
-        } else if (bag.contains(singleItem)) {
-            player.dropFromBag(singleItem);
-            currentLocation.getItems().add(noun);
+        } else if (currentBag.contains(noun)) {
+            player.dropFromBag(noun);
+            currentLocation.getItem().add(noun);
         } else {
-            System.out.printf("[%s] is not a valid command at %s. ", noun, currentLocation);
+            System.out.printf("[%s] is not a valid command at %s. ", noun, currentLocation.getName());
         }
     }
 
     //gets item
     private void putItemInBag(String noun) {
-        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
-        List<String> itemList = player.getCurrentLocation().getItems();
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
+        List<String> currentBag = player.getBag();
 
-        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
 
-        if (singleItem == null) {
-            System.out.printf("Can't pick this %s at %s.", noun, currentLocation);
+        boolean singleItem = mapItem.containsKey(noun);
+        boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
 
-        } else if (itemList.contains(noun)){
-
-            player.addToBag(singleItem);
-
-            for (int i = 0; i < itemList.size(); i++){
-                if (noun.equalsIgnoreCase(itemList.get(i))){
-                    currentLocation.getItems().remove(i);
-                }
+        if (singleItem && isItemInCurrentLocation) {
+            if (currentBag.size() < 6) {
+                player.addToBag(noun);
+                currentLocation.getItem().remove(noun);
+            } else {
+                System.out.println("Max number of Items in your bag is 5.");
+                view.promptEnterKey();
             }
-        }
-        else {
-            System.out.printf("[%s] is not a valid command at %s. ", noun, currentLocation);
+        } else {
+            System.out.printf("[%s] is not a at %s. ", noun, currentLocation.getName());
         }
     }
 
+
     //look function
     private void lookItem(String noun) {
-        GameMap.LocationLayout currentLocation = player.getCurrentLocation();
-        List<String> itemList = player.getCurrentLocation().getItems();
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
 
-        GameItem.ItemInformation singleItem = findTheItemByNoun(noun);
+        boolean singleItem = mapItem.containsKey(noun);
+        boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
 
-        if (singleItem == null) {
-            System.out.printf("Can't find %s at %s.", noun, currentLocation);
+
+        if (singleItem && isItemInCurrentLocation) {
+            System.out.printf("%s --> %s \n", noun, mapItem.get(noun));
+            view.promptEnterKey();
+        } else if (singleItem && player.getBag().contains(noun)) {
+            System.out.printf("%s --> %s \n", noun, mapItem.get(noun));
+            view.promptEnterKey();
+        } else {
+            System.out.printf("Can't look at [%s], item not at %s or in your bag.", noun, currentLocation.getName());
         }
-        else if (itemList.contains(noun)) {
-            System.out.printf("%s --> %s \n", noun, singleItem.getDescription());
+    }
+
+    //check if you are a winner
+    private boolean checkIfWinner() {
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
+        List<String> currentBag = player.getBag();
+
+        if (currentLocation.getName().equalsIgnoreCase("Area51")) {
+            if (currentBag.contains("camu camu") && currentBag.contains("camel milk") && currentBag.contains("sumalak") && currentBag.contains("glacier magical plant")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //can only trade certain items for special elements.
+    //Implement commands in json instead of hard code values.
+    private void tradeSpecialElements(String noun) {
+        Location currentLocation = locationMap.get(player.getCurrentLocation());
+        List<String> currentBag = player.getBag();
+
+        boolean singleItem = mapItem.containsKey(noun);
+        boolean isItemInCurrentLocation = currentLocation.getItem().contains(noun);
+
+
+        if (singleItem && isItemInCurrentLocation) {
+            switch (noun) {
+                case "camu camu":
+                    if (currentBag.contains("zippo lighter")) {
+                        dropItem("zippo lighter");
+                        putItemInBag(noun);
+                    }
+                    break;
+                case "camel milk":
+                    if (currentBag.contains("gold rolex")) {
+                        dropItem("gold rolex");
+                        putItemInBag(noun);
+                    }
+                    break;
+                case "sumalak":
+                    if (currentBag.contains("bubble gum")) {
+                        dropItem("bubble gum");
+                        putItemInBag(noun);
+                    }
+                    break;
+                case "glacier magical plant":
+                    if (currentBag.contains("jack daniels") && currentBag.contains("ice container")) {
+                        dropItem("jack daniels");
+                        putItemInBag(noun);
+                    }
+                    break;
+                default:
+                    System.out.println("Can't complete trade, look at clues to what items you need");
+                    view.promptEnterKey();
+                    break;
+            }
+        } else {
+            System.out.println("Can't complete trade, look at clues to what items you need");
             view.promptEnterKey();
         }
     }
 
-    private GameItem.ItemInformation findTheItemByNoun(String noun) {
-        for (GameItem.ItemInformation item : gameItems) {
-            if (noun.equalsIgnoreCase(item.getName())) {
-                return item;
-            }
-        }
-        return null;
-    }
+    public void displayLocation(Player player) {
 
-    private static void displayLocation(Player player) {
         //will clear at the top and print the location
         Console.clear();
-        String currentLocation = player.getCurrentLocation().getName();
-        String description = player.getCurrentLocation().getDescription();
-        List<String> item = player.getCurrentLocation().getItems();
+        String currentLocation = player.getCurrentLocation();
+        String description = locationMap.get(currentLocation).getDescription();
+        List<String> item = locationMap.get(currentLocation).getItem();
+        Map<String, String> directions = locationMap.get(currentLocation).getDirections();
 
-        HashMap<String, String> directions = player.getCurrentLocation().getDirections();
-
-        System.out.printf("\n%s, Your bag has: [%s] \nYou are located at: %s \nAvailable Items: %s \nDirections: %s \nLocation Info: %s\n",
-                player.getName(), player.stringOfCurrentBagItems(), currentLocation, item, directions, description);
+        System.out.printf("\n%s, Your bag has: [%s] " +
+                        "\nYou are located at: %s " +
+                        "\nThis is your current position inside the map: " +
+                        "\nAvailable Items: %s " +
+                        "\nDirections: %s \nLocation Info: %s\n" +
+                        "Portal Usage: %s\n",
+                player.getName(), player.printCurrentBag(), currentLocation, item, directions, description, portalUse);
 
         displayCharacter(currentLocation);
     }
 
-    private static void displayCharacter(String currentLocation) {
-        //initialize Characters to utilize attributes
-        Character.NPC1 npc1 = character.getNpc1();
-        Character.NPC2 npc2 = character.getNpc2();
-        Character.NPC3 npc3 = character.getNpc3();
-        Character.NPC4 npc4 = character.getNpc4();
-        Character.NPC5 npc5 = character.getNpc5();
-
-
-        if (currentLocation.equals(npc1.getLocation())) {
-            System.out.printf("You see : %s", npc1.getName());
-        } else if (currentLocation.equals(npc2.getLocation())) {
-            System.out.printf("You see The : %s", npc2.getName());
-        } else if (currentLocation.equals(npc3.getLocation())) {
-            System.out.printf("You see The : %s", npc3.getName());
-        } else if (currentLocation.equals(npc4.getLocation())) {
-            System.out.printf("You see a : %s", npc4.getName());
-        } else if (currentLocation.equals(npc5.getLocation())) {
-            System.out.printf("You see a : %s", npc5.getName());
-        } else {
+    private void displayCharacter(String currentLocation) {
+        for (Map.Entry<String, Character> entry : characterMap.entrySet()) {
+            if (currentLocation.equalsIgnoreCase(entry.getKey())) {
+                System.out.printf("You see the : %s\n", entry.getValue().getName());
+            }
+        }
+        if (!characterMap.containsKey(currentLocation)) {
             System.out.println("You see no one in this location");
         }
     }
+
+    private void talkToNPC(String name) {
+        String currentLocationName = locationMap.get(player.getCurrentLocation()).getName();
+        String characterName = characterMap.get(currentLocationName).getName();
+
+        for (Map.Entry<String, Character> entry : characterMap.entrySet()) {
+            String charName = entry.getValue().getName();
+            String charLocation = entry.getValue().getLocation();
+            if (name.equalsIgnoreCase(charName) && currentLocationName.equalsIgnoreCase(charLocation)) {
+                System.out.printf("%s : %s", name, entry.getValue().getQuotes());
+                System.out.println("\nYou must [trade] an item in your bag based on the Location Info.");
+            }
+        }
+        if (!name.equalsIgnoreCase(characterName)) {
+            System.out.printf("\nNo one here to talk with. %s isn't here.", name);
+        }
+        view.promptEnterKey();
+    }
 }
-
-
