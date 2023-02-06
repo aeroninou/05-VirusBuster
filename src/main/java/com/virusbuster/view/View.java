@@ -3,7 +3,6 @@ package com.virusbuster.view;
 import com.apps.util.Prompter;
 import com.apps.util.Console;
 import com.virusbuster.model.Game;
-import com.virusbuster.model.GameSave;
 
 import java.io.*;
 import java.util.*;
@@ -39,8 +38,6 @@ public class View {
     public static final String CONTINUE_PREVIOUS_GAME_PRESS_Y_YES_OR_N_NO = "\nWould you like to continue previous game? Press Y|YES or N|No\n";
 
     private final Game game = new Game(this);
-    //public GameSave saveLoad = new GameSave(game.player,game.locationMap.get(game.player.getCurrentLocation()));
-    public GameSave saveLoad = new GameSave(game);
 
 
     //welcome the player with a title/splash screen
@@ -54,7 +51,6 @@ public class View {
     //print exit message on quit
     public void exitMessage() {
         Console.clear();
-        promptToSave();
         textLoader(EXIT_MESSAGE);
         Console.pause(3000);
         Console.clear();
@@ -158,28 +154,6 @@ public class View {
             gameOverMessage();
         }
     }
-    public void promptToSave() {
-        String answer = prompt(SAVE,
-                YES_NO, INVALID_INPUT).toUpperCase();
-
-        if ("Y".equals(answer) || "YES".equals(answer)) {
-            saveLoad.saveGame();
-        } else if ("N".equals(answer) || "NO".equals(answer)) {
-            gameOverMessage();
-            System.exit(0);
-        }
-    }
-    public void promptToLoad() {
-        String answer = prompt(CONTINUE_PREVIOUS_GAME_PRESS_Y_YES_OR_N_NO,
-                YES_NO,INVALID_INPUT).toUpperCase();
-
-        if ("Y".equals(answer) || "YES".equals(answer)) {
-            saveLoad.loadGame(game.player);
-        } else if ("N".equals(answer) || "NO".equals(answer)) {
-            game.gameStart();
-        }
-    }
-
 
     //create a prompt method to uses for error checking
     public String prompt(String promptMessage, String regex, String helpMessage) {

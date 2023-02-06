@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Location implements Serializable {
+public class Location {
     private String name;
     private HashMap<String, String> directions;
     private String description;
