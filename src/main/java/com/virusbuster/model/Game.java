@@ -162,9 +162,34 @@ public class Game {
             case "trade":
                 tradeSpecialElements(noun);
                 break;
-            //TODO:is this something that we need?
             case "see":
-                //fx;
+                if (Objects.equals(player.getCurrentLocation(), "Area51")) {
+                    view.displayArea51Map();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Portal Room")) {
+                    view.displayPortalRoomMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Amazon Jungle Fever, Brazil")) {
+                    view.displayAmazonJungleMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Burj Khalifa, Dubai")) {
+                    view.displayDubaiMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Tashkent, Uzbekistan")) {
+                    view.displayUzbekiMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Nuuk, Greenland")) {
+                    view.displayGreenlandMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Laboratory")) {
+                    view.displayLabMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Armory")) {
+                    view.displayArmoryMap();
+                }
+                if (Objects.equals(player.getCurrentLocation(), "Cafeteria")) {
+                    view.displayCafeMap();
+                }
                 break;
             default:
                 System.out.println("Invalid in ExecuteCommand");
@@ -344,35 +369,7 @@ public class Game {
                         "Portal Usage: %s\n",
                 player.getName(), player.printCurrentBag(), currentLocation, item, directions, description, portalUse);
 
-        if (Objects.equals(currentLocation, "Area51")) {
-            view.displayArea51Map();
-        }
-        if (Objects.equals(currentLocation, "Portal Room")) {
-            view.displayPortalRoomMap();
-        }
-        if (Objects.equals(currentLocation, "Amazon Jungle Fever, Brazil")) {
-            view.displayAmazonJungleMap();
-        }
-        if (Objects.equals(currentLocation, "Burj Khalifa, Dubai")) {
-            view.displayDubaiMap();
-        }
-        if (Objects.equals(currentLocation, "Tashkent, Uzbekistan")) {
-            view.displayUzbekiMap();
-        }
-        if (Objects.equals(currentLocation, "Nuuk, Greenland")) {
-            view.displayGreenlandMap();
-        }
-        if (Objects.equals(currentLocation, "Laboratory")) {
-            view.displayLabMap();
-        }
-        if (Objects.equals(currentLocation, "Armory")) {
-            view.displayArmoryMap();
-        }
-        if (Objects.equals(currentLocation, "Cafeteria")) {
-            view.displayCafeMap();
-        }
         displayCharacter(currentLocation);
-
     }
 
     private void displayCharacter(String currentLocation) {
